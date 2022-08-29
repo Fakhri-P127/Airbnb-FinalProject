@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32811.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{8595179E-6533-4D89-9530-2F91F93C815E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1203A828-F9D5-4780-B1D1-535D19830845}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C4B6E371-8FB0-4D5F-A466-DCBE6B78A516}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A72EA469-B86E-4661-B83C-3E4BDD6248B0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{7E775E92-3F2E-476D-873D-A84BDAC015A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Domain", "src\Core\Airbnb.Domain\Airbnb.Domain.csproj", "{6F91CA6E-93CF-4939-B0FC-4506C1065C14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Application", "src\Core\Airbnb.Application\Airbnb.Application.csproj", "{BCCBD504-C731-4893-9E83-C95D8CA2C430}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Persistance", "src\Infrastructure\Airbnb.Persistance\Airbnb.Persistance.csproj", "{283245A7-287A-46A3-9A7C-B952E74E3170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.WebAPI", "src\Presentation\Airbnb.WebAPI\Airbnb.WebAPI.csproj", "{34F30124-E4F9-4499-A18D-0D14B8DDD130}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F91CA6E-93CF-4939-B0FC-4506C1065C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F91CA6E-93CF-4939-B0FC-4506C1065C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F91CA6E-93CF-4939-B0FC-4506C1065C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F91CA6E-93CF-4939-B0FC-4506C1065C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCBD504-C731-4893-9E83-C95D8CA2C430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCBD504-C731-4893-9E83-C95D8CA2C430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCBD504-C731-4893-9E83-C95D8CA2C430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCBD504-C731-4893-9E83-C95D8CA2C430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{283245A7-287A-46A3-9A7C-B952E74E3170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{283245A7-287A-46A3-9A7C-B952E74E3170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{283245A7-287A-46A3-9A7C-B952E74E3170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{283245A7-287A-46A3-9A7C-B952E74E3170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34F30124-E4F9-4499-A18D-0D14B8DDD130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34F30124-E4F9-4499-A18D-0D14B8DDD130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34F30124-E4F9-4499-A18D-0D14B8DDD130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34F30124-E4F9-4499-A18D-0D14B8DDD130}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C4B6E371-8FB0-4D5F-A466-DCBE6B78A516} = {8595179E-6533-4D89-9530-2F91F93C815E}
+		{A72EA469-B86E-4661-B83C-3E4BDD6248B0} = {8595179E-6533-4D89-9530-2F91F93C815E}
+		{7E775E92-3F2E-476D-873D-A84BDAC015A2} = {8595179E-6533-4D89-9530-2F91F93C815E}
+		{6F91CA6E-93CF-4939-B0FC-4506C1065C14} = {C4B6E371-8FB0-4D5F-A466-DCBE6B78A516}
+		{BCCBD504-C731-4893-9E83-C95D8CA2C430} = {C4B6E371-8FB0-4D5F-A466-DCBE6B78A516}
+		{283245A7-287A-46A3-9A7C-B952E74E3170} = {A72EA469-B86E-4661-B83C-3E4BDD6248B0}
+		{34F30124-E4F9-4499-A18D-0D14B8DDD130} = {7E775E92-3F2E-476D-873D-A84BDAC015A2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {928CB276-D3EC-4C93-98C9-8FE094E71F01}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,15 @@
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\bin\Debug\net6.0\Airbnb.Application.deps.json
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\bin\Debug\net6.0\Airbnb.Application.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\bin\Debug\net6.0\Airbnb.Application.pdb
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\bin\Debug\net6.0\Airbnb.Domain.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\bin\Debug\net6.0\Airbnb.Domain.pdb
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.csproj.AssemblyReference.cache
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.AssemblyInfoInputs.cache
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.AssemblyInfo.cs
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.csproj.CoreCompileInputs.cache
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.csproj.CopyComplete
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\refint\Airbnb.Application.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\Airbnb.Application.pdb
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Application\obj\Debug\net6.0\ref\Airbnb.Application.dll
