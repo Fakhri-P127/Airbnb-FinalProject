@@ -16,7 +16,7 @@ namespace Airbnb.Application.Features.User.Commands.Update
           
             RuleFor(x => x.Firstname).NotEmpty().Length(2, 15);
             RuleFor(x => x.Lastname).NotEmpty().Length(2, 15);
-            RuleFor(x => x.Work).Length(5, 40);
+            RuleFor(x => x.Work).Length(5, 50);
             RuleFor(x => x.About).Length(15, 250);
             RuleFor(x => x.DateOfBirth).NotEmpty().GreaterThanOrEqualTo(_minDateTime)
                 .LessThanOrEqualTo(_maxDateTime);

@@ -1,5 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using Airbnb.Persistance.Context;
 using Airbnb.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;

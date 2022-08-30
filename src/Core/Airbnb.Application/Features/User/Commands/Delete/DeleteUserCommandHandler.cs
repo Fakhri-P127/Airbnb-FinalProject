@@ -1,7 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;

@@ -2,7 +2,7 @@
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Features.Authentication.Common;
 using Airbnb.Application.Helpers;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -56,6 +56,8 @@ namespace Airbnb.Application.Features.Authentication.Commands.Register
         // register deki tokeni silmek olar
             string token = await _unit.JwtTokenGenerator.GenerateTokenAsync(user);
             var authResult = _mapper.Map<AuthenticationResult>(user);
+            if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
+            if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
             authResult.Token = token;
             
             return authResult;

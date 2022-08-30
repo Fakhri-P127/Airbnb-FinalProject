@@ -3,7 +3,7 @@ using Airbnb.Application.Contracts.v1.User.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Features.Authentication.Commands.Register;
 using Airbnb.Application.Helpers;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
@@ -32,12 +32,13 @@ namespace Airbnb.Application.Features.User.Commands.Update
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.RouteId, null);
             if (user is null) throw new UserNotFoundValidationException() { ErrorMessage = "User with this Id doesn't exist." };
             _unit.UserRepository.Update(user);
-
             _mapper.Map(request, user);
             user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
             await _unit.SaveChangesAsync();
             UpdateUserResponse response = _mapper.Map<UpdateUserResponse>(user);
+            if (user.EmailConfirmed) response.Verifications.Add("Email verified");
+            if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
             return response;
 
         }

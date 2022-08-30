@@ -1,7 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using Airbnb.Persistance.Authentication;
 using Airbnb.Persistance.Common.Repositories;
 using Airbnb.Persistance.Context;

@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Contracts.v1.User.Responses;
 using Airbnb.Application.Features.User.Commands.Update;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using AutoMapper;
 
 namespace Airbnb.Application.Mapping

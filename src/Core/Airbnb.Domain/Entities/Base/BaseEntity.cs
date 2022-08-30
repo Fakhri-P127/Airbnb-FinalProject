@@ -11,6 +11,7 @@ namespace Airbnb.Domain.Entities.Base
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt{ get; set; }
+        // false = gizledilen, null = pending, true = gorsenen
         public bool? Status { get; set; } 
 
     }

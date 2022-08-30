@@ -24,5 +24,7 @@ namespace Airbnb.Application.Contracts.v1.User.Responses
         public string Work { get; set; }
         public DateTime ModifiedAt { get; set; }
         public DateTime CreatedAt { get; set; }
+        public List<string> Verifications { get; set; }
+
     }
 }

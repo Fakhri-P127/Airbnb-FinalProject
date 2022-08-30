@@ -1,4 +1,4 @@
-﻿using Airbnb.Domain.Entities;
+﻿using Airbnb.Domain.Entities.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Features.Authentication.Commands.Register;
 using Airbnb.Application.Features.Authentication.Queries.Login;
-using Airbnb.Domain.Entities;
+using Airbnb.Domain.Entities.Common;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using FluentValidation.Results;
 using MediatR;

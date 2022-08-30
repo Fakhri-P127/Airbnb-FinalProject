@@ -23,5 +23,6 @@ namespace Airbnb.Application.Contracts.v1.User.Responses
         public string About { get; set; }
         //public List<string> Languages { get; set; }
         public string Work { get; set; }
+        public List<string> Verifications { get; set; }
     }
 }
