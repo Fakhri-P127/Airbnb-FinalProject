@@ -25,8 +25,6 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.MaxGuestCount).IsRequired();
             builder.Property(x => x.PropertyGroupId).IsRequired();
             builder.Property(x => x.PropertyTypeId).IsRequired();
-            builder.Property(x => x.AdultCount).IsRequired();
-            builder.Property(x => x.ChildrenCount).HasDefaultValue(0).IsRequired();
             builder.Property(x => x.AirCoverId).IsRequired();
             builder.Property(x => x.AppUserId).IsRequired();
             builder.Property(x => x.BathroomCount).IsRequired();
@@ -34,8 +32,10 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.BedCount).IsRequired();
             builder.Property(x => x.CancellationPolicyId).IsRequired();
             builder.Property(x => x.Status).HasDefaultValue(true);
+            //builder.Property(x => x.AdultCount).IsRequired();
+            //builder.Property(x => x.ChildrenCount).IsRequired();
 
-            builder.Property(x => x.MaxNightCount).HasDefaultValue(60).IsRequired();
+            builder.Property(x => x.MaxNightCount).IsRequired();
 
         }
     }

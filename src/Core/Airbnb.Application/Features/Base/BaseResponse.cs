@@ -11,9 +11,9 @@ namespace Airbnb.Contracts.v1.Base
         /// <summary>
         /// 
         /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime ModifiedAt { get; set; } = DateTime.UtcNow;
+        public Guid Id { get; set; } 
+        public DateTime CreatedAt { get; set; } 
+        public DateTime ModifiedAt { get; set; } 
         //banned suspended or active
         public bool? Status { get; set; } = true;
 

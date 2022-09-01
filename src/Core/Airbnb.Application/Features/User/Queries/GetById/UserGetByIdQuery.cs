@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.User.Queries.GetById
 {
-    public class UserGetByIdQuery:IRequest<GetUserResponse>
+    public class UserGetByIdQuery:IRequest<UserResponse>
     {
         public string Id { get; set; }
         public UserGetByIdQuery(string id)

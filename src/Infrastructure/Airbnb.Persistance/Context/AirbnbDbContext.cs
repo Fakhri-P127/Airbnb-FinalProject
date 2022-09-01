@@ -41,9 +41,14 @@ namespace Airbnb.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            //AutoUpdateCreatedAndModifiedValue();
             
             base.OnModelCreating(builder);
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            AutoUpdateCreatedAndModifiedValue();
+
+            return base.SaveChangesAsync(cancellationToken);
         }
         private void AutoUpdateCreatedAndModifiedValue()
         {
@@ -52,7 +57,7 @@ namespace Airbnb.Persistance.Context
             .Where(e => e.Entity is BaseEntity && (
             e.State == EntityState.Added
             || e.State == EntityState.Modified
-            || e.State == EntityState.Unchanged));
+            ));
 
             foreach (var entityEntry in entries)
             {

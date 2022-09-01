@@ -12,40 +12,39 @@ namespace Airbnb.WebAPI.Controllers.v1
 
     public class UsersController : BaseController
     {
-        private readonly IUnitOfWork _unit;
-        private readonly ISender _mediator;
+        private readonly ISender _mediatr;
 
-        public UsersController(IUnitOfWork unit,ISender mediator)
+        public UsersController(ISender mediatr)
         {
-            _unit = unit;
-            _mediator = mediator;
+           
+            _mediatr = mediatr;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
-            var result = await _mediator.Send(new UserGetAllQuery());
+            var result = await _mediatr.Send(new UserGetAllQuery());
             //if (!result.Any()) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
-            var result = await _mediator.Send(new UserGetByIdQuery(id));
+            var result = await _mediatr.Send(new UserGetByIdQuery(id));
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateUser([FromForm]UpdateUserCommand command)
         {
-            var result = await _mediator.Send(command);
+            var result = await _mediatr.Send(command);
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute]string id)
         {
-            var result = await _mediator.Send(new DeleteUserCommand(id));
+            var result = await _mediatr.Send(new DeleteUserCommand(id));
             //if (result is null) throw new Exception("Internal server error");
             return NoContent();
         }

@@ -11,6 +11,7 @@ namespace Airbnb.Application.Common.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        IPropertyRepository PropertyRepository { get; }
         IJwtTokenGenerator JwtTokenGenerator { get; }
         Task SaveChangesAsync();
     }

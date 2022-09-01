@@ -21,8 +21,8 @@ namespace Airbnb.Persistance.Common
         private readonly JwtSettings _jwtSettings;
 
         public IJwtTokenGenerator JwtTokenGenerator { get => new JwtTokenGenerator(_userManager, _jwtSettings) ?? throw new NotImplementedException(); }
-
         public IUserRepository UserRepository { get => new UserRepository(_context) ?? throw new NotImplementedException(); }
+        public IPropertyRepository PropertyRepository { get => new PropertyRepository(_context) ?? throw new NotImplementedException(); }
 
         public async Task SaveChangesAsync()
         {

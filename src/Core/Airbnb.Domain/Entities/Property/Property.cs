@@ -15,20 +15,21 @@ namespace Airbnb.Domain.Entities.Property
         public string Title { get; set; }
         public string Description { get; set; }
         // price  INT di
-        public int Price { get; set; }
+        public int? Price { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public byte MinNightCount { get; set; }
-        public byte MaxNightCount { get; set; }
-        public byte MaxGuestCount { get; set; }
-        public byte AdultCount { get; set; }
-        public byte ChildrenCount { get; set; }
-        public byte BathroomCount { get; set; }
-        public byte BedroomCount { get; set; }
-        public byte BedCount { get; set; }
-        public decimal Latitude { get; set; }
-        public decimal Longitude { get; set; }
+        public byte? MinNightCount { get; set; }
+        public byte? MaxNightCount { get; set; }
+        public byte? MaxGuestCount { get; set; }
+        // bunlar reze \ *o* / rve uchundu burda olmali deyiller
+        //public byte? AdultCount { get; set; }
+        //public byte? ChildrenCount { get; set; }
+        public byte? BathroomCount { get; set; }
+        public byte? BedroomCount { get; set; }
+        public byte? BedCount { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
         //hansi saatlar arasi check in ede bilerler
         //public string FromCheckinTime { get; set; }
         //// tocheckintime olmayada biler, belke tek 1 saatda qebul olunur.

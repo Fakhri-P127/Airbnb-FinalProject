@@ -80,3 +80,4 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\De
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\MediatR.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Airbnb.WebAPI.staticwebassets.runtime.json
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\AutoMapper.Collection.dll

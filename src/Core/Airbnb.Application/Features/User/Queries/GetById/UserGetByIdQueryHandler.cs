@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.User.Queries.GetById
 {
-    public class UserGetByIdQueryHandler : IRequestHandler<UserGetByIdQuery, GetUserResponse>
+    public class UserGetByIdQueryHandler : IRequestHandler<UserGetByIdQuery, UserResponse>
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
@@ -22,12 +22,12 @@ namespace Airbnb.Application.Features.User.Queries.GetById
             _unit = unit;
             _mapper = mapper;
         }
-        public async Task<GetUserResponse> Handle(UserGetByIdQuery request, CancellationToken cancellationToken)
+        public async Task<UserResponse> Handle(UserGetByIdQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _unit.UserRepository.GetByIdAsync(request.Id, null);
+            AppUser user = await _unit.UserRepository.GetByIdAsync(request.Id,null,"Gender");
             if (user is null) throw new UserNotFoundValidationException() { ErrorMessage="User with this Id doesn't exist."};
 
-            GetUserResponse response = _mapper.Map<GetUserResponse>(user);
+            UserResponse response = _mapper.Map<UserResponse>(user);
             return response;
         }
     }

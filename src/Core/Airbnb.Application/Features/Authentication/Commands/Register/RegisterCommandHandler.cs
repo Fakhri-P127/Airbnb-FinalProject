@@ -37,6 +37,8 @@ namespace Airbnb.Application.Features.Authentication.Commands.Register
 
             user = _mapper.Map<AppUser>(request);
             user.CreatedAt = DateTime.UtcNow;
+            user.ModifiedAt = DateTime.UtcNow;
+            user.PhoneNumberConfirmed = true;
             await ImageCheck(request, user);
             IdentityResult createdUser = await _userManager.CreateAsync(user, request.Password);
             if (!createdUser.Succeeded)
@@ -52,10 +54,10 @@ namespace Airbnb.Application.Features.Authentication.Commands.Register
                 };
             }
             // if image exists it checks image size and sets the image
-
         // register deki tokeni silmek olar
             string token = await _unit.JwtTokenGenerator.GenerateTokenAsync(user);
             var authResult = _mapper.Map<AuthenticationResult>(user);
+            authResult.Verifications = new();
             if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
             authResult.Token = token;

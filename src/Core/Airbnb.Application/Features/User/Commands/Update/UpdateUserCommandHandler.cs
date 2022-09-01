@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.User.Commands.Update
 {
-    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UpdateUserResponse>
+    public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserResponse>
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
@@ -27,18 +27,22 @@ namespace Airbnb.Application.Features.User.Commands.Update
             _mapper = mapper;
             _env = env;
         }
-        public async Task<UpdateUserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
+        public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            AppUser user = await _unit.UserRepository.GetByIdAsync(request.RouteId, null);
+            AppUser user = await _unit.UserRepository.GetByIdAsync(request.RouteId,null,"Gender");
             if (user is null) throw new UserNotFoundValidationException() { ErrorMessage = "User with this Id doesn't exist." };
             _unit.UserRepository.Update(user);
             _mapper.Map(request, user);
-            user.ModifiedAt = DateTime.UtcNow;
+            //user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
             await _unit.SaveChangesAsync();
-            UpdateUserResponse response = _mapper.Map<UpdateUserResponse>(user);
+            UserResponse response = _mapper.Map<UserResponse>(user);
+            // birinci gender verence deyer null olur, gel repo ile genderi tap ve responsedaki gendere beraber et eger nulldisa
+            response.Verifications = new();
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
+
+
             return response;
 
         }

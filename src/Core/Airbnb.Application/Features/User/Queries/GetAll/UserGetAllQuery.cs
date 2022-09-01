@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Airbnb.Application.Features.User.Queries.GetAll
 {
-    public class UserGetAllQuery : IRequest<List<GetUserResponse>>
+    public class UserGetAllQuery : IRequest<List<UserResponse>>
     {
 
     }

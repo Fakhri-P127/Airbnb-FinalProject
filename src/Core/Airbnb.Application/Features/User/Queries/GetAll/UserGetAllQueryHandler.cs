@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Airbnb.Application.Features.User.Queries.GetAll
 {
-    public class UserGetAllQueryHandler : IRequestHandler<UserGetAllQuery, List<GetUserResponse>>
+    public class UserGetAllQueryHandler : IRequestHandler<UserGetAllQuery, List<UserResponse>>
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
@@ -16,12 +16,22 @@ namespace Airbnb.Application.Features.User.Queries.GetAll
             _unit = unit;
             _mapper = mapper;
         }
-        public async Task<List<GetUserResponse>> Handle(UserGetAllQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserResponse>> Handle(UserGetAllQuery request, CancellationToken cancellationToken)
         {
-            List<AppUser> users = await _unit.UserRepository.GetAllAsync(null);
+            List<AppUser> users = await _unit.UserRepository.GetAllAsync(null,"Gender");
             
-            List<GetUserResponse> response = _mapper.Map<List<GetUserResponse>>(users);
-            return response;
+            List<UserResponse> responses = _mapper.Map<List<UserResponse>>(users);
+
+            foreach (var response in responses)
+            {
+                response.Verifications = new();
+                foreach (var user in users)
+                {
+                    if (user.EmailConfirmed) response.Verifications.Add("Email verified");
+                    if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
+                }
+            }
+            return responses;
         }
     }
 }

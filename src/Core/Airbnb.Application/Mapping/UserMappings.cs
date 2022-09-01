@@ -9,14 +9,15 @@ namespace Airbnb.Application.Mapping
     {
         public UserMappings()
         {
-            CreateMap<AppUser, GetUserResponse>();
+            CreateMap<AppUser, UserResponse>();
 
             CreateMap<UpdateUserCommand, AppUser>()
                 .ForMember(x => x.ProfilPicture, d => d.Ignore())
-                .ForAllMembers(opts => opts.Condition((UpdateUserCommand, AppUser, updateUserCommandMember) => updateUserCommandMember!= null));
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<AppUser, UpdateUserResponse>();
-         
+            //CreateMap<AppUser, UserResponse>();
+
+            CreateMap<Gender, GenderInAppUser>();
         }
     }
 }

@@ -2,12 +2,9 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace Airbnb.Application
 {
@@ -22,6 +19,7 @@ namespace Airbnb.Application
 
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
+            //services.
             return services;
         }
     }

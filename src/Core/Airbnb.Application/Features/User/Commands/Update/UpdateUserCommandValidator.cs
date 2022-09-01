@@ -14,12 +14,12 @@ namespace Airbnb.Application.Features.User.Commands.Update
         public UpdateUserCommandValidator()
         {
           
-            RuleFor(x => x.Firstname).NotEmpty().Length(2, 15);
-            RuleFor(x => x.Lastname).NotEmpty().Length(2, 15);
+            RuleFor(x => x.Firstname).Length(2, 15);
+            RuleFor(x => x.Lastname).Length(2, 15);
             RuleFor(x => x.Work).Length(5, 50);
             RuleFor(x => x.About).Length(15, 250);
-            RuleFor(x => x.DateOfBirth).NotEmpty().GreaterThanOrEqualTo(_minDateTime)
-                .LessThanOrEqualTo(_maxDateTime);
+            RuleFor(x => x.DateOfBirth).GreaterThanOrEqualTo(_minDateTime)
+                .LessThanOrEqualTo(_maxDateTime).When(x=>x.DateOfBirth != null);
             RuleFor(x => x.PhoneNumber)
                 .Matches("^\\(?(\\+994)?\\)?[\\s\\-]?0?(50|51|55|70|77|12)[\\s\\-]?\\d{3}[\\s\\-]?\\d{2}[\\s\\-]?\\d{2}[\\s\\-]?$")
                 .WithMessage("{PropertyName} {PropertyValue} is not in the correct format. We only accept Azerbaijan numbers");
