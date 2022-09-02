@@ -71,7 +71,7 @@ namespace Airbnb.Application.Features.Properties.Commands.Update
                         {
                             Name = await image
                         .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                            Alternative = "Apartment main image",
+                            //Alternative = "Apartment main image",
                             IsMain = true
                         };
                         property.PropertyImages.Add(mainImage);
@@ -81,7 +81,7 @@ namespace Airbnb.Application.Features.Properties.Commands.Update
                     {
                         Name = await image
                        .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                        Alternative = "Apartment detail image",
+                        //Alternative = "Apartment detail image",
                         IsMain = false
                     };
                     property.PropertyImages.Add(detailImages);

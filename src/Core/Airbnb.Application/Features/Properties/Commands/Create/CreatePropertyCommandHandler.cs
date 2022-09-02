@@ -24,7 +24,6 @@ namespace Airbnb.Application.Features.Properties.Commands.Create
         }
         public async Task<PropertyResponse> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            // not included u dummyyyy
             Property property = _mapper.Map<Property>(request);
             await ImageCheck(request, property);
             AddPropertyAmenities(request, property);
@@ -57,7 +56,7 @@ namespace Airbnb.Application.Features.Properties.Commands.Create
                         {
                             Name = await image
                         .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                            Alternative = "Apartment main image",
+                            //Alternative = "Apartment main image",
                             IsMain = true
                         };
                         property.PropertyImages.Add(mainImage);
@@ -67,7 +66,7 @@ namespace Airbnb.Application.Features.Properties.Commands.Create
                     {
                         Name = await image
                        .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                        Alternative = "Apartment detail image",
+                        //Alternative = "Apartment detail image",
                         IsMain = false
                     };
                     property.PropertyImages.Add(detailImages);

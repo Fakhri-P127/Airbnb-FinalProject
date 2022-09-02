@@ -10,7 +10,7 @@ namespace Airbnb.Application.Contracts.v1.Property.Responses.NestedPropertyRespo
     public class PropertyImagesInPropertyResponse
     {
         public string Name { get; set; }
-        public string Alternative { get; set; }
+        //public string Alternative { get; set; }
         public bool IsMain { get; set; }
     }
 }

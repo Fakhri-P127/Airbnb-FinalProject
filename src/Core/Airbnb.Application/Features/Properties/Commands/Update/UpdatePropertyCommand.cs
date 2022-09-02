@@ -18,14 +18,14 @@ namespace Airbnb.Application.Features.Properties.Commands.Update
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public byte? MinNightCount { get; set; }
-        public byte? MaxNightCount { get; set; }
-        public byte? MaxGuestCount { get; set; }
+        public int? MinNightCount { get; set; }
+        public int? MaxNightCount { get; set; }
+        public int? MaxGuestCount { get; set; }
         //public byte? AdultCount { get; set; }
         //public byte? ChildrenCount { get; set; }
-        public byte? BathroomCount { get; set; }
-        public byte? BedroomCount { get; set; }
-        public byte? BedCount { get; set; }
+        public int? BathroomCount { get; set; }
+        public int? BedroomCount { get; set; }
+        public int? BedCount { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
 

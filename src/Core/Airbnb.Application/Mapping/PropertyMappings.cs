@@ -39,6 +39,7 @@ namespace Airbnb.Application.Mapping
                 .ForMember(x => x.PropertyImages, d => d.Ignore())
                 .ForMember(x => x.PropertyAmenities, d => d.Ignore())
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+
         }
     }
 }

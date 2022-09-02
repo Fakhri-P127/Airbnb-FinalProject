@@ -13,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Context
 {
-    public class AirbnbDbContext:IdentityDbContext
+    public class AirbnbDbContext : IdentityDbContext
     {
-        public AirbnbDbContext(DbContextOptions<AirbnbDbContext> options):base(options)
+        public AirbnbDbContext(DbContextOptions<AirbnbDbContext> options) : base(options)
         {
 
         }
         #region User related sets
-        public DbSet<AppUser> AppUsers{ get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<AppUserLanguage> AppUserLanguages { get; set; }
@@ -41,7 +41,7 @@ namespace Airbnb.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            
+
             base.OnModelCreating(builder);
         }
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -57,6 +57,7 @@ namespace Airbnb.Persistance.Context
             .Where(e => e.Entity is BaseEntity && (
             e.State == EntityState.Added
             || e.State == EntityState.Modified
+            || e.State == EntityState.Unchanged
             ));
 
             foreach (var entityEntry in entries)
