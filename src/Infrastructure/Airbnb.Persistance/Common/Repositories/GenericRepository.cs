@@ -1,6 +1,8 @@
 ﻿using Airbnb.Application.Common.Interfaces.Repositories;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.Base;
 using Airbnb.Persistance.Context;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

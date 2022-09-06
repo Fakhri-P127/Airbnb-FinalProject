@@ -12,7 +12,8 @@ namespace Airbnb.Application.Common.Interfaces
     {
         IUserRepository UserRepository { get; }
         IPropertyRepository PropertyRepository { get; }
-        IJwtTokenGenerator JwtTokenGenerator { get; }
+        IHostRepository HostRepository { get; }
+        IAirCoverRepository AirCoverRepository { get; }
         Task SaveChangesAsync();
     }
 }

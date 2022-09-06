@@ -1,5 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces.Authentication;
-using Airbnb.Domain.Entities.Common;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Common;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;

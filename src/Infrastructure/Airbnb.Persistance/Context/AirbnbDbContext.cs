@@ -1,6 +1,6 @@
 ﻿using Airbnb.Domain.Entities.Base;
-using Airbnb.Domain.Entities.Common;
-using Airbnb.Domain.Entities.Property;
+using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -24,6 +24,8 @@ namespace Airbnb.Persistance.Context
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<AppUserLanguage> AppUserLanguages { get; set; }
+        public DbSet<GuestReview> GuestReviews { get; set; }
+        public DbSet<Host> Hosts { get; set; }
         #endregion
         #region Property related dbsets
         public DbSet<Property> Properties { get; set; }
@@ -36,11 +38,19 @@ namespace Airbnb.Persistance.Context
         public DbSet<PrivacyType> PrivacyTypes { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<PropertyAmenity> PropertyAmenities { get; set; }
+        public DbSet<PropertyReview> PropertyReviews { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host).HasForeignKey(x => x.HostId)
+                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Reservation>().HasOne(x => x.GuestReview).WithOne(x => x.Reservation)
+                .OnDelete(DeleteBehavior.NoAction); 
+        
 
             base.OnModelCreating(builder);
         }

@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\v1\Property\Requests\" />
-    <Folder Include="Contracts\v1\User\Requests\" />
+    <Folder Include="Features\Base\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
 

@@ -1,7 +1,7 @@
-﻿using Airbnb.Application.Features.Authentication.Commands.Register;
-using Airbnb.Application.Features.Authentication.Common;
+﻿using Airbnb.Application.Features.Client.Authentication.Commands.Register;
+using Airbnb.Application.Features.Client.Authentication.Common;
 using Airbnb.Application.Helpers;
-using Airbnb.Domain.Entities.Common;
+using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using Microsoft.AspNetCore.Hosting;
 using System;

@@ -1,7 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Domain.Entities.Common;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Authentication;
 using Airbnb.Persistance.Common.Repositories;
 using Airbnb.Persistance.Context;
@@ -17,22 +17,19 @@ namespace Airbnb.Persistance.Common
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AirbnbDbContext _context;
-        private readonly UserManager<AppUser> _userManager;
-        private readonly JwtSettings _jwtSettings;
-
-        public IJwtTokenGenerator JwtTokenGenerator { get => new JwtTokenGenerator(_userManager, _jwtSettings) ?? throw new NotImplementedException(); }
+ 
+      
         public IUserRepository UserRepository { get => new UserRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyRepository PropertyRepository { get => new PropertyRepository(_context) ?? throw new NotImplementedException(); }
-
+        public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
+        public IAirCoverRepository AirCoverRepository { get => new AirCoverRepository(_context) ?? throw new NotImplementedException(); }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
-        public UnitOfWork(AirbnbDbContext context,UserManager<AppUser> userManager,JwtSettings jwtSettings)
+        public UnitOfWork(AirbnbDbContext context)
         {
             _context = context;
-            _userManager = userManager;
-            _jwtSettings = jwtSettings;
         }
     }
 }

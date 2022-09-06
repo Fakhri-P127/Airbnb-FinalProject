@@ -1,4 +1,4 @@
-﻿using Airbnb.Domain.Entities.Common;
+﻿using Airbnb.Domain.Entities.AppUserRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

@@ -1,4 +1,4 @@
-﻿using Airbnb.Domain.Entities.Property;
+﻿using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -13,10 +13,10 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
     {
         public void Configure(EntityTypeBuilder<CancellationPolicy> builder)
         {
-            builder.Property(x => x.Name).HasMaxLength(30).IsRequired();
-            builder.Property(x => x.FullRefund).HasMaxLength(100).IsRequired();
-            builder.Property(x => x.PartialRefund).HasMaxLength(100);
-            builder.Property(x => x.NoRefund).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.FullRefund).HasMaxLength(500).IsRequired();
+            builder.Property(x => x.PartialRefund).HasMaxLength(500);
+            builder.Property(x => x.NoRefund).HasMaxLength(500).IsRequired();
             builder.Property(x => x.Status).HasDefaultValue(true);
 
             builder.HasIndex(x => x.Name).IsUnique();

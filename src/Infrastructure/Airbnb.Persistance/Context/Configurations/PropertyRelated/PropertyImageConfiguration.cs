@@ -1,4 +1,4 @@
-﻿using Airbnb.Domain.Entities.Property;
+﻿using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -14,7 +14,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
         public void Configure(EntityTypeBuilder<PropertyImage> builder)
         {
             builder.Property(x => x.IsMain).HasDefaultValue(false).IsRequired();
-            builder.Property(x => x.Name).HasMaxLength(120).IsRequired();
+            builder.Property(x => x.Name).HasMaxLength(200).IsRequired();
             //builder.Property(x => x.Alternative).HasMaxLength(25);
             builder.Property(x => x.Status).HasDefaultValue(true);
 

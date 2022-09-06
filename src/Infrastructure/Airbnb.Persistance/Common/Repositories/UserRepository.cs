@@ -1,5 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Domain.Entities.Common;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Context;
 using Airbnb.Persistance.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +34,7 @@ namespace Airbnb.Persistance.Common.Repositories
             }
             return await query.ToListAsync();
         }
+
 
         public virtual async Task<AppUser> GetByIdAsync(string id, Expression<Func<AppUser, bool>> expression, params string[] includes)
         {

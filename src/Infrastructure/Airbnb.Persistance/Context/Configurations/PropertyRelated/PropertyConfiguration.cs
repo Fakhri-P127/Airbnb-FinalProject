@@ -1,4 +1,4 @@
-﻿using Airbnb.Domain.Entities.Property;
+﻿using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -16,9 +16,9 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
         {
             builder.Property(x => x.Price).IsRequired();
             builder.Property(x => x.Title).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.Description).HasMaxLength(300).IsRequired();
-            builder.Property(x => x.Country).HasMaxLength(35).IsRequired();
-            builder.Property(x => x.City).HasMaxLength(35).IsRequired();
+            builder.Property(x => x.Description).HasMaxLength(1000).IsRequired();
+            builder.Property(x => x.Country).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.City).HasMaxLength(50).IsRequired();
             builder.Property(x => x.Street).HasMaxLength(50).IsRequired();
             builder.Property(x => x.Latitude).HasColumnType("decimal(10,8)").IsRequired();
             builder.Property(x => x.Longitude).HasColumnType("decimal(11,8)").IsRequired();
@@ -26,7 +26,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.PropertyGroupId).IsRequired();
             builder.Property(x => x.PropertyTypeId).IsRequired();
             builder.Property(x => x.AirCoverId).IsRequired();
-            builder.Property(x => x.AppUserId).IsRequired();
+            //builder.Property(x => x.AppUserId).IsRequired();
             builder.Property(x => x.BathroomCount).IsRequired();
             builder.Property(x => x.BedroomCount).IsRequired();
             builder.Property(x => x.BedCount).IsRequired();

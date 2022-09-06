@@ -1,10 +1,11 @@
-﻿using Airbnb.Application.Contracts.v1.Property.Responses;
-using Airbnb.Application.Contracts.v1.Property.Responses.NestedPropertyResponses;
-using Airbnb.Application.Features.Properties.Commands.Create;
-using Airbnb.Application.Features.Properties.Commands.Update;
-using Airbnb.Application.Features.User.Commands.Update;
-using Airbnb.Domain.Entities.Common;
-using Airbnb.Domain.Entities.Property;
+﻿using Airbnb.Application.Contracts.v1.Client.Property.Responses;
+using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedPropertyResponses;
+using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedUserResponses;
+using Airbnb.Application.Features.Client.Properties.Commands.Create;
+using Airbnb.Application.Features.Client.Properties.Commands.Update;
+using Airbnb.Application.Features.Client.User.Commands.Update;
+using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace Airbnb.Application.Mapping
     {
         public PropertyMappings()
         {
-            CreateMap<Property, PropertyResponse>();
+            CreateMap<Property, GetPropertyResponse>();
+            CreateMap<Property, CreatePropertyResponse>();
             CreateMap<PropertyImage, PropertyImagesInPropertyResponse>();
             CreateMap<PropertyAmenity, PropertyAmenitiesInPropertyResponse>();
                 
@@ -27,8 +29,14 @@ namespace Airbnb.Application.Mapping
             CreateMap<PropertyType, PropertyTypeInPropertyResponse>();
             CreateMap<CancellationPolicy, CancellationPolicyInPropertyResponse>();
             CreateMap<AirCover, AirCoverInPropertyResponse>();
-            CreateMap<AppUser, AppUserInPropertyResponse>();
             CreateMap<PrivacyType, PrivacyTypeInPropertyResponse>();
+            CreateMap<AppUser, HostInPropertyResponse>();
+            CreateMap<PropertyReview, PropertyReviewsInReservation>();
+            CreateMap<PropertyReview, PropertyReviewInReservationPropertyResponse>();
+           
+            
+            
+
 
             CreateMap<CreatePropertyCommand, Property>()
                 .ForMember(x => x.PropertyImages, d => d.Ignore())
@@ -37,6 +45,7 @@ namespace Airbnb.Application.Mapping
 
             CreateMap<UpdatePropertyCommand, Property>()
                 .ForMember(x => x.PropertyImages, d => d.Ignore())
+               
                 .ForMember(x => x.PropertyAmenities, d => d.Ignore())
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
