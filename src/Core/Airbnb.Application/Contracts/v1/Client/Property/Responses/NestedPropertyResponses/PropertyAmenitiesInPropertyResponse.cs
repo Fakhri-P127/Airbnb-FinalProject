@@ -16,7 +16,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedProper
     public class AmenityInPropertyAmenities
     {
         public Guid Id { get; set; }
-        public string AmenityType { get; set; }
+        public Guid AmenityTypeId { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

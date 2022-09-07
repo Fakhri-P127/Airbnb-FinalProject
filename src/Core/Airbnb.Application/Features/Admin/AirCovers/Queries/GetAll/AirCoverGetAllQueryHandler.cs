@@ -1,14 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
-using Airbnb.Application.Exceptions.AirCovers;
+using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll
 {
@@ -25,7 +20,6 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll
         public async Task<List<AirCoverResponse>> Handle(AirCoverGetAllQuery request, CancellationToken cancellationToken)
         {
             List<AirCover> airCovers = await _unit.AirCoverRepository.GetAllAsync(request.Expression);
-            if (airCovers is null) throw new AirCoverNotFoundException();
             List<AirCoverResponse> responses = _mapper.Map<List<AirCoverResponse>>(airCovers);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

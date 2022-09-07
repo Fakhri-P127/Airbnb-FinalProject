@@ -29,7 +29,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             _mapper.Map(request, user);
             //user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
-            RemoveAmenities(request, user);
+            CheckRemoveLanguages(request, user);
             CheckAddLanguage(request, user);
             await _unit.SaveChangesAsync();
             UserResponse response = _mapper.Map<UserResponse>(user);
@@ -37,7 +37,6 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             response.Verifications = new();
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
-
 
             return response;
 
@@ -81,7 +80,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             }
 
         }
-        private void RemoveAmenities(UpdateUserCommand request, AppUser user)
+        private void CheckRemoveLanguages(UpdateUserCommand request, AppUser user)
         {
             if (request.DeletedAppUserLanguages != null && request.DeletedAppUserLanguages.Count != 0)
             {

@@ -36,6 +36,7 @@ namespace Airbnb.Persistance.Context
         public DbSet<AirCover> AirCovers { get; set; }
         public DbSet<CancellationPolicy> CancellationPolicies { get; set; }
         public DbSet<PrivacyType> PrivacyTypes { get; set; }
+        public DbSet<AmenityType> AmenityTypes { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<PropertyAmenity> PropertyAmenities { get; set; }
         public DbSet<PropertyReview> PropertyReviews { get; set; }
@@ -46,6 +47,7 @@ namespace Airbnb.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host).HasForeignKey(x => x.HostId)
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Reservation>().HasOne(x => x.GuestReview).WithOne(x => x.Reservation)

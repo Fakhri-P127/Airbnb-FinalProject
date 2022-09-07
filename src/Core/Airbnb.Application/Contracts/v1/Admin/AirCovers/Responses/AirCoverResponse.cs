@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses
 {
-    public class AirCoverResponse:BaseResponse
+    public class AirCoverResponse : BaseResponse
     {
         public string Logo { get; set; }
         public string Title { get; set; }

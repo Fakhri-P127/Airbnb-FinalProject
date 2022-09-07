@@ -1,16 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Common.Interfaces.Authentication;
-using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication;
-using Airbnb.Persistance.Common.Repositories;
+using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
+using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
+using Airbnb.Persistance.Common.Repositories.PropertyRelated;
+using Airbnb.Persistance.Common.Repositories.UserRelated;
 using Airbnb.Persistance.Context;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Common
 {
@@ -18,11 +11,15 @@ namespace Airbnb.Persistance.Common
     {
         private readonly AirbnbDbContext _context;
  
-      
         public IUserRepository UserRepository { get => new UserRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyRepository PropertyRepository { get => new PropertyRepository(_context) ?? throw new NotImplementedException(); }
         public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
         public IAirCoverRepository AirCoverRepository { get => new AirCoverRepository(_context) ?? throw new NotImplementedException(); }
+        public IAmenityTypeRepository AmenityTypeRepository { get => new AmenityTypeRepository(_context) ?? throw new NotImplementedException(); }
+        public IAmenityRepository AmenityRepository { get => new AmenityRepository(_context) ?? throw new NotImplementedException(); }
+        public ICancellationPolicyRepository CancellationPolicyRepository { get => new CancellationPolicyRepository(_context) ?? throw new NotImplementedException(); }
+        public IPrivacyTypeRepository PrivacyTypeRepository { get => new PrivacyTypeRepository(_context) ?? throw new NotImplementedException(); }
+
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

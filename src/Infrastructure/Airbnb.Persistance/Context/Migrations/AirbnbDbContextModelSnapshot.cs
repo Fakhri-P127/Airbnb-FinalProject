@@ -253,10 +253,8 @@ namespace Airbnb.Persistance.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AmenityType")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                    b.Property<Guid>("AmenityTypeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -285,6 +283,8 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AmenityTypeId");
+
                     b.HasIndex("Description")
                         .IsUnique()
                         .HasFilter("[Description] IS NOT NULL");
@@ -296,6 +296,29 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsUnique();
 
                     b.ToTable("Amenities");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AmenityType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AmenityTypes");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.CancellationPolicy", b =>
@@ -1099,6 +1122,17 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Amenity", b =>
+                {
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.AmenityType", "AmenityType")
+                        .WithMany("Amenities")
+                        .HasForeignKey("AmenityTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AmenityType");
+                });
+
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Property", b =>
                 {
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.AirCover", "AirCover")
@@ -1325,6 +1359,11 @@ namespace Airbnb.Persistance.Context.Migrations
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Amenity", b =>
                 {
                     b.Navigation("PropertyAmenities");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AmenityType", b =>
+                {
+                    b.Navigation("Amenities");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.CancellationPolicy", b =>

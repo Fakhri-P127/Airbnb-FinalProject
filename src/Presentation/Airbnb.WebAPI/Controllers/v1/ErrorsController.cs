@@ -14,7 +14,7 @@ namespace Airbnb.WebAPI.Controllers.v1
         [ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult ErrorHandler()
         {
-            Exception? exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+            Exception exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
             //var exception = feature?.Error;
             //var path = feature?.Path;
             //var endpoint = feature?.Endpoint;
@@ -26,7 +26,7 @@ namespace Airbnb.WebAPI.Controllers.v1
 
             //};
             HttpStatusCode statusCode;
-            string? errorMessage;
+            string errorMessage;
             //List<string> errorMessages = new();
      
             switch (exception)

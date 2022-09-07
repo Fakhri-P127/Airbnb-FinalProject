@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces.Authentication;
-using Airbnb.Application.Common.Interfaces.Repositories;
+using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
+using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,10 @@ namespace Airbnb.Application.Common.Interfaces
         IPropertyRepository PropertyRepository { get; }
         IHostRepository HostRepository { get; }
         IAirCoverRepository AirCoverRepository { get; }
+        IAmenityTypeRepository AmenityTypeRepository { get; }
+        IAmenityRepository AmenityRepository { get; }
+        ICancellationPolicyRepository CancellationPolicyRepository { get; }
+        IPrivacyTypeRepository PrivacyTypeRepository { get; }
         Task SaveChangesAsync();
     }
 }
