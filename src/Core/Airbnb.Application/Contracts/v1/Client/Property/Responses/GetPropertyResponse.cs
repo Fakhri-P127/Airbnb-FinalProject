@@ -1,5 +1,5 @@
 ﻿using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedPropertyResponses;
+using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using System;

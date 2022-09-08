@@ -31,7 +31,7 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Update
             _unit.AmenityTypeRepository.Update(amenityType,false);
             amenityType.Name = request.Name;
             await _unit.SaveChangesAsync();
-            amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(amenityType.Id, null);
+            amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(amenityType.Id, null,"Amenities");
             AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
             if (response is null) throw new Exception("Internal server error");
 

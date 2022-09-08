@@ -1,4 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses.NestedAmenityResponses;
+﻿using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses.NestedResponses;
 using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;

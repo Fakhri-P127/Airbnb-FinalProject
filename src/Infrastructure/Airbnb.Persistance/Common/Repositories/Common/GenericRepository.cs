@@ -25,6 +25,7 @@ namespace Airbnb.Persistance.Common.Repositories.Common
         }
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
         {
+           
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
             if (includes.Length != 0)

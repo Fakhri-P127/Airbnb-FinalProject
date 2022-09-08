@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedHostResponses;
-using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedUserResponses;
+using Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses;
+using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 
 namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
 {

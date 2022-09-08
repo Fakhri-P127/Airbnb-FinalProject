@@ -19,7 +19,8 @@ namespace Airbnb.Application
 
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
-            //services.
+         
+
             return services;
         }
     }

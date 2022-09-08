@@ -12,13 +12,18 @@ namespace Airbnb.Application.Common.Interfaces
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
-        IPropertyRepository PropertyRepository { get; }
         IHostRepository HostRepository { get; }
+        IGenderRepository GenderRepository { get; }
+        ILanguageRepository LanguageRepository { get; }
+        IPropertyRepository PropertyRepository { get; }
         IAirCoverRepository AirCoverRepository { get; }
         IAmenityTypeRepository AmenityTypeRepository { get; }
         IAmenityRepository AmenityRepository { get; }
         ICancellationPolicyRepository CancellationPolicyRepository { get; }
         IPrivacyTypeRepository PrivacyTypeRepository { get; }
+        IPropertyGroupRepository PropertyGroupRepository { get; }
+        IPropertyTypeRepository PropertyTypeRepository { get; }
+        
         Task SaveChangesAsync();
     }
 }

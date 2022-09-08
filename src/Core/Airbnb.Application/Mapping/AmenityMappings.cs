@@ -1,5 +1,5 @@
 ﻿using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
-using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses.NestedAmenityResponses;
+using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses.NestedResponses;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
 using Airbnb.Application.Features.Admin.Amenities.Commands.Create;
 using Airbnb.Domain.Entities.PropertyRelated;

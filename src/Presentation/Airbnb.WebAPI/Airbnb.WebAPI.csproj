@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\assets\images\PropertyGroupImages\" />
     <Folder Include="wwwroot\assets\images\PropertyImages\" />
     <Folder Include="wwwroot\assets\images\UserProfilePictures\" />
   </ItemGroup>

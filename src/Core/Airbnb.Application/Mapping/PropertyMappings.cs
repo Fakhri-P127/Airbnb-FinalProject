@@ -1,17 +1,11 @@
 ﻿using Airbnb.Application.Contracts.v1.Client.Property.Responses;
-using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedPropertyResponses;
-using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedUserResponses;
+using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses;
+using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 using Airbnb.Application.Features.Client.Properties.Commands.Create;
 using Airbnb.Application.Features.Client.Properties.Commands.Update;
-using Airbnb.Application.Features.Client.User.Commands.Update;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Mapping
 {

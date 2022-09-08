@@ -1,6 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedPropertyResponses;
-using Airbnb.Application.Contracts.v1.Client.User.Responses;
-using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedUserResponses;
+﻿using Airbnb.Application.Contracts.v1.Client.User.Responses;
+using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 using Airbnb.Application.Features.Client.User.Commands.Update;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
