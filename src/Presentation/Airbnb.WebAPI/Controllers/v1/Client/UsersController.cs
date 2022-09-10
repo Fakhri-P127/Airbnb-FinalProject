@@ -28,12 +28,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             //if (!result.Any()) throw new Exception("Internal server error");
             return Ok(result);
         }
-        [HttpGet("hosts")]
-        public async Task<IActionResult> GetAllHosts()
+        [HttpGet("usersWithoutProfilePicture")]
+        public async Task<IActionResult> GetUsersWithoutProfilePicture()
         {
             var query = new UserGetAllQuery
             {
-                Expression = x => x.Host != null
+                Expression = x => x.ProfilPicture == null
             };
             List<UserResponse> result = await _mediatr.Send(query);
             //if (!result.Any()) throw new Exception("Internal server error");

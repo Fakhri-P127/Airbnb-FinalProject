@@ -25,7 +25,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create
         public async Task<PostPropertyGroupResponse> Handle(CreatePropertyGroupCommand request, CancellationToken cancellationToken)
         {
             var existed = await _unit.PropertyGroupRepository.GetAllAsync(x => x.Name == request.Name);
-            if (existed is not null)
+            if (existed.Any())
                 throw new DuplicatePrivacyTypeNameValidationException();
             PropertyGroup propertyGroup = new()
             {
