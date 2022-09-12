@@ -20,7 +20,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Commands.Create
         {
             Amenity amenity = _mapper.Map<Amenity>(request);
             await _unit.AmenityRepository.AddAsync(amenity);
-            amenity = await _unit.AmenityRepository.GetByIdAsync(amenity.Id, null);
+            amenity = await _unit.AmenityRepository.GetByIdAsync(amenity.Id, null,"AmenityType");
             PostAmenityResponse response = _mapper.Map<PostAmenityResponse>(amenity);
             if (response is null) throw new Exception("Internal server error");
             return response;

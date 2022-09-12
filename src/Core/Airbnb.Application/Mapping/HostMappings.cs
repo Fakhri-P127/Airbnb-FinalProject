@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Contracts.v1.Client.Host.Responses;
 using Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses;
+using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses;
 using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 using Airbnb.Application.Features.Client.Hosts.Commands.Create;
 using Airbnb.Domain.Entities.AppUserRelated;

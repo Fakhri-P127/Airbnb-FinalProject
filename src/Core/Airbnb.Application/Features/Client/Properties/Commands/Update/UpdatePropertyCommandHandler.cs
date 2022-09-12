@@ -25,7 +25,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         public async Task<CreatePropertyResponse> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.RouteId, null, FileHelpers.AllPropertyRelationIncludes());
+                .GetByIdAsync(request.Id, null, FileHelpers.AllPropertyRelationIncludes());
             if (property is null) throw new NotFoundException("Property");
             _unit.PropertyRepository.Update(property);
             _mapper.Map(request, property);

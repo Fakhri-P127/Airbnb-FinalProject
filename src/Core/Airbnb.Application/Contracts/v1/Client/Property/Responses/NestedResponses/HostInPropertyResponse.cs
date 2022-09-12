@@ -3,7 +3,9 @@
     public class HostInPropertyResponse
     {
         public Guid Id { get; set; }
-        public AppUserInHost Host { get; set; }
+        public bool IsSuperHost { get; set; }
+
+        public AppUserInHost AppUser { get; set; }
     }
     public class AppUserInHost
     {

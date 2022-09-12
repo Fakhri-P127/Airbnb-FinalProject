@@ -23,6 +23,7 @@ namespace Airbnb.Persistance.Common
         public IPrivacyTypeRepository PrivacyTypeRepository { get => new PrivacyTypeRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyGroupRepository PropertyGroupRepository { get => new PropertyGroupRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyTypeRepository PropertyTypeRepository { get => new PropertyTypeRepository(_context) ?? throw new NotImplementedException(); }
+        public IReservationRepository ReservationRepository { get => new ReservationRepository(_context) ?? throw new NotImplementedException(); }
 
         public async Task SaveChangesAsync()
         {

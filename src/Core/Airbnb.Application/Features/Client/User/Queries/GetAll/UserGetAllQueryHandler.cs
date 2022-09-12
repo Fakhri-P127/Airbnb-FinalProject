@@ -3,6 +3,7 @@ using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
 
@@ -22,7 +23,7 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
         {
             List<AppUser> users = await _unit.UserRepository.GetAllAsync(request.Expression
                 , FileHelpers.AllUserRelationIncludes());
-
+            
             List<UserResponse> responses = AddVerifications(users);
 
             return responses;

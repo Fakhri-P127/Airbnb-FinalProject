@@ -42,9 +42,10 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return CreatedAtAction(nameof(GetPropertById), routeValues: new { id = result.Id }, result);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateProperty([FromForm] UpdatePropertyCommand command)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateProperty([FromRoute] Guid id, [FromForm] UpdatePropertyCommand command)
         {
+            command.Id = id;
             var result = await _mediatr.Send(command);
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);

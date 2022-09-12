@@ -27,10 +27,9 @@ namespace Airbnb.Application.Mapping
             CreateMap<AppUser, HostInPropertyResponse>();
             CreateMap<PropertyReview, PropertyReviewsInReservation>();
             CreateMap<PropertyReview, PropertyReviewInReservationPropertyResponse>();
-           
-            
-            
-
+            CreateMap<Host, HostInPropertyResponse>();
+            CreateMap<AppUser, AppUserInHost>()
+                .ForMember(dest=>dest.Fullname,opt=>opt.MapFrom(src=>$"{src.Firstname} {src.Lastname}"));
 
             CreateMap<CreatePropertyCommand, Property>()
                 .ForMember(x => x.PropertyImages, d => d.Ignore())

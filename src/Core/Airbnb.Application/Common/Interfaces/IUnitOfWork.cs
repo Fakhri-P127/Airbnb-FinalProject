@@ -23,6 +23,7 @@ namespace Airbnb.Application.Common.Interfaces
         IPrivacyTypeRepository PrivacyTypeRepository { get; }
         IPropertyGroupRepository PropertyGroupRepository { get; }
         IPropertyTypeRepository PropertyTypeRepository { get; }
+        IReservationRepository ReservationRepository { get; }
         
         Task SaveChangesAsync();
     }

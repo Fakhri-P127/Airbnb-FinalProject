@@ -25,7 +25,8 @@ namespace Airbnb.Persistance.Common.Repositories.Common
         }
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
         {
-           
+            // if(x.checkInDate<"insertCheckIn" || x.checkOutDate > "insertCheckOut") burda exception mesaji ver ki bu araliq goturulub 
+
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
             if (includes.Length != 0)

@@ -10,5 +10,7 @@ namespace Airbnb.Persistance.Common.Repositories.PropertyRelated
         public PropertyRepository(AirbnbDbContext context) : base(context)
         {
         }
+
+      
     }
 }

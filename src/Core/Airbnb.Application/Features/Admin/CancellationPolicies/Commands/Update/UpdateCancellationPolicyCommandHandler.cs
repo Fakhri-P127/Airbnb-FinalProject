@@ -31,7 +31,8 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Update
             _unit.CancellationPolicyRepository.Update(cancellationPolicy);
             _mapper.Map(request, cancellationPolicy);
             await _unit.SaveChangesAsync();
-            cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(cancellationPolicy.Id, null,"Property");
+            cancellationPolicy = await _unit.CancellationPolicyRepository
+                .GetByIdAsync(cancellationPolicy.Id, null,"Properties");
             CancellationPolicyResponse response = _mapper.Map<CancellationPolicyResponse>(cancellationPolicy);
             if (response is null) throw new Exception("Internal server error");
 
