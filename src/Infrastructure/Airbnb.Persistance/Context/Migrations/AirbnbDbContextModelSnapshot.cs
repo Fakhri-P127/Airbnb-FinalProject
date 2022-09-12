@@ -792,7 +792,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<int>("PetCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Price")
+                    b.Property<int>("PricePerDay")
                         .HasColumnType("int");
 
                     b.Property<Guid>("PropertyId")

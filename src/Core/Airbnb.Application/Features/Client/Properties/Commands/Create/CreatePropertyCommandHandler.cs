@@ -76,7 +76,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                 throw new PropertyImageValidationException
                 { ErrorMessage = $"{request.MainPropertyImage.FileName} image size too big" };
             }
-            property.PropertyImages = new();
+           
             PropertyImage main = new()
             {
                 Name = await request.MainPropertyImage
@@ -89,7 +89,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
       
         private void AddPropertyAmenities(CreatePropertyCommand request, Property property)
         {
-            property.PropertyAmenities = new();
+            
 
             foreach (Guid amenityId in request.PropertyAmenities)
             {

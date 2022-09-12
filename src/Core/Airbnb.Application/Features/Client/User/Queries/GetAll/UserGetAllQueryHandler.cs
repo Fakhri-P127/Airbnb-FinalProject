@@ -36,7 +36,7 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
             {
                 UserResponse response = responses.FirstOrDefault(x => x.Id == user.Id);
                 if (response is null) throw new UserNotFoundValidationException();
-                response.Verifications = new();
+                
 
                 if (user.EmailConfirmed) response.Verifications.Add("Email verified");
                 if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");

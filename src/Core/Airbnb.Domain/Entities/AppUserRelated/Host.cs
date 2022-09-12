@@ -10,7 +10,12 @@ namespace Airbnb.Domain.Entities.AppUserRelated
 {
     public class Host:BaseEntity
     {
-
+        public Host()
+        {
+            Properties = new();
+            ReviewsAboutGuests = new();
+            Reservations = new();
+        }
         public bool IsSuperHost { get; set; }
 
         public List<Property> Properties { get; set; }
@@ -19,6 +24,9 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         //public List<Review> PropertyReviews { get; set; }
         public List<GuestReview> ReviewsAboutGuests { get; set; }
         //public List<Review> ReviewsByYou { get; set; }
+
+        // Bu Reservation unun relation u nu yigishdirmaq olar, Reservation da HostId saxlamaga ehtiyac yoxdu
+        // her propertynin reservationlari buna beraber olsun.
         public List<Reservation> Reservations { get; set; }
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }

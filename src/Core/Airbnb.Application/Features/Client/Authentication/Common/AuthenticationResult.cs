@@ -11,6 +11,10 @@ namespace Airbnb.Application.Features.Client.Authentication.Common
 {
     public class AuthenticationResult
     {
+        public AuthenticationResult()
+        {
+            Verifications = new();
+        }
         public string Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }

@@ -9,6 +9,11 @@ namespace Airbnb.Domain.Entities.PropertyRelated
 {
     public class PropertyGroup:BaseEntity
     {
+        public PropertyGroup()
+        {
+            Properties = new List<Property>();
+            PropertyGroupTypes = new List<PropertyGroupType>();
+        }
         public string Image { get; set; }
         public string Name { get; set; }
         public List<Property> Properties { get; set; }

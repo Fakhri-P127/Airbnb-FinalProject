@@ -10,6 +10,13 @@ namespace Airbnb.Domain.Entities.AppUserRelated
 {
     public class AppUser : IdentityUser
     {
+        public AppUser()
+        {
+            AppUserLanguages = new();
+            ReviewsByYou = new();
+            ReviewsAboutYou = new();
+            ReservationsYouMade = new();
+        }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }

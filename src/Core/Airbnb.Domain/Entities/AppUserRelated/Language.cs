@@ -9,6 +9,10 @@ namespace Airbnb.Domain.Entities.AppUserRelated
 {
     public class Language:BaseEntity
     {
+        public Language()
+        {
+            AppUserLanguages = new();
+        }
         public string Name { get; set; }
         public List<AppUserLanguage> AppUserLanguages { get; set; }
 

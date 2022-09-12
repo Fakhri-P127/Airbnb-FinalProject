@@ -9,6 +9,10 @@ namespace Airbnb.Domain.Entities.PropertyRelated
 {
     public class Amenity:BaseEntity
     {
+        public Amenity()
+        {
+            PropertyAmenities = new();
+        }
         public string Icon { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

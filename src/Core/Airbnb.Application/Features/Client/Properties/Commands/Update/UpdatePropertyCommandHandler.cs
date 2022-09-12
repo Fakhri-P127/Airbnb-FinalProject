@@ -116,7 +116,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 
         private void CheckAddPropertyAmenities(UpdatePropertyCommand request, Property property)
         {
-            //property.PropertyAmenities = new();
+            
 
             if (request.PropertyAmenities != null && request.PropertyAmenities.Count != 0)
             {

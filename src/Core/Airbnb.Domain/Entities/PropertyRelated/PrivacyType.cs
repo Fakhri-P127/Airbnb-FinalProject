@@ -9,6 +9,10 @@ namespace Airbnb.Domain.Entities.PropertyRelated
 {
     public class PrivacyType:BaseEntity
     {
+        public PrivacyType()
+        {
+            Properties = new();
+        }
         public string Name { get; set; }
         public List<Property> Properties { get; set; }
     }

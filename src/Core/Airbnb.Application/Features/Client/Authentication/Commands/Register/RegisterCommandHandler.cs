@@ -61,7 +61,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         // register deki tokeni silmek olar
             string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
             var authResult = _mapper.Map<AuthenticationResult>(user);
-            authResult.Verifications = new();
+           
             if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
             authResult.Token = token;

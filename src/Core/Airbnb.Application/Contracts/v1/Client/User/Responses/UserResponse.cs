@@ -9,6 +9,10 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Responses
 {
     public class UserResponse
     {
+        public UserResponse()
+        {
+            Verifications = new();
+        }
         public string Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }

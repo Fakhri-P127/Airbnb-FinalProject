@@ -9,6 +9,10 @@ namespace Airbnb.Domain.Entities.AppUserRelated
 {
     public class Gender:BaseEntity
     {
+        public Gender()
+        {
+            AppUsers = new();
+        }
         public string Name { get; set; }
         public List<AppUser> AppUsers { get; set; }
 

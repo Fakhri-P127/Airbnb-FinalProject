@@ -34,7 +34,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             await _unit.SaveChangesAsync();
             UserResponse response = _mapper.Map<UserResponse>(user);
             // birinci gender verence deyer null olur, gel repo ile genderi tap ve responsedaki gendere beraber et eger nulldisa
-            response.Verifications = new();
+            
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
 

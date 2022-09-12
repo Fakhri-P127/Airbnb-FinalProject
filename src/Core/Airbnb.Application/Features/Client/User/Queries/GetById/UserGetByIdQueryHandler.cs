@@ -25,7 +25,7 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetById
             if (user is null) throw new UserNotFoundValidationException() { ErrorMessage="User with this Id doesn't exist."};
 
             UserResponse response = _mapper.Map<UserResponse>(user);
-            response.Verifications = new();
+            
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
 

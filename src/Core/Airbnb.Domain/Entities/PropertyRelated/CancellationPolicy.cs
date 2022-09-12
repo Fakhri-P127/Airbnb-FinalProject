@@ -9,6 +9,10 @@ namespace Airbnb.Domain.Entities.PropertyRelated
 {
     public class CancellationPolicy:BaseEntity
     {
+        public CancellationPolicy()
+        {
+            Properties = new();
+        }
         public string Name { get; set; }
         public string FullRefund { get; set; }
         public string PartialRefund { get; set; }
