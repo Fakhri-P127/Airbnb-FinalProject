@@ -16,10 +16,6 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         public int ChildCount { get; set; }
         public int InfantCount { get; set; }
         public int PetCount { get; set; }
-        // gunlerle biryerde olan pricedi, normalini propertyden chek goster ekranda idc
-        //public int Price { get; set; }
-        //public int ServiceFee { get; set; }
-        //public int TotalPrice { get; set; }
         public Guid PropertyId { get; set; }
 
         // who's reserving

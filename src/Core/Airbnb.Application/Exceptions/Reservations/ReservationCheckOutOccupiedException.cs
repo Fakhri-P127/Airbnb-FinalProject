@@ -11,7 +11,7 @@ namespace Airbnb.Application.Exceptions.Reservations
     {
         public HttpStatusCode StatusCode => HttpStatusCode.Conflict;
         public string ErrorMessage { get; set; }
-        public ReservationCheckOutOccupiedException(DateTime CheckOut)
+        public ReservationCheckOutOccupiedException(DateTime? CheckOut)
         {
             ErrorMessage = $"{CheckOut:dd/MM/yyyy} is already reserved. Please choose checkout date that's not occupied";
         }

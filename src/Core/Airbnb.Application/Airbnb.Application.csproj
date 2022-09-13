@@ -15,11 +15,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Client\Reservations\Queries\" />
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

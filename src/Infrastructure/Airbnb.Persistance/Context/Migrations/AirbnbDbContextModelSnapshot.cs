@@ -766,6 +766,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CheckInDate")
@@ -802,7 +803,10 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool?>("Status")
-                        .HasColumnType("bit");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<int>("TotalPrice")
                         .HasColumnType("int");
@@ -1256,7 +1260,9 @@ namespace Airbnb.Persistance.Context.Migrations
                 {
                     b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", "AppUser")
                         .WithMany("ReservationsYouMade")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Airbnb.Domain.Entities.AppUserRelated.Host", "Host")
                         .WithMany("Reservations")

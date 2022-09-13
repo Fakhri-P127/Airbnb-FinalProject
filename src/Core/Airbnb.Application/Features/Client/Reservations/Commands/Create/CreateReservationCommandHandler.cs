@@ -4,6 +4,7 @@ using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Exceptions.Hosts;
 using Airbnb.Application.Exceptions.Properties;
 using Airbnb.Application.Exceptions.Reservations;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -32,16 +33,13 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             Property property = await CheckIfNotFoundThenReturnProperty(request);
             int reservedDays = CheckMaxGuestThenReturnInt(request, property);
 
-            CheckOutDateValidationChecker(property, reservedDays);
+            ReservationHelpers.CheckOutDateValidationChecker(property, reservedDays);
             await CheckIfDateOccupied(request);
             Reservation reservation = _mapper.Map<Reservation>(request);
             reservation.Property = property;
-            CalculatePrice(reservation, reservedDays);
+            ReservationHelpers.CalculatePrice(reservation, reservedDays);
             await _unit.ReservationRepository.AddAsync(reservation);
-            reservation = await _unit.ReservationRepository.GetByIdAsync(reservation.Id, null);
-            PostReservationResponse response = _mapper.Map<PostReservationResponse>(reservation);
-            if (response is null) throw new Exception("Internal server error");
-            return response;
+            return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }
 
         private int CheckMaxGuestThenReturnInt(CreateReservationCommand request,
@@ -54,15 +52,6 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
                     (property.MaxGuestCount, totalGuestCount);
 
             return reservedDays;
-        }
-
-        private static void CheckOutDateValidationChecker(Property property, int reservedDays)
-        {
-            if (property.MinNightCount > reservedDays)
-                throw new ReservationMinNightValidationException(property.MinNightCount
-                    , reservedDays);
-            if (property.MaxNightCount < reservedDays)
-                throw new ReservationMaxNightValidationException(property.MaxNightCount, reservedDays);
         }
 
         private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request)
@@ -80,18 +69,9 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         }
 
         private async Task CheckIfDateOccupied(CreateReservationCommand request)
-        { 
-            List<Reservation> occupiedCheckInTime = await _unit.ReservationRepository
-                .GetAllAsync(x => x.CheckInDate <= request.CheckInDate
-                && x.CheckOutDate >= request.CheckInDate);
-            if (occupiedCheckInTime.Count != 0)
-                throw new ReservationCheckInOccupiedException(request.CheckInDate);
-
-            List<Reservation> occupiedCheckOutTime = await _unit.ReservationRepository
-                .GetAllAsync(x => x.CheckInDate <= request.CheckOutDate
-                && x.CheckOutDate >= request.CheckOutDate);
-            if (occupiedCheckOutTime.Count != 0)
-                throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
+        {
+            await CheckIfCheckInIsOccupied(request);
+            await CheckIfCheckOutIsOccupied(request);
 
             #region comment
             // meselcun: oktyabrin 1-inden 31-ne kimi rezerv edirsen amma icherisinde
@@ -99,28 +79,33 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             // exception tullamayacaq. Bashlangic ve sonu butun ehate edirse bu exceptiona dushun.
             // Bunu checkout la da ede bilerdik, bir ferqi yoxdu bildiyim qederile
             #endregion
-            List<Reservation> containsOccupiedDate = await _unit.ReservationRepository.GetAllAsync(x=>
-            x.CheckInDate >= request.CheckInDate && x.CheckInDate <=request.CheckOutDate);
-            if (containsOccupiedDate.Count != 0) throw new ReservationContainsOccupiedDateException();
+            await CheckIfItContainsOccupiedDate(request);
 
         }
-        private static void CalculatePrice(Reservation reservation,int reservedDays)
+
+        private async Task CheckIfItContainsOccupiedDate(CreateReservationCommand request)
         {
-            // guest 2 den choxdusa onda her birine gore price artir. Saytda bele idi
-            int totalGuests = reservation.AdultCount + reservation.ChildCount;
-            if ( totalGuests > 2)
-            {
-                int PricePerGuest = (int)(reservation.Property.Price * 0.2);
-                reservation.PricePerDay =
-                    (int)(reservation.Property.Price * reservedDays + (totalGuests-2) * PricePerGuest);
-            }
-            else
-            {
-                reservation.PricePerDay = (int)(reservation.Property.Price * reservedDays);
-            }
-            // qiymetin 10 % i service fee di, random olaraq sechmishem
-            reservation.ServiceFee = (int)(reservation.PricePerDay * 0.1);
-            reservation.TotalPrice = reservation.PricePerDay + reservation.ServiceFee;
+            List<Reservation> containsOccupiedDate = await _unit.ReservationRepository.GetAllAsync(x =>
+            x.CheckInDate >= request.CheckInDate && x.CheckInDate <= request.CheckOutDate);
+            if (containsOccupiedDate.Count != 0) throw new ReservationContainsOccupiedDateException();
+        }
+
+        private async Task CheckIfCheckOutIsOccupied(CreateReservationCommand request)
+        {
+            List<Reservation> occupiedCheckOutTime = await _unit.ReservationRepository
+                            .GetAllAsync(x => x.CheckInDate <= request.CheckOutDate
+                            && x.CheckOutDate >= request.CheckOutDate);
+            if (occupiedCheckOutTime.Count != 0)
+                throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
+        }
+
+        private async Task CheckIfCheckInIsOccupied(CreateReservationCommand request)
+        {
+            List<Reservation> occupiedCheckInTime = await _unit.ReservationRepository
+                .GetAllAsync(x => x.CheckInDate <= request.CheckInDate
+                && x.CheckOutDate >= request.CheckInDate);
+            if (occupiedCheckInTime.Count != 0)
+                throw new ReservationCheckInOccupiedException(request.CheckInDate);
         }
     }
 }
