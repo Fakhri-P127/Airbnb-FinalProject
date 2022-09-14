@@ -21,11 +21,9 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }
         // bu value onsuzda var, response da deyish listini saxla
-        //public bool IsVerified { get; set; } = false;
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
         //banned suspended or active
-        //public string Status { get; set; } 
 
         //optionals
         public string ProfilPicture { get; set; }

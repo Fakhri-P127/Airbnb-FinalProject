@@ -17,7 +17,7 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses
         public int InfantCount { get; set; }
         public int PetCount { get; set; }
         // gunlerle biryerde olan pricedi, normalini propertyden chek goster ekranda idc
-        public int Price { get; set; }
+        public int PricePerDay { get; set; }
         public int ServiceFee { get; set; }
         public int TotalPrice { get; set; }
 

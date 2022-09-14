@@ -40,9 +40,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
             _mapper.Map(request, reservation);
             // eger guest countda deyishiklik varsa qiymeti yeniden hesablasin, yoxdusa ehtiyac yoxdu
             if (requestGuestCount != reservedGuestCount || existedReservedDays != reservedDays)
-            {
                 ReservationHelpers.CalculatePrice(reservation, reservedDays);
-            }
             await _unit.SaveChangesAsync();
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
 

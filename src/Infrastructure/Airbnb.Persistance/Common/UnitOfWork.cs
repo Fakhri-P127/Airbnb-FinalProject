@@ -15,6 +15,7 @@ namespace Airbnb.Persistance.Common
         public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
         public IGenderRepository GenderRepository { get => new GenderRepository(_context) ?? throw new NotImplementedException(); }
         public ILanguageRepository LanguageRepository { get => new LanguageRepository(_context) ?? throw new NotImplementedException(); }
+        public IGuestReviewRepository GuestReviewRepository { get => new GuestReviewRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyRepository PropertyRepository { get => new PropertyRepository(_context) ?? throw new NotImplementedException(); }
         public IAirCoverRepository AirCoverRepository { get => new AirCoverRepository(_context) ?? throw new NotImplementedException(); }
         public IAmenityTypeRepository AmenityTypeRepository { get => new AmenityTypeRepository(_context) ?? throw new NotImplementedException(); }
@@ -24,6 +25,7 @@ namespace Airbnb.Persistance.Common
         public IPropertyGroupRepository PropertyGroupRepository { get => new PropertyGroupRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyTypeRepository PropertyTypeRepository { get => new PropertyTypeRepository(_context) ?? throw new NotImplementedException(); }
         public IReservationRepository ReservationRepository { get => new ReservationRepository(_context) ?? throw new NotImplementedException(); }
+        public IPropertyReviewRepository PropertyReviewRepository { get => new PropertyReviewRepository(_context) ?? throw new NotImplementedException(); }
 
         public async Task SaveChangesAsync()
         {

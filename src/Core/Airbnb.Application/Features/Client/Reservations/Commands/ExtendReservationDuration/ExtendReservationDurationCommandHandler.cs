@@ -37,9 +37,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
             _unit.ReservationRepository.Update(reservation);
             reservation.CheckOutDate = request.CheckOutDate;
             if (existedReservedDays != reservedDays)
-            {
                 ReservationHelpers.CalculatePrice(reservation, reservedDays);
-            }
             await _unit.SaveChangesAsync();
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }

@@ -15,6 +15,7 @@ namespace Airbnb.Application.Common.Interfaces
         IHostRepository HostRepository { get; }
         IGenderRepository GenderRepository { get; }
         ILanguageRepository LanguageRepository { get; }
+        IGuestReviewRepository GuestReviewRepository { get; }
         IPropertyRepository PropertyRepository { get; }
         IAirCoverRepository AirCoverRepository { get; }
         IAmenityTypeRepository AmenityTypeRepository { get; }
@@ -24,6 +25,7 @@ namespace Airbnb.Application.Common.Interfaces
         IPropertyGroupRepository PropertyGroupRepository { get; }
         IPropertyTypeRepository PropertyTypeRepository { get; }
         IReservationRepository ReservationRepository { get; }
+        IPropertyReviewRepository PropertyReviewRepository { get; }
         
         Task SaveChangesAsync();
     }
