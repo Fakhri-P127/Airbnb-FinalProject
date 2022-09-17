@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Host.Responses;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
@@ -18,9 +19,11 @@ namespace Airbnb.Application.Features.Client.Hosts.Queries.GetAll
         }
         public async Task<List<GetHostResponse>> Handle(GetAllHostQuery request, CancellationToken cancellationToken)
         {
-            List<Host> hosts = await _unit.HostRepository.GetAllAsync(request.Expression,"AppUser");
-
+            List<Host> hosts = await _unit.HostRepository.GetAllAsync(request.Expression,
+                HostHelper.AllHostIncludes());
+            
             List<GetHostResponse> responses = _mapper.Map<List<GetHostResponse>>(hosts);
+            if (responses is null) throw new Exception("Internal server error");
             return responses;
                 
         }

@@ -20,18 +20,15 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        // bu value onsuzda var, response da deyish listini saxla
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
-        //banned suspended or active
-
+      
         //optionals
         public string ProfilPicture { get; set; }
         public string About { get; set; }
         public Guid? GenderId { get; set; }
         public Gender Gender { get; set; }
         public string Work { get; set; }
-        //public Guid? HostId { get; set; }
         public Host Host { get; set; }
         public List<AppUserLanguage> AppUserLanguages { get; set; }
         public List<PropertyReview> ReviewsByYou { get; set; }

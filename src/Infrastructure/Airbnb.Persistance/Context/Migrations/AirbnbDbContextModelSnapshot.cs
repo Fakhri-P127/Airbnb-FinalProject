@@ -22,6 +22,111 @@ namespace Airbnb.Persistance.Context.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("About")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Firstname")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<Guid?>("GenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Lastname")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ProfilPicture")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Work")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GenderId");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUserLanguage", b =>
                 {
                     b.Property<Guid>("Id")
@@ -35,17 +140,17 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<Guid>("LanguageId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -65,6 +170,12 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -72,12 +183,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<bool?>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -94,6 +199,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -105,17 +211,22 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<Guid>("HostId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.HasKey("Id");
 
@@ -141,14 +252,14 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsSuperHost")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -168,6 +279,12 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -175,12 +292,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
-
-                    b.Property<bool?>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -224,6 +335,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<string>("Logo")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -231,11 +347,6 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -268,6 +379,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -275,11 +391,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -307,14 +418,14 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -335,6 +446,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -351,11 +467,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<string>("PartialRefund")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -374,6 +485,11 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -381,11 +497,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -442,6 +553,11 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<Guid>("HostId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<decimal?>("Latitude")
                         .IsRequired()
                         .HasColumnType("decimal(10,8)");
@@ -478,11 +594,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<Guid?>("PropertyTypeId")
                         .IsRequired()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.Property<string>("Street")
                         .IsRequired()
@@ -523,16 +634,16 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -557,6 +668,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -564,11 +680,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -590,6 +701,11 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -598,11 +714,6 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.Property<Guid>("PropertyTypeId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -622,6 +733,11 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<bool>("IsMain")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -637,11 +753,6 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.Property<Guid>("PropertyId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -660,6 +771,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("AppUserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("CheckInScore")
@@ -674,6 +786,14 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("HostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<float>("LocationScore")
                         .HasColumnType("real");
 
@@ -683,17 +803,13 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<float>("OverallScore")
                         .HasColumnType("real");
 
-                    b.Property<Guid?>("PropertyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ReservationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
 
                     b.Property<float>("ValueScore")
                         .HasColumnType("real");
@@ -702,7 +818,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("PropertyId");
+                    b.HasIndex("HostId");
 
                     b.HasIndex("ReservationId")
                         .IsUnique();
@@ -728,6 +844,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -735,11 +856,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
-
-                    b.Property<bool?>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -787,6 +903,12 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<int>("InfantCount")
                         .HasColumnType("int");
 
+                    b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -802,11 +924,8 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<int>("ServiceFee")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("Status")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<int>("TotalPrice")
                         .HasColumnType("int");
@@ -872,80 +991,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -1031,46 +1076,11 @@ namespace Airbnb.Persistance.Context.Migrations
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUser", b =>
                 {
-                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.Gender", "Gender")
+                        .WithMany("AppUsers")
+                        .HasForeignKey("GenderId");
 
-                    b.Property<string>("About")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .IsRequired()
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<Guid?>("GenderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ProfilPicture")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
-
-                    b.Property<string>("Work")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasIndex("GenderId");
-
-                    b.HasDiscriminator().HasValue("AppUser");
+                    b.Navigation("Gender");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUserLanguage", b =>
@@ -1096,10 +1106,12 @@ namespace Airbnb.Persistance.Context.Migrations
                 {
                     b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", "AppUser")
                         .WithMany("ReviewsAboutYou")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Airbnb.Domain.Entities.AppUserRelated.Host", "Host")
-                        .WithMany("ReviewsAboutGuests")
+                        .WithMany("ReviewsByYou")
                         .HasForeignKey("HostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1239,11 +1251,15 @@ namespace Airbnb.Persistance.Context.Migrations
                 {
                     b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", "AppUser")
                         .WithMany("ReviewsByYou")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.Property", null)
-                        .WithMany("Reviews")
-                        .HasForeignKey("PropertyId");
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.Host", "Host")
+                        .WithMany("ReviewsAboutYourProperty")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.Reservation", "Reservation")
                         .WithOne("PropertyReview")
@@ -1252,6 +1268,8 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Host");
 
                     b.Navigation("Reservation");
                 });
@@ -1294,7 +1312,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1303,7 +1321,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1318,7 +1336,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1327,7 +1345,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1336,11 +1354,15 @@ namespace Airbnb.Persistance.Context.Migrations
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUser", b =>
                 {
-                    b.HasOne("Airbnb.Domain.Entities.AppUserRelated.Gender", "Gender")
-                        .WithMany("AppUsers")
-                        .HasForeignKey("GenderId");
+                    b.Navigation("AppUserLanguages");
 
-                    b.Navigation("Gender");
+                    b.Navigation("Host");
+
+                    b.Navigation("ReservationsYouMade");
+
+                    b.Navigation("ReviewsAboutYou");
+
+                    b.Navigation("ReviewsByYou");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Gender", b =>
@@ -1354,7 +1376,9 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.Navigation("Reservations");
 
-                    b.Navigation("ReviewsAboutGuests");
+                    b.Navigation("ReviewsAboutYourProperty");
+
+                    b.Navigation("ReviewsByYou");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Language", b =>
@@ -1389,8 +1413,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("PropertyImages");
 
                     b.Navigation("Reservations");
-
-                    b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", b =>
@@ -1412,19 +1434,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("GuestReview");
 
                     b.Navigation("PropertyReview");
-                });
-
-            modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUser", b =>
-                {
-                    b.Navigation("AppUserLanguages");
-
-                    b.Navigation("Host");
-
-                    b.Navigation("ReservationsYouMade");
-
-                    b.Navigation("ReviewsAboutYou");
-
-                    b.Navigation("ReviewsByYou");
                 });
 #pragma warning restore 612, 618
         }

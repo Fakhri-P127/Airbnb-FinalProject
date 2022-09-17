@@ -7,14 +7,9 @@ using Airbnb.Application.Exceptions.Reservations;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
+using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 {
@@ -36,10 +31,23 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             ReservationHelpers.CheckOutDateValidationChecker(property, reservedDays);
             await CheckIfDateOccupied(request);
             Reservation reservation = _mapper.Map<Reservation>(request);
+            SetReservationStatus(reservation);
             reservation.Property = property;
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
             await _unit.ReservationRepository.AddAsync(reservation);
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
+        }
+
+        private static void SetReservationStatus(Reservation reservation)
+        {
+            if (reservation.CheckInDate.Subtract(DateTime.Now).Days <= 1)
+            {
+                reservation.Status = (int)Enum_ReservationStatus.ArrivingSoon;
+            }
+            else
+            {
+                reservation.Status = (int)Enum_ReservationStatus.Upcoming;
+            }
         }
 
         private int CheckMaxGuestThenReturnInt(CreateReservationCommand request,
@@ -63,8 +71,10 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             if (user is null) throw new UserNotFoundValidationException()
             { ErrorMessage = $"User with is Id({request.AppUserId}) doesnt' exist" };
             Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
+
             if (host is null) throw new HostNotFoundException(request.HostId);
-          
+            if (host.AppUserId == user.Id) throw new Reservation_CantReserveYourOwnPropertyException();
+
             return property;
         }
 
@@ -98,6 +108,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             if (occupiedCheckOutTime.Count != 0)
                 throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
         }
+        
 
         private async Task CheckIfCheckInIsOccupied(CreateReservationCommand request)
         {

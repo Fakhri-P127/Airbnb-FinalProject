@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Domain.Entities.PropertyRelated
 {
-    public class Property:BaseEntity
+    public class Property : BaseEntity
     {
         public Property()
         {
             PropertyImages = new();
-            PropertyAmenities=new();
-            Reviews=new();
+            PropertyAmenities = new();
+            //Reviews=new();
             Reservations = new();
-    }
+        }
         public string Title { get; set; }
         public string Description { get; set; }
         // price  INT di
@@ -45,7 +45,8 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         //relations
         public List<PropertyImage> PropertyImages { get; set; }
         public List<PropertyAmenity> PropertyAmenities { get; set; }
-        public List<PropertyReview> Reviews { get; set; }
+        //public List<PropertyReview> Reviews { get; set; }
+        // burda guest reviewda saxlaya bilersen ki, propertye uygun guest reviewlari goturesen.
         public Guid? PropertyGroupId { get; set; }
         public PropertyGroup PropertyGroup { get; set; }
         public Guid? PropertyTypeId { get; set; }

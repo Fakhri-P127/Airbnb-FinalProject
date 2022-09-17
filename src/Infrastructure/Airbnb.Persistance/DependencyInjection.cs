@@ -29,7 +29,6 @@ namespace Airbnb.Persistance
 
             services.AddIdentity<AppUser, IdentityRole>(opt =>
             {
-              
                 opt.User.RequireUniqueEmail = true;
                 
                 opt.Password.RequireDigit = false;

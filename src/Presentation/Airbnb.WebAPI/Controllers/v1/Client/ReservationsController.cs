@@ -3,6 +3,7 @@ using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Application.Features.Client.Reservations.Commands.Delete;
 using Airbnb.Application.Features.Client.Reservations.Commands.ExtendReservationDuration;
 using Airbnb.Application.Features.Client.Reservations.Commands.Update;
+using Airbnb.Application.Features.Client.Reservations.Commands.UpdateReservationStatus;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetAll;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
@@ -54,6 +55,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             command.Id = id;
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
+        }
+        [HttpPatch("[action]/{id:guid}")]
+        public async Task<IActionResult> UpdateReservationStatus([FromRoute] Guid id)
+        {
+            await _mediatr.Send(new UpdateReservationStatusCommand(id));
+            return NoContent();
         }
 
         [HttpDelete("{id:guid}")]

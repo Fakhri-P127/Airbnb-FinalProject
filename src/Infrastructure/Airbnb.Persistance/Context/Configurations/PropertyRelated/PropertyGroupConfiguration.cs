@@ -14,7 +14,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
         public void Configure(EntityTypeBuilder<PropertyGroup> builder)
         {
 
-            builder.Property(x => x.Status).HasDefaultValue(true);
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
             builder.Property(x => x.Image).HasMaxLength(200).IsRequired();
             builder.Property(x => x.Name).HasMaxLength(60).IsRequired();
 

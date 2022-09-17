@@ -16,7 +16,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.PropertyId).IsRequired();
             builder.Property(x => x.AmenityId).IsRequired();
 
-            builder.Property(x => x.Status).HasDefaultValue(true);
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
         }
     }
 }

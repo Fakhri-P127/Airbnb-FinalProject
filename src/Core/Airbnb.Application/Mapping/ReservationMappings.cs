@@ -40,7 +40,7 @@ namespace Airbnb.Application.Mapping
                      opt.MapFrom(src => src.ChildCount);
                  })
                 .ForAllMembers(opt => opt
-                .Condition((src, dest, srcMember) => srcMember != null || srcMember != default));
+                .Condition((src, dest, srcMember) => srcMember != null));
             
         }
     }

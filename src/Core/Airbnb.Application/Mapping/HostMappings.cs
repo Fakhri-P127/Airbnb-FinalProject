@@ -25,7 +25,7 @@ namespace Airbnb.Application.Mapping
             CreateMap<Property, PropertyInGetHostResponse>();
             CreateMap<GuestReview, GuestReviewInHostResponse>();
             CreateMap<Reservation, ReservationInHostResponse>();
-
-        }
+            CreateMap<PropertyReview, PropertyReviewInHostResponse>();
+    }
     }
 }

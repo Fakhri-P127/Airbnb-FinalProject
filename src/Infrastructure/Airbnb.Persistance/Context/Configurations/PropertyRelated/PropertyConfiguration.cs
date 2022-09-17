@@ -31,7 +31,8 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.BedroomCount).IsRequired();
             builder.Property(x => x.BedCount).IsRequired();
             builder.Property(x => x.CancellationPolicyId).IsRequired();
-            builder.Property(x => x.Status).HasDefaultValue(true);
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
+            
             //builder.Property(x => x.AdultCount).IsRequired();
             //builder.Property(x => x.ChildrenCount).IsRequired();
 

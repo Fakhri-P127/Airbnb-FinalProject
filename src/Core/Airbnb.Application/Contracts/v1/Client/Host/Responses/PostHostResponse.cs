@@ -1,4 +1,5 @@
 ﻿using Airbnb.Application.Contracts.v1.Base;
+using Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;

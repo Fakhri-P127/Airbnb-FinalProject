@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Host.Responses;
 using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
@@ -29,10 +30,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
             { ErrorMessage="User with this Id doesn't exist"};
             Host host = _mapper.Map<Host>(request);
             await _unit.HostRepository.AddAsync(host);
-            host = await _unit.HostRepository.GetByIdAsync(host.Id, null);//include ele
-            PostHostResponse response = _mapper.Map<PostHostResponse>(host);
-            
-            return response;
+            return await HostHelper.ReturnResponse(host, _unit, _mapper);
         }
     }
 }

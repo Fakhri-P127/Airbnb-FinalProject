@@ -21,7 +21,7 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         public int PricePerDay { get; set; }
         public int ServiceFee { get; set; }
         public int TotalPrice { get; set; }
-
+        public int Status { get; set; }
         public Guid PropertyId { get; set; }
         public Property Property { get; set; }
         // who's reserving

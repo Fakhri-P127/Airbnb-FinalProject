@@ -17,7 +17,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.FullRefund).HasMaxLength(500).IsRequired();
             builder.Property(x => x.PartialRefund).HasMaxLength(500);
             builder.Property(x => x.NoRefund).HasMaxLength(500).IsRequired();
-            builder.Property(x => x.Status).HasDefaultValue(true);
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
 
             builder.HasIndex(x => x.Name).IsUnique();
         }

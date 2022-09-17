@@ -10,7 +10,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses
         public DateTime? DateOfBirth { get; set; }
        
         public string PhoneNumber { get; set; }
-        public GenderInUserResponse Gender { get; set; }
+        //public GenderInUserResponse Gender { get; set; }
         public string ProfilPicture { get; set; }
         public string About { get; set; }
         public string Work { get; set; }

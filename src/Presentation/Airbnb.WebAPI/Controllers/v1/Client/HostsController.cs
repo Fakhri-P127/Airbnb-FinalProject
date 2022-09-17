@@ -25,7 +25,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> CreateHost([FromBody] CreateHostCommand command)
         {
             var result = await _mediatr.Send(command);

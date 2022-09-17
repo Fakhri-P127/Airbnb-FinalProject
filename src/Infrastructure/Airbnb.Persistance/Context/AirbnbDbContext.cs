@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Context
 {
-    public class AirbnbDbContext : IdentityDbContext
+    public class AirbnbDbContext : IdentityDbContext<AppUser>
     {
         public AirbnbDbContext(DbContextOptions<AirbnbDbContext> options) : base(options)
         {
@@ -48,11 +48,15 @@ namespace Airbnb.Persistance.Context
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-            builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host).HasForeignKey(x => x.HostId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host)
+                .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)
+                .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<PropertyReview>().HasOne(x => x.AppUser).WithMany(x => x.ReviewsByYou)
+                .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Reservation>().HasOne(x => x.GuestReview).WithOne(x => x.Reservation)
-                .OnDelete(DeleteBehavior.NoAction); 
-        
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             base.OnModelCreating(builder);
         }

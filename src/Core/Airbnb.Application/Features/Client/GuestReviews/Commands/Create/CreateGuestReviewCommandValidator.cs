@@ -14,7 +14,6 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
             RuleFor(x=>x.GuestScore).GreaterThanOrEqualTo(1).LessThanOrEqualTo(5).NotEmpty();
             RuleFor(x=>x.Text).Length(3,250).NotEmpty();
             RuleFor(x=>x.AppUserId).NotEmpty();
-            RuleFor(x=>x.AppUserId).NotEmpty();
             RuleFor(x=>x.HostId).NotEmpty();
             RuleFor(x=>x.ReservationId).NotEmpty();
         }

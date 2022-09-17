@@ -28,5 +28,11 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         //public Property Property { get; set; }
         public Guid ReservationId { get; set; }
         public Reservation Reservation { get; set; }
+        public Guid HostId { get; set; }
+        public Host Host { get; set; }
+        //public Guid PropertyId { get; set; }
+        //public Property Property { get; set; }
+
+
     }
 }

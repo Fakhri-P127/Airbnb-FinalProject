@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{7E775E92-3F2E-476D-873D-A84BDAC015A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Domain", "src\Core\Airbnb.Domain\Airbnb.Domain.csproj", "{6F91CA6E-93CF-4939-B0FC-4506C1065C14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.Domain", "src\Core\Airbnb.Domain\Airbnb.Domain.csproj", "{6F91CA6E-93CF-4939-B0FC-4506C1065C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Application", "src\Core\Airbnb.Application\Airbnb.Application.csproj", "{BCCBD504-C731-4893-9E83-C95D8CA2C430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.Application", "src\Core\Airbnb.Application\Airbnb.Application.csproj", "{BCCBD504-C731-4893-9E83-C95D8CA2C430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Persistance", "src\Infrastructure\Airbnb.Persistance\Airbnb.Persistance.csproj", "{283245A7-287A-46A3-9A7C-B952E74E3170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.Persistance", "src\Infrastructure\Airbnb.Persistance\Airbnb.Persistance.csproj", "{283245A7-287A-46A3-9A7C-B952E74E3170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.WebAPI", "src\Presentation\Airbnb.WebAPI\Airbnb.WebAPI.csproj", "{34F30124-E4F9-4499-A18D-0D14B8DDD130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.WebAPI", "src\Presentation\Airbnb.WebAPI\Airbnb.WebAPI.csproj", "{34F30124-E4F9-4499-A18D-0D14B8DDD130}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

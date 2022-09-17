@@ -13,8 +13,8 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)
         {
-            builder.Property(x => x.Status).HasDefaultValue(true).IsRequired();
-
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.CheckInDate).IsRequired();
             builder.Property(x => x.CheckOutDate).IsRequired();
             builder.Property(x => x.AdultCount).IsRequired();
