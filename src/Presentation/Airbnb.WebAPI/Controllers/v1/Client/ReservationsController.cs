@@ -6,6 +6,7 @@ using Airbnb.Application.Features.Client.Reservations.Commands.Update;
 using Airbnb.Application.Features.Client.Reservations.Commands.UpdateReservationStatus;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetAll;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetById;
+using Airbnb.Domain.Enums.Reservations;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -17,11 +18,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
     public class ReservationsController : BaseController
     {
         private readonly ISender _mediatr;
-
         public ReservationsController(ISender mediatr)
         {
             _mediatr = mediatr;
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllReservations()
         {
@@ -32,6 +33,15 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> GetReservationById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new GetReservationByIdQuery(id));
+            return Ok(result);
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetAvailableReservations()
+        {
+            List<GetReservationResponse> result = await _mediatr
+                .Send(new GetAllReservationsQuery(x =>
+                x.Status != (int)Enum_ReservationStatus.ReservationCancelled
+               && x.Status != (int)Enum_ReservationStatus.ReservationFinished));
             return Ok(result);
         }
         [HttpPost]
