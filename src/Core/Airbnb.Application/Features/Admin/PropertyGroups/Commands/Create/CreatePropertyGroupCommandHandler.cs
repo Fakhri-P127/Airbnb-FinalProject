@@ -33,10 +33,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create
             };
             await ImageCheck(request, propertyGroup);
             await _unit.PropertyGroupRepository.AddAsync(propertyGroup);
-            propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(propertyGroup.Id, null);
-            PostPropertyGroupResponse response = _mapper.Map<PostPropertyGroupResponse>(propertyGroup);
-            if (response is null) throw new Exception("Internal server error");
-            return response;
+            return await PropertyGroupHelper.ReturnResponse(propertyGroup, _unit, _mapper);
         }
         private async Task ImageCheck(CreatePropertyGroupCommand request, PropertyGroup propertyGroup)
         {

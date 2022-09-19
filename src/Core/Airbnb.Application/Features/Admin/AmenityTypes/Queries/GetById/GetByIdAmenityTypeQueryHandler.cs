@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
+using Airbnb.Application.Exceptions.AmenityTypes;
 using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -26,7 +27,7 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Queries.GetById
         {
             AmenityType amenityType = await _unit.AmenityTypeRepository
                 .GetByIdAsync(request.Id, request.Expression);
-            if (amenityType is null) throw new NotFoundException("AmenityType");
+            if (amenityType is null) throw new AmenityTypeNotFoundException();
             AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
             if (response is null) throw new Exception("Internal server error");
 

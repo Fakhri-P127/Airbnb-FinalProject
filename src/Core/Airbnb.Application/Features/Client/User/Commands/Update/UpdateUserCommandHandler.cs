@@ -6,6 +6,7 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Client.User.Commands.Update
 {
@@ -14,27 +15,29 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UpdateUserCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env)
+        public UpdateUserCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env
+            ,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
             _env = env;
+            _accessor = accessor;
         }
         public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            AppUser user = await _unit.UserRepository.GetByIdAsync(request.RouteId,null,FileHelpers.AllUserRelationIncludes());
-            if (user is null) throw new UserNotFoundValidationException() { ErrorMessage = "User with this Id doesn't exist." };
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            AppUser user = await _unit.UserRepository.GetByIdAsync(Id.ToString(),null, AppUserHelper.AllUserIncludes());
+            if (user is null) throw new UserIdNotFoundException();
             _unit.UserRepository.Update(user);
             _mapper.Map(request, user);
-            //user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
             CheckRemoveLanguages(request, user);
             CheckAddLanguage(request, user);
             await _unit.SaveChangesAsync();
             UserResponse response = _mapper.Map<UserResponse>(user);
             // birinci gender verence deyer null olur, gel repo ile genderi tap ve responsedaki gendere beraber et eger nulldisa
-            
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
 

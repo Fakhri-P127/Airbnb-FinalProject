@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
+using Airbnb.Application.Exceptions.CancellationPolicies;
 using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using MediatR;
@@ -22,7 +23,7 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Delete
         public async Task<Unit> Handle(DeleteCancellationPolicyCommand request, CancellationToken cancellationToken)
         {
             CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.Id, null);
-            if (cancellationPolicy is null) throw new NotFoundException("CancellationPolicy");
+            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
             await _unit.CancellationPolicyRepository.DeleteAsync(cancellationPolicy);
             return await Task.FromResult(Unit.Value);
         }

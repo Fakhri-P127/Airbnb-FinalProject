@@ -3,6 +3,7 @@ using Airbnb.Application.Features.Admin.AirCovers.Commands.Delete;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetById;
+using Airbnb.Application.Filters;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
@@ -27,7 +28,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(new AirCoverGetAllQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAirCoverById([FromRoute]Guid id)
         {
             var result = await _mediatr.Send(new AirCoverGetByIdQuery(id));
@@ -40,14 +41,14 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetAirCoverById), routeValues: new {id=result.Id},result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateAirCover([FromRoute] Guid id, [FromBody] UpdateAirCoverCommand command)
+        [HttpPut("{id}")]
+        //[EnsureIdIsGuidActionFilter]
+        public async Task<IActionResult> UpdateAirCover([FromBody] UpdateAirCoverCommand command)
         {
-            command.Id = id;
             var result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAirCover([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteAirCoverCommand(id));

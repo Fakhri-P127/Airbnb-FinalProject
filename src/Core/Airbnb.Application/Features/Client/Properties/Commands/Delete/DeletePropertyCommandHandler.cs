@@ -21,8 +21,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Delete
         }
         public async Task<Unit> Handle(DeletePropertyCommand request, CancellationToken cancellationToken)
         {
-            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null,FileHelpers.AllPropertyRelationIncludes());
-            if (property is null) throw new NotFoundException("Property");
+            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null,PropertyHelper.AllPropertyIncludes());
+            if (property is null) throw new PropertyNotFoundException();
 
             property.PropertyImages.ForEach(image =>
             {

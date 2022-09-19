@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update
 {
     public class UpdatePropertyTypeCommand:IRequest<PostPropertyTypeResponse>
     {
-        public Guid Id { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

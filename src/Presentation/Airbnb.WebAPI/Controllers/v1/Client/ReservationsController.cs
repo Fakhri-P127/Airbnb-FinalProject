@@ -9,12 +9,11 @@ using Airbnb.Application.Features.Client.Reservations.Queries.GetById;
 using Airbnb.Domain.Enums.Reservations;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
-    
+
     public class ReservationsController : BaseController
     {
         private readonly ISender _mediatr;
@@ -29,12 +28,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<GetReservationResponse> result = await _mediatr.Send(new GetAllReservationsQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetReservationById([FromRoute] Guid id)
-        {
-            var result = await _mediatr.Send(new GetReservationByIdQuery(id));
-            return Ok(result);
-        }
         [HttpGet("[action]")]
         public async Task<IActionResult> GetAvailableReservations()
         {
@@ -44,36 +37,41 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
                && x.Status != (int)Enum_ReservationStatus.ReservationFinished));
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetReservationById([FromRoute] Guid id)
+        {
+            var result = await _mediatr.Send(new GetReservationByIdQuery(id));
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> MakeReservation(CreateReservationCommand command)
         {
             PostReservationResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetReservationById), new { id = result.Id }, result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateReservation([FromRoute]Guid id,
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateReservation(
             [FromBody]UpdateReservationCommand command)
         {
-            command.Id = id;
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpPatch("[action]/{id:guid}")]
-        public async Task<IActionResult> ExtendReservationDuration([FromRoute] Guid id,
+        [HttpPatch("[action]/{id}")]
+        public async Task<IActionResult> ExtendReservationDuration(
             [FromBody]ExtendReservationDurationCommand command)
         {
-            command.Id = id;
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpPatch("[action]/{id:guid}")]
+        [HttpPatch("[action]/{id}")]
         public async Task<IActionResult> UpdateReservationStatus([FromRoute] Guid id)
         {
             await _mediatr.Send(new UpdateReservationStatusCommand(id));
             return NoContent();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReservation([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteReservationCommand(id));

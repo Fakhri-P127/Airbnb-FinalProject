@@ -21,10 +21,10 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
         public async Task<List<GetPropertyResponse>> Handle(PropertyGetAllQuery request, CancellationToken cancellationToken)
         {
             List<Property> properties = await _unit.PropertyRepository
-                .GetAllAsync(null, FileHelpers.AllPropertyRelationIncludes());
+                .GetAllAsync(null, PropertyHelper.AllPropertyIncludes());
             
             List<GetPropertyResponse> response = _mapper.Map<List<GetPropertyResponse>>(properties);
-
+            if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }

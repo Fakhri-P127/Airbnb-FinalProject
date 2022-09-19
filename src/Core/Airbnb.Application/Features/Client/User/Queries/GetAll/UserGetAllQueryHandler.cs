@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
         public async Task<List<UserResponse>> Handle(UserGetAllQuery request, CancellationToken cancellationToken)
         {
             List<AppUser> users = await _unit.UserRepository.GetAllAsync(request.Expression
-                , FileHelpers.AllUserRelationIncludes());
+                , AppUserHelper.AllUserIncludes());
             
             List<UserResponse> responses = AddVerifications(users);
 

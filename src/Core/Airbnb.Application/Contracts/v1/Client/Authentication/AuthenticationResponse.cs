@@ -1,17 +1,8 @@
-﻿using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Domain.Entities;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Airbnb.Application.Features.Client.Authentication.Common
+﻿namespace Airbnb.Application.Contracts.v1.Client.Authentication
 {
-    public class AuthenticationResult
+    public class AuthenticationResponse
     {
-        public AuthenticationResult()
+        public AuthenticationResponse()
         {
             Verifications = new();
         }
@@ -29,7 +20,5 @@ namespace Airbnb.Application.Features.Client.Authentication.Common
         public DateTime ModifiedAt { get; set; }
         //public List<string> Errors { get; set; }
         public List<string> Verifications { get; set; }
-
-
     }
 }

@@ -30,10 +30,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 
             await _unit.PropertyRepository.AddAsync(property);
             // bele etmesem Property nin relation classlari null olaraq qalir, gerek deyerlerini burda set etim. Bele daha yaxshidi mence
-            property = await _unit.PropertyRepository
-                .GetByIdAsync(property.Id, null, FileHelpers.AllPropertyRelationIncludes());
-            CreatePropertyResponse response = _mapper.Map<CreatePropertyResponse>(property);
-            return response;
+            return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
         }
 
         public async Task CheckAddDetailImages(CreatePropertyCommand request, Property property)
@@ -89,8 +86,6 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
       
         private void AddPropertyAmenities(CreatePropertyCommand request, Property property)
         {
-            
-
             foreach (Guid amenityId in request.PropertyAmenities)
             {
                 // Amenity amenity = _unit.AmenityRepoGetById edib add etmek olar. Bunu ele 

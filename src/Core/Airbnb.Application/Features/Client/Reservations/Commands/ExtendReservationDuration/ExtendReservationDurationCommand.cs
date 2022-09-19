@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
 {
     public class ExtendReservationDurationCommand:IRequest<PostReservationResponse>
     {
-        public Guid Id { get; set; }
         public DateTime CheckOutDate { get; set; }
     }
 }

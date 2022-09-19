@@ -1,14 +1,7 @@
-﻿using Airbnb.Application.Features.Client.Authentication.Commands.Register;
-using Airbnb.Application.Features.Client.Authentication.Common;
-using Airbnb.Application.Helpers;
+﻿using Airbnb.Application.Contracts.v1.Client.Authentication;
+using Airbnb.Application.Features.Client.Authentication.Commands.Register;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Mapping
 {
@@ -33,7 +26,7 @@ namespace Airbnb.Application.Mapping
                 
                 //.ForMember(x=>x.DateOfBirth.Date,d=>d.MapFrom(r=>r.DateOfBirth));
 
-            CreateMap<AppUser, AuthenticationResult>()
+            CreateMap<AppUser, AuthenticationResponse>()
                 .ForMember(x=>x.Id,d=>d.MapFrom(r=> r.Id));
             ;
         }

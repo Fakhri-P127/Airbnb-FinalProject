@@ -6,6 +6,7 @@ using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
 {
@@ -14,26 +15,27 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UpdatePropertyGroupCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env)
+        public UpdatePropertyGroupCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env
+            ,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
             _env = env;
+            _accessor = accessor;
         }
         public async Task<PostPropertyGroupResponse> Handle(UpdatePropertyGroupCommand request, CancellationToken cancellationToken)
         {
-            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.Id, null);
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(Id, null);
             if (propertyGroup is null) throw new PropertyGroupNotFoundException();
             _unit.PropertyGroupRepository.Update(propertyGroup);
             _mapper.Map(request, propertyGroup);
             await ImageCheck(request, propertyGroup);
            
             await _unit.SaveChangesAsync();
-            propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(propertyGroup.Id, null);
-               
-            PostPropertyGroupResponse response = _mapper.Map<PostPropertyGroupResponse>(propertyGroup);
-            return response;
+            return await PropertyGroupHelper.ReturnResponse(propertyGroup, _unit, _mapper);
 
         }
         private async Task ImageCheck(UpdatePropertyGroupCommand request, PropertyGroup propertyGroup)

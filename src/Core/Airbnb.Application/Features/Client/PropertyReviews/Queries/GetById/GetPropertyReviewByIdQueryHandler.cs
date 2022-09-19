@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.PropertyReviews.Responses;
+using Airbnb.Application.Exceptions.PropertyReviews;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -21,6 +22,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetById
         {
             PropertyReview propertyReview = await _unit.PropertyReviewRepository
                 .GetByIdAsync(request.Id,request.Expression, PropertyReviewHelper.AllPropertyReviewIncludes());
+            if (propertyReview is null) throw new PropertyReview_NotFoundException(request.Id);
             PropertyReviewResponse response = _mapper.Map<PropertyReviewResponse>(propertyReview);
             if (response is null) throw new Exception("Internal server error");
             return response;

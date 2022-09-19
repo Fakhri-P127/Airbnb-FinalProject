@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update
 {
     public class UpdatePrivacyTypeCommand:IRequest<PrivacyTypeResponse>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
+using Airbnb.Application.Exceptions.Amenities;
 using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -26,7 +27,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetById
         public async Task<GetAmenityResponse> Handle(GetByIdAmenityQuery request, CancellationToken cancellationToken)
         {
             Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, request.Expression);
-            if (amenity is null) throw new NotFoundException("Amenity");
+            if (amenity is null) throw new AmenityNotFoundException();
             GetAmenityResponse response = _mapper.Map<GetAmenityResponse>(amenity);
             if (response is null) throw new Exception("Internal server error");
             return response;

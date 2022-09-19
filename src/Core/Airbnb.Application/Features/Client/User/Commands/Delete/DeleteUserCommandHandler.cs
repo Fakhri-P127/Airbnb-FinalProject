@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Delete
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.Id, null);
-            if (user is null) throw new UserNotFoundValidationException() { ErrorMessage = "User with this Id doesn't exist" };
+            if (user is null) throw new UserIdNotFoundException();
 
             if (string.IsNullOrWhiteSpace(user.ProfilPicture))
                 FileHelpers.FileDelete(_env.WebRootPath, "assets/images/UserProfilePictures", user.ProfilPicture);

@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
 {
     public class UpdateAirCoverCommand:IRequest<AirCoverResponse>
     {
-        public Guid Id { get; set; }
         public string Logo { get; set; }
         public string Title { get; set; }
         public string BookingProtectionGuarantee { get; set; }

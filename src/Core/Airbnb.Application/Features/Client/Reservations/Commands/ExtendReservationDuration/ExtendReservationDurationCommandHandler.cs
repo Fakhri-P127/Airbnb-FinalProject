@@ -6,6 +6,7 @@ using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,20 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _accessor;
 
-        public ExtendReservationDurationCommandHandler(IUnitOfWork unit, IMapper mapper)
+        public ExtendReservationDurationCommandHandler(IUnitOfWork unit, IMapper mapper,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
+            _accessor = accessor;
         }
         public async Task<PostReservationResponse> Handle(ExtendReservationDurationCommand request, CancellationToken cancellationToken)
         {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
             Reservation reservation = await _unit.ReservationRepository
-                 .GetByIdAsync(request.Id, null, "Property");
-            if (reservation is null) throw new ReservationNotFoundException(request.Id);
+                 .GetByIdAsync(Id, null, "Property");
+            if (reservation is null) throw new ReservationNotFoundException(Id);
             int reservedDays = request.CheckOutDate.Subtract(reservation.CheckInDate).Days;
             int existedReservedDays = reservation.CheckOutDate.Subtract(reservation.CheckInDate).Days;
             ReservationHelpers.CheckOutDateValidationChecker(reservation.Property, reservedDays);

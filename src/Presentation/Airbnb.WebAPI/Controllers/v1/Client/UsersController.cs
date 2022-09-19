@@ -1,16 +1,16 @@
-﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Client.User.Responses;
+﻿using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Features.Client.User.Commands.Delete;
 using Airbnb.Application.Features.Client.User.Commands.Update;
 using Airbnb.Application.Features.Client.User.Queries.GetAll;
 using Airbnb.Application.Features.Client.User.Queries.GetById;
+using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
-
+    [SkipMyGlobalResourceFilter]
     public class UsersController : BaseController
     {
         private readonly ISender _mediatr;
@@ -56,8 +56,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] string id)
         {
-            var result = await _mediatr.Send(new DeleteUserCommand(id));
-            //if (result is null) throw new Exception("Internal server error");
+            await _mediatr.Send(new DeleteUserCommand(id));
             return NoContent();
         }
     }

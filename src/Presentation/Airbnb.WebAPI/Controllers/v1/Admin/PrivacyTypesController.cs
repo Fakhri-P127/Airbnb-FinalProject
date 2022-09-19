@@ -41,7 +41,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdatePrivacyType([FromRoute] Guid id, [FromBody] UpdatePrivacyTypeCommand command)
         {
-            command.Id = id;
             var result = await _mediatr.Send(command);
             return Ok(result);
         }

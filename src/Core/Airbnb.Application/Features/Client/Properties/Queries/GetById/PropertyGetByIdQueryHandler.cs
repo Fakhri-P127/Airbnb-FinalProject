@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses;
 using Airbnb.Application.Exceptions.Common;
+using Airbnb.Application.Exceptions.Properties;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -21,9 +22,9 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetById
         public async Task<GetPropertyResponse> Handle(PropertyGetByIdQuery request, CancellationToken cancellationToken)
         {
             Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null
-                , FileHelpers.AllPropertyRelationIncludes());
+                , PropertyHelper.AllPropertyIncludes());
 
-            if (property is null) throw new NotFoundException("Property");
+            if (property is null) throw new PropertyNotFoundException();
             GetPropertyResponse response = _mapper.Map<GetPropertyResponse>(property);
             return response;
         }

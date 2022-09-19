@@ -11,7 +11,6 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
 {
     public class UpdateAmenityCommand:IRequest<PostAmenityResponse>
     {
-        public Guid Id { get; set; }
         public string Icon { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

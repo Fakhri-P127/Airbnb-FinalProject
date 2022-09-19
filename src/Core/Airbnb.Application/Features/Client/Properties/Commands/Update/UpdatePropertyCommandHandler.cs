@@ -7,6 +7,7 @@ using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 {
@@ -15,18 +16,22 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UpdatePropertyCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env)
+        public UpdatePropertyCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env,
+            IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
             _env = env;
+            _accessor = accessor;
         }
         public async Task<CreatePropertyResponse> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.Id, null, FileHelpers.AllPropertyRelationIncludes());
-            if (property is null) throw new NotFoundException("Property");
+                .GetByIdAsync(Id, null, PropertyHelper.AllPropertyIncludes());
+            if (property is null) throw new PropertyNotFoundException();
             _unit.PropertyRepository.Update(property);
             _mapper.Map(request, property);
 
@@ -37,10 +42,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             CheckAddPropertyAmenities(request, property);
 
             await _unit.SaveChangesAsync();
-            property = await _unit.PropertyRepository
-                .GetByIdAsync(property.Id, null, FileHelpers.AllPropertyRelationIncludes());
-            CreatePropertyResponse response = _mapper.Map<CreatePropertyResponse>(property);
-            return response;
+            return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
+
         }
 
         private async Task CheckAddMainImage(UpdatePropertyCommand request, Property property)

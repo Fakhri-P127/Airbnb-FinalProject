@@ -2,9 +2,11 @@
 using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +19,18 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UpdatePrivacyTypeCommandHandler(IUnitOfWork unit, IMapper mapper)
+        public UpdatePrivacyTypeCommandHandler(IUnitOfWork unit, IMapper mapper,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
+            _accessor = accessor;
         }
         public async Task<PrivacyTypeResponse> Handle(UpdatePrivacyTypeCommand request, CancellationToken cancellationToken)
         {
-            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.Id, null);
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(Id, null);
             if (privacyType is null) throw new PrivacyTypeNotFoundException();
             _unit.PrivacyTypeRepository.Update(privacyType, false);
             privacyType.Name = request.Name;

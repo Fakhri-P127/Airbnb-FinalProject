@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Update
 {
     public class UpdateCancellationPolicyCommand:IRequest<CancellationPolicyResponse>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string FullRefund { get; set; }
         public string PartialRefund { get; set; }

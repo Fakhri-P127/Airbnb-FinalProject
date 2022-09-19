@@ -2,6 +2,7 @@
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses;
 using Airbnb.Application.Exceptions.PropertyGroups;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
@@ -27,8 +28,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetById
         public async Task<GetPropertyGroupResponse> Handle(GetByIdPropertyGroupQuery request, CancellationToken cancellationToken)
         {
             PropertyGroup propertyGroup = await _unit.PropertyGroupRepository
-                .GetByIdAsync(request.Id, request.Expression, "Properties", "PropertyGroupTypes",
-              "PropertyGroupTypes.PropertyType", "PropertyGroupTypes.PropertyType.Properties");
+                .GetByIdAsync(request.Id, request.Expression,PropertyGroupHelper.AllPropertyGroupIncludes());
             if (propertyGroup is null) throw new PropertyGroupNotFoundException();
             GetPropertyGroupResponse response = _mapper.Map<GetPropertyGroupResponse>(propertyGroup);
             if (response is null) throw new Exception("Internal server error");

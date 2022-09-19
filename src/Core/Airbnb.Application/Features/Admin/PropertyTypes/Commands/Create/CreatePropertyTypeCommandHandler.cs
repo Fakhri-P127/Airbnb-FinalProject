@@ -3,6 +3,7 @@ using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Exceptions.PropertyTypes;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
@@ -32,10 +33,8 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Create
                 throw new DuplicatePropertyTypeNameValidationException();
             PropertyType propertyType = _mapper.Map<PropertyType>(request);
             await _unit.PropertyTypeRepository.AddAsync(propertyType);
-            propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(propertyType.Id, null);
-            PostPropertyTypeResponse response = _mapper.Map<PostPropertyTypeResponse>(propertyType);
-            if (response is null) throw new Exception("Internal server error");
-            return response;
+            return await PropertyTypeHelper.ReturnResponse(propertyType, _unit, _mapper);
+
         }
     }
 }

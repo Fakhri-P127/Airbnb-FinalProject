@@ -45,21 +45,5 @@ namespace Airbnb.Application.Helpers
         {
             return file.Length / 1024 / 1024 < mb && file.ContentType.Contains("image/");
         }
-        public static string[] AllUserRelationIncludes()
-        {
-            string[] includes = new[] { "Gender","Host", "AppUserLanguages", "ReviewsByYou"
-                , "ReviewsAboutYou", "ReservationsYouMade" };
-            return includes;
-        }
-        public static string[] AllPropertyRelationIncludes()
-        {
-            string[] includes = new[] { "PropertyImages"
-                , "PropertyAmenities", "PropertyAmenities.Amenity", "PropertyGroup", "PropertyType", "AirCover"
-                , "CancellationPolicy", "PrivacyType","Reviews","Host","Reservations","Host.AppUser" };
-
-            return includes;
-        }
-
-
     }
 }

@@ -6,7 +6,6 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
 {
     public class UpdateUserCommand : IRequest<UserResponse>
     {
-        public string RouteId { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }

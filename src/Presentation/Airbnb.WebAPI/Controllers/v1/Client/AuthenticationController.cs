@@ -1,24 +1,21 @@
 ﻿using Airbnb.Application.Features.Client.Authentication.Commands.Register;
 using Airbnb.Application.Features.Client.Authentication.Queries.Login;
-using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.WebAPI.Controllers.v1.Base;
-using FluentValidation.Results;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
+    [SkipMyGlobalResourceFilter]
     public class AuthenticationController : BaseController
     {
         private readonly ISender _mediatr;
-        private readonly UserManager<AppUser> _userManager;
+      
 
-        public AuthenticationController(ISender mediatr, UserManager<AppUser> userManager)
+        public AuthenticationController(ISender mediatr)
         {
             _mediatr = mediatr;
-            _userManager = userManager;
         }
 
         [HttpPost("register")]

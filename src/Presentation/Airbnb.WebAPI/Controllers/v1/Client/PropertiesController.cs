@@ -1,13 +1,12 @@
-﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Features.Client.Properties.Commands.Create;
+﻿using Airbnb.Application.Features.Client.Properties.Commands.Create;
 using Airbnb.Application.Features.Client.Properties.Commands.Delete;
 using Airbnb.Application.Features.Client.Properties.Commands.Update;
 using Airbnb.Application.Features.Client.Properties.Queries.GetAll;
 using Airbnb.Application.Features.Client.Properties.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
@@ -45,7 +44,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> UpdateProperty([FromRoute] Guid id, [FromForm] UpdatePropertyCommand command)
         {
-            command.Id = id;
+            
             var result = await _mediatr.Send(command);
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);

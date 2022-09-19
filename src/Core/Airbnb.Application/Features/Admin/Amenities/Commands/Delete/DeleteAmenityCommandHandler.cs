@@ -1,4 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Exceptions.Amenities;
 using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using MediatR;
@@ -21,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Commands.Delete
         public async Task<Unit> Handle(DeleteAmenityCommand request, CancellationToken cancellationToken)
         {
             Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, null);
-            if (amenity is null) throw new NotFoundException("Amenity");
+            if (amenity is null) throw new AmenityNotFoundException();
             await _unit.AmenityRepository.DeleteAsync(amenity);
 
             return await Task.FromResult(Unit.Value);

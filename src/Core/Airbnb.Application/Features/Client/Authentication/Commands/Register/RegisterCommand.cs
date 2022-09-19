@@ -1,10 +1,10 @@
-﻿using Airbnb.Application.Features.Client.Authentication.Common;
+﻿using Airbnb.Application.Contracts.v1.Client.Authentication;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
 {
-    public class RegisterCommand:IRequest<AuthenticationResult>
+    public class RegisterCommand:IRequest<AuthenticationResponse>
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

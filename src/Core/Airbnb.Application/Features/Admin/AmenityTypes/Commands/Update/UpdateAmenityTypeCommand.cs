@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Update
 {
     public class UpdateAmenityTypeCommand:IRequest<AmenityTypeResponse>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

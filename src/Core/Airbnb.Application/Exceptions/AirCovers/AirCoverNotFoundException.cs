@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace Airbnb.Application.Exceptions.AirCovers
 {
-    public class NotFoundException : Exception, IServiceException
+    public class AirCoverNotFoundException : Exception, IServiceException
     {
         public HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 

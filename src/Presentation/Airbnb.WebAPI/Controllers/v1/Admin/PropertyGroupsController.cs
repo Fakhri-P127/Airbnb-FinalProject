@@ -8,6 +8,7 @@ using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetById;
+using Airbnb.Application.Filters;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -43,10 +44,10 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetPropertyGroupById), routeValues: new { id = result.Id }, result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdatePropertyGroup([FromRoute] Guid id, [FromForm] UpdatePropertyGroupCommand command)
+        [HttpPut("{id}")]
+        //[EnsureIdIsGuidActionFilter]
+        public async Task<IActionResult> UpdatePropertyGroup([FromForm] UpdatePropertyGroupCommand command)
         {
-            command.Id = id;
             var result = await _mediatr.Send(command);
             return Ok(result);
         }

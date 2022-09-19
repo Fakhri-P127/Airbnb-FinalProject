@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
+using Airbnb.Application.Exceptions.CancellationPolicies;
 using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -27,7 +28,7 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Queries.GetById
         {
             CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository
                 .GetByIdAsync(request.Id, request.Expression, "Properties");
-            if (cancellationPolicy is null) throw new NotFoundException("CancellationPolicy");
+            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
             CancellationPolicyResponse response = _mapper.Map<CancellationPolicyResponse>(cancellationPolicy);
             if (response is null) throw new Exception("Internal server error");
 

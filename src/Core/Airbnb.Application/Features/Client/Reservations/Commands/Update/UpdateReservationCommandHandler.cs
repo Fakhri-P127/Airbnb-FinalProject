@@ -5,6 +5,7 @@ using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
 {
@@ -12,17 +13,20 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UpdateReservationCommandHandler(IUnitOfWork unit, IMapper mapper)
+        public UpdateReservationCommandHandler(IUnitOfWork unit, IMapper mapper,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
+            _accessor = accessor;
         }
         public async Task<PostReservationResponse> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null,
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(Id, null,
                 "Property", "Host");
-            if (reservation is null) throw new ReservationNotFoundException(request.Id);
+            if (reservation is null) throw new ReservationNotFoundException(Id);
             CheckMaxGuest(request, reservation.Property);
             // eger gonderdilen requestde checkin ya da check out verilmeyibse rezervasiyadakina beraber olsun
             request.CheckInDate ??= reservation.CheckInDate;

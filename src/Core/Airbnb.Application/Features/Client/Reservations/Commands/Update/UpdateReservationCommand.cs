@@ -12,7 +12,6 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
 {
     public class UpdateReservationCommand:IRequest<PostReservationResponse>
     {
-        public Guid Id { get; set; }
         public DateTime? CheckInDate { get; set; }
         public DateTime? CheckOutDate { get; set; }
         public int AdultCount { get; set; }

@@ -21,8 +21,8 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetById
         public async Task<UserResponse> Handle(UserGetByIdQuery request, CancellationToken cancellationToken)
         {
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.Id, request.Expression
-                , FileHelpers.AllUserRelationIncludes());
-            if (user is null) throw new UserNotFoundValidationException() { ErrorMessage="User with this Id doesn't exist."};
+                , AppUserHelper.AllUserIncludes());
+            if (user is null) throw new UserIdNotFoundException();
 
             UserResponse response = _mapper.Map<UserResponse>(user);
             

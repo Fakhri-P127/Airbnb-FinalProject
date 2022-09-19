@@ -27,7 +27,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<PropertyReviewResponse> result = await _mediatr.Send(new GetAllPropertyReviewsQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPropertyReviewById([FromRoute]Guid id)
         {
             PropertyReviewResponse result = await _mediatr.Send(new GetPropertyReviewByIdQuery(id));
@@ -40,7 +40,8 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
                 .Send(new GetAllPropertyReviewsQuery(x => x.AppUserId == guestId));
             return Ok(result);
         }
-        [HttpGet("[action]/{hostId:guid}")]
+
+        [HttpGet("[action]/{hostId}")]
         public async Task<IActionResult> GetPropertyReviewsOfAHost(Guid hostId)
         {
             List<PropertyReviewResponse> result = await _mediatr
@@ -53,14 +54,14 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PropertyReviewResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetPropertyReviewById),new { id = result.Id },result);
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePropertyReview([FromBody] UpdatePropertyReviewCommand command)
         {
             PropertyReviewResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
      
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePropertyReview([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeletePropertyReviewCommand(id));

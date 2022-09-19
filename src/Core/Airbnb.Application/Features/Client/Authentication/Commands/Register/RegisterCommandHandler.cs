@@ -1,18 +1,17 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Authentication;
+using Airbnb.Application.Contracts.v1.Client.Authentication;
 using Airbnb.Application.Exceptions.AppUser;
-using Airbnb.Application.Features.Client.Authentication.Common;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using System.Security.Policy;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
 {
-    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResult>
+    public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResponse>
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
@@ -30,7 +29,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             _env = env;
             _jwtTokenGenerator = jwtTokenGenerator;
         }
-        public async Task<AuthenticationResult> Handle(RegisterCommand request, CancellationToken cancellationToken)
+        public async Task<AuthenticationResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is not null) throw new DuplicateEmailValidationException();
@@ -60,7 +59,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             // if image exists it checks image size and sets the image
         // register deki tokeni silmek olar
             string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
-            var authResult = _mapper.Map<AuthenticationResult>(user);
+            var authResult = _mapper.Map<AuthenticationResponse>(user);
            
             if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");

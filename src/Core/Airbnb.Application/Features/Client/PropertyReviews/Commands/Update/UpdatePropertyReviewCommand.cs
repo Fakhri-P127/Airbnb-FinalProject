@@ -10,7 +10,6 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Update
 {
     public class UpdatePropertyReviewCommand:IRequest<PropertyReviewResponse>
     {
-        public Guid Id { get; set; }
         public string Text { get; set; }
         //public float OverallScore { get; set; }
         public float CleanlinessScore { get; set; }

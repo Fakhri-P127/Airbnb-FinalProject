@@ -11,7 +11,6 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
 {
     public class UpdatePropertyGroupCommand:IRequest<PostPropertyGroupResponse>
     {
-        public Guid Id { get; set; }
         public IFormFile Image { get; set; }
         public string Name { get; set; }
     }

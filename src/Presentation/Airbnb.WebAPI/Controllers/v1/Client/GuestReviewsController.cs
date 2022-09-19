@@ -56,7 +56,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> UpdateGuestReview([FromRoute]Guid id,
             UpdateGuestReviewCommand command)
         {
-            command.Id = id;
             GuestReviewResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
