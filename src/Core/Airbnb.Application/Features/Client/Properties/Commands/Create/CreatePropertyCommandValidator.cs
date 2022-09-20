@@ -14,7 +14,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             RuleFor(x => x.PropertyGroupId).NotEmpty();
             RuleFor(x => x.PropertyTypeId).NotEmpty();
 
-            RuleFor(x => x.MinNightCount).GreaterThanOrEqualTo(1).LessThanOrEqualTo(60).NotEmpty();
+            RuleFor(x => x.MinNightCount).GreaterThanOrEqualTo(1).LessThanOrEqualTo(60);
             RuleFor(x => x.MaxGuestCount).GreaterThanOrEqualTo(1).LessThanOrEqualTo(100).NotEmpty();
             RuleFor(x => x.MaxNightCount).GreaterThanOrEqualTo(1).LessThanOrEqualTo(60);
             RuleFor(x => x.BathroomCount).GreaterThanOrEqualTo(1).LessThanOrEqualTo(100).NotEmpty();

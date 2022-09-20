@@ -1,4 +1,4 @@
-﻿namespace Airbnb.Application.Contracts.v1.Client.Authentication
+﻿namespace Airbnb.Application.Contracts.v1.Client.Authentication.Responses
 {
     public class AuthenticationResponse
     {

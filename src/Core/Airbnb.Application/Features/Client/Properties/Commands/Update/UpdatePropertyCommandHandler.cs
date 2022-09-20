@@ -1,6 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses;
-using Airbnb.Application.Exceptions.Common;
 using Airbnb.Application.Exceptions.Properties;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
@@ -38,6 +37,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             RemoveImages(request, property);
             await CheckAddMainImage(request, property);
             await CheckAddDetailImages(request, property);
+            await CheckAddBedImages(request, property);
             RemoveAmenities(request, property);
             CheckAddPropertyAmenities(request, property);
 
@@ -51,11 +51,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             var mainImg = property.PropertyImages.FirstOrDefault(x => x.IsMain == true);
             if (mainImg is not null && request.MainPropertyImage is not null)
             {
-                if (!request.MainPropertyImage.IsImageOkay(2))
-                {
-                    throw new PropertyImageValidationException
-                    { ErrorMessage = $"{request.MainPropertyImage.FileName} image size too big" };
-                }
+                PropertyHelper.CheckImageIsOkay(request.MainPropertyImage);
                 //main image
                 FileHelpers.FileDelete(_env.WebRootPath, "assets/images/PropertyImages", mainImg.Name);
                 mainImg.Name = await request.MainPropertyImage
@@ -63,19 +59,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             }
             else if (mainImg is null && request.MainPropertyImage is not null)
             {
-                if (!request.MainPropertyImage.IsImageOkay(2))
-                {
-                    throw new PropertyImageValidationException
-                    { ErrorMessage = $"{request.MainPropertyImage.FileName} image size too big" };
-                }
-                PropertyImage main = new()
-                {
-                    Name = await request.MainPropertyImage
-          .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                    IsMain = true,
-                    Property = property
-                };
-                property.PropertyImages.Add(main);
+                PropertyHelper.CheckImageIsOkay(request.MainPropertyImage);
+                await PropertyHelper.CreateMainImage(request.MainPropertyImage, property,_env);
             }
             else if (mainImg is null && request.MainPropertyImage is null)
             {
@@ -92,35 +77,40 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             if (request.DetailPropertyImages != null && request.DetailPropertyImages.Count != 0)
             {
                 // birinci shekil main shekildi
-                foreach (var image in request.DetailPropertyImages)
+                foreach (IFormFile image in request.DetailPropertyImages)
                 {
-                    if (!image.IsImageOkay(2))
-                    {
-                        throw new PropertyImageValidationException
-                        { ErrorMessage = $"{image.FileName} image size too big" };
-                    }
-                    PropertyImage detailImages = new()
-                    {
-                        Name = await image
-                       .FileCreate(_env.WebRootPath, "assets/images/PropertyImages"),
-                        //Alternative = "Apartment detail image",
-                        IsMain = false
-                    };
-                    property.PropertyImages.Add(detailImages);
+                    PropertyHelper.CheckImageIsOkay(image);
+                    await PropertyHelper.CreateDetailImage(property, image,_env);
                 }
-
             }
-            if (!property.PropertyImages.Where(x => x.IsMain == false).Any())
-            {
+            if (!property.PropertyImages.Where(x => x.IsMain == false).Any())   
                 throw new PropertyImageValidationException
-                { ErrorMessage = "You must have at least 1 detail images" };//bunu deyish 4e sonra
-            }
+                { ErrorMessage = "You must have at least 1 detail image" };//bunu deyish 4e sonra
         }
 
-        private void CheckAddPropertyAmenities(UpdatePropertyCommand request, Property property)
+        public async Task CheckAddBedImages(UpdatePropertyCommand request, Property property)
         {
-            
+            // bed images
+            if (request.BedImages != null && request.BedImages.Count != 0)
+            {
+                byte counter = 1;
+                foreach (IFormFile image in request.BedImages)
+                {
+                    PropertyHelper.CheckImageIsOkay(image);
 
+                    await PropertyHelper.CreateBedImage(property, image, counter,_env);
+                    counter++;
+                }
+            }
+            //if (!property.PropertyImages.Where(x => x.IsMain == null).Any())
+            //{
+            //    throw new PropertyImageValidationException
+            //    { ErrorMessage = "You must have at least 1 bed image" };
+            //}
+        }
+
+        private static void CheckAddPropertyAmenities(UpdatePropertyCommand request, Property property)
+        {
             if (request.PropertyAmenities != null && request.PropertyAmenities.Count != 0)
             {
                 foreach (Guid amenityId in request.PropertyAmenities)
@@ -150,10 +140,10 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 request.DeletedPropertyImages.ForEach(imageId =>
                 {
                     var propertyImage = property.PropertyImages.FirstOrDefault(x => x.Id == imageId);
-                    if(propertyImage is null) throw new PropertyImageValidationException
-                        { ErrorMessage = $"Image with this Id({imageId}) doesn't exist" };
+                    if (propertyImage is null) throw new PropertyImageValidationException
+                    { ErrorMessage = $"Image with this Id({imageId}) doesn't exist" };
                     removableImageIds.Add(imageId);
-                    });
+                });
                 property.PropertyImages.ForEach(propImg =>
                 {
                     if (removableImageIds.Any(imgId => imgId == propImg.Id))
@@ -166,21 +156,20 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 
             }
         }
-        private void RemoveAmenities(UpdatePropertyCommand request, Property property)
+        private static void RemoveAmenities(UpdatePropertyCommand request, Property property)
         {
             if (request.DeletedPropertyAmenities != null && request.DeletedPropertyAmenities.Count != 0)
             {
                 List<Guid> removableAmenityIds = new();
                 request.DeletedPropertyAmenities.ForEach(amenityId =>
                 {
-                    var propertyAmenity= property.PropertyAmenities.FirstOrDefault(x => x.Id == amenityId);
+                    var propertyAmenity = property.PropertyAmenities.FirstOrDefault(x => x.Id == amenityId);
                     if (propertyAmenity is null) throw new PropertyAmenityValidationException
                     { ErrorMessage = $"Amenity with this Id({amenityId}) doesn't exist" };
                     removableAmenityIds.Add(amenityId);
                 });
                 property.PropertyAmenities.RemoveAll(propAmenity => removableAmenityIds
                 .Any(remAmenityId => propAmenity.Id == remAmenityId));
-
             }
         }
     }

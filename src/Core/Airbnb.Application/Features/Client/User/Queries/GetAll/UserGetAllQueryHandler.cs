@@ -6,6 +6,7 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace Airbnb.Application.Features.Client.User.Queries.GetAll
 {
@@ -21,6 +22,7 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
         }
         public async Task<List<UserResponse>> Handle(UserGetAllQuery request, CancellationToken cancellationToken)
         {
+          
             List<AppUser> users = await _unit.UserRepository.GetAllAsync(request.Expression
                 , AppUserHelper.AllUserIncludes());
             

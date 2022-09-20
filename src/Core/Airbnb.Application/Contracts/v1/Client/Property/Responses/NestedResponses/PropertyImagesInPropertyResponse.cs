@@ -11,7 +11,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedRespon
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        //public string Alternative { get; set; }
-        public bool IsMain { get; set; }
+        public string Alternative { get; set; }
+        public bool? IsMain { get; set; }
     }
 }

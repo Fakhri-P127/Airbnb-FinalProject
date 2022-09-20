@@ -11,8 +11,8 @@ namespace Airbnb.Domain.Entities.PropertyRelated
     {
         public string Name { get; set; }
         // alternative e ehtiyac yoxdu chunki product yaradanda alternative deyer vermirik
-        //public string Alternative { get; set; }
-        public bool IsMain { get; set; }
+        public string Alternative { get; set; }
+        public bool? IsMain { get; set; }
         public Guid PropertyId { get; set; }
         public Property Property { get; set; }
     }

@@ -49,8 +49,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
             
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
-            if (user is null) throw new UserNotFoundValidationException()
-            { ErrorMessage = $"User with this Id({request.AppUserId}) doesnt' exist" };
+            if (user is null) throw new UserIdNotFoundException();
             return reservation;
         }
     }

@@ -43,9 +43,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
             if (request.Image is not null)
             {
                 if (!request.Image.IsImageOkay(2))
-                {
                     throw new PropertyGroupImageValidationException();
-                }
                 if (!string.IsNullOrWhiteSpace(propertyGroup.Image))
                     FileHelpers.FileDelete(_env.WebRootPath, "assets/images/PropertyGroupImages", propertyGroup.Image);
                 propertyGroup.Image = await request.Image

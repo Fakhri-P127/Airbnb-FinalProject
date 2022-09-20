@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetById
         }
         public async Task<GetPropertyResponse> Handle(PropertyGetByIdQuery request, CancellationToken cancellationToken)
         {
-            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null
+            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, request.Expression
                 , PropertyHelper.AllPropertyIncludes());
 
             if (property is null) throw new PropertyNotFoundException();

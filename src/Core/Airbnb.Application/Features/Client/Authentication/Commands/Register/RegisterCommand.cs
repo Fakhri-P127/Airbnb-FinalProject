@@ -1,4 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Authentication;
+﻿using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 

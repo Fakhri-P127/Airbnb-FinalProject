@@ -11,6 +11,6 @@ namespace Airbnb.Application.Exceptions.AppUser
     {
         public HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
-        public string ErrorMessage { get; set; } = "User with this Id doesn't exist. Please enter valid Id";
+        public string ErrorMessage => "User with this Id doesn't exist. Please enter valid Id";
     }
 }

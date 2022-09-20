@@ -10,6 +10,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedRespon
 {
     public class ReservationInPropertyResponse
     {
+        public Guid Id { get; set; }
         public DateTime CheckInDate { get; set; }
         public DateTime CheckOutDate { get; set; }
         public int AdultCount { get; set; }

@@ -49,5 +49,9 @@ namespace Airbnb.Application.Helpers
             reservation.ServiceFee = (int)(reservation.PricePerDay * 0.1);
             reservation.TotalPrice = reservation.PricePerDay + reservation.ServiceFee;
         }
+        //public static string ChangeStatusToString(int status)
+        //{
+
+        //}
     }
 }

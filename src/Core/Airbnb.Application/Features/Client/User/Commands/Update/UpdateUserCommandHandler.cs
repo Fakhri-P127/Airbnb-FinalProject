@@ -50,18 +50,14 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             if (request.ProfilPicture is not null)
             {
                 if (!request.ProfilPicture.IsImageOkay(2))
-                {
                     throw new UserValidationException { ErrorMessage = "Image size too big" };
-                }
                 if (!string.IsNullOrWhiteSpace(user.ProfilPicture))
                     FileHelpers.FileDelete(_env.WebRootPath, "assets/images/UserProfilePictures", user.ProfilPicture);
                 user.ProfilPicture = await request.ProfilPicture
                     .FileCreate(_env.WebRootPath, "assets/images/UserProfilePictures");
             }
-
-
         }
-        private void CheckAddLanguage(UpdateUserCommand request, AppUser user)
+        private static void CheckAddLanguage(UpdateUserCommand request, AppUser user)
         {
             if (request.AppUserLanguages != null && request.AppUserLanguages.Count != 0)
             {
@@ -83,21 +79,20 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             }
 
         }
-        private void CheckRemoveLanguages(UpdateUserCommand request, AppUser user)
+        private static void CheckRemoveLanguages(UpdateUserCommand request, AppUser user)
         {
             if (request.DeletedAppUserLanguages != null && request.DeletedAppUserLanguages.Count != 0)
             {
                 List<Guid> removableAppUserLanguageIds = new();
                 request.DeletedAppUserLanguages.ForEach(languageId =>
                 {
-                    var appUserLanguage = user.AppUserLanguages.FirstOrDefault(x => x.Id == languageId);
+                    AppUserLanguage appUserLanguage = user.AppUserLanguages.FirstOrDefault(x => x.Id == languageId);
                     if (appUserLanguage is null) throw new UserLanguageValidationException
                     { ErrorMessage = $"Language with this Id({languageId}) doesn't exist" };
                     removableAppUserLanguageIds.Add(languageId);
                 });
                 user.AppUserLanguages.RemoveAll(appUserLanguage => removableAppUserLanguageIds
                 .Any(remLanguageId => appUserLanguage.Id == remLanguageId));
-
             }
         }
     }

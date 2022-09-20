@@ -17,15 +17,16 @@ namespace Airbnb.Application.Mapping
     {
         public ReservationMappings()
         {
-            CreateMap<Reservation, PostReservationResponse>();
-            CreateMap<Reservation, GetReservationResponse>();
+            CreateMap<Reservation, PostReservationResponse>()
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
+            CreateMap<Reservation, GetReservationResponse>()
+                .ForMember(dest => dest.Status, opt => opt.Ignore());
             CreateMap<PropertyReview, PropertyReviewInReservationResponse>();
             CreateMap<GuestReview, GuestReviewInReservationResponse>();
 
             CreateMap<CreateReservationCommand, Reservation>();
 
             CreateMap<UpdateReservationCommand, Reservation>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.HostId, opt => opt.Ignore())
                 .ForMember(dest => dest.PropertyId, opt => opt.Ignore())

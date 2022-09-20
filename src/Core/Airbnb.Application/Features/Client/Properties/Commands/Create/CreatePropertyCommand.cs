@@ -13,7 +13,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         public string Country { get; set; }
         public string City { get; set; }
         public string Street { get; set; }
-        public int MinNightCount { get; set; }
+        public int MinNightCount { get; set; } = 1;
         public int MaxNightCount { get; set; } = 60; // default 60 - sehifede beledi(max 60 olur)
         public int MaxGuestCount { get; set; }
         public int BathroomCount { get; set; }
@@ -21,11 +21,13 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         public int BedCount { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
+        public TimeSpan CheckInTime { get; set; }
+        public TimeSpan CheckOutTime { get; set; }
 
         //relations
-
         public IFormFile MainPropertyImage { get; set; }
         public List<IFormFile> DetailPropertyImages { get; set; }
+        public List<IFormFile> BedImages { get; set; }
         public List<Guid> PropertyAmenities { get; set; }
         public Guid PropertyGroupId { get; set; }
         public Guid PropertyTypeId { get; set; }

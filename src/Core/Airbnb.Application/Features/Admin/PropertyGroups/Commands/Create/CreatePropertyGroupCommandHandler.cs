@@ -40,9 +40,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create
             if (request.Image is not null)
             {
                 if (!request.Image.IsImageOkay(2))
-                {
                     throw new PropertyGroupImageValidationException();
-                }
 
                 propertyGroup.Image = await request.Image
                     .FileCreate(_env.WebRootPath, "assets/images/PropertyGroupImages");

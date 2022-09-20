@@ -6,6 +6,6 @@ namespace Airbnb.Application.Exceptions.AppUser
     {
         public HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
-        public string ErrorMessage { get; set; } = "Email or password is incorrect.";
+        public string ErrorMessage  => "Email or password is incorrect.";
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Authentication;
-using Airbnb.Application.Contracts.v1.Client.Authentication;
+using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;

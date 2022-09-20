@@ -40,6 +40,8 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
+
         public async Task<IActionResult> GetGuestReviewById([FromRoute]Guid id)
         {
             GuestReviewResponse result = await _mediatr.Send(new GetGuestReviewByIdQuery(id));

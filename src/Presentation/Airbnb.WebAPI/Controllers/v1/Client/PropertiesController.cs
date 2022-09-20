@@ -26,7 +26,15 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             var result = await _mediatr.Send(new PropertyGetAllQuery());
             return Ok(result);
         }
+        [HttpGet("{hostId}/[action]")]
+        public async Task<IActionResult> GetAllPendingPropertiesOfHost([FromRoute] Guid hostId)
+        {
+            var result = await _mediatr.Send(new PropertyGetAllQuery(x=> x.IsDisplayed == null
+            && x.HostId == hostId));
+            return Ok(result);
+        }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetPropertById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new PropertyGetByIdQuery(id));

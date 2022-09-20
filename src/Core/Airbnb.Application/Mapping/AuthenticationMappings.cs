@@ -1,4 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Authentication;
+﻿using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Features.Client.Authentication.Commands.Register;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;

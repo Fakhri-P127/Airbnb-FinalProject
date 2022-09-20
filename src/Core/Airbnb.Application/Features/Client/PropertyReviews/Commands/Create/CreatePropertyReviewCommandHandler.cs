@@ -28,7 +28,6 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
             Reservation reservation = await CheckNotFoundsThenReturnReservation(request);
             PropertyReview propertyReview = _mapper.Map<PropertyReview>(request);
             propertyReview.Host = reservation.Host;
-            //propertyReview.Property = reservation.Property;
             await _unit.PropertyReviewRepository.AddAsync(propertyReview);
             return await PropertyReviewHelper.ReturnResponse(propertyReview, _unit, _mapper);
         }
@@ -39,8 +38,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
                 .GetByIdAsync(request.ReservationId, null,"Host","Property");
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
-            if (user is null) throw new UserNotFoundValidationException()
-            { ErrorMessage = $"User with this Id({request.AppUserId} doesn't exist." };
+            if (user is null) throw new UserIdNotFoundException(); 
 
             if (reservation.AppUserId != user.Id) throw new PropertyReview_UserIdNotMatchedException(request.AppUserId,reservation.AppUserId);
 

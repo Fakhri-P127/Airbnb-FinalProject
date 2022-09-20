@@ -1,4 +1,5 @@
-﻿using Microsoft.OpenApi.Models;
+﻿using Microsoft.OpenApi.Any;
+using Microsoft.OpenApi.Models;
 
 namespace Airbnb.WebAPI
 {
@@ -8,6 +9,11 @@ namespace Airbnb.WebAPI
             {
                 services.AddSwaggerGen(opt =>
                 {
+                    opt.MapType<TimeSpan>(() => new OpenApiSchema
+                    {
+                        Type = "string",
+                        Example = new OpenApiString("00:00:00")
+                    });
                     opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Scheme = "Bearer",

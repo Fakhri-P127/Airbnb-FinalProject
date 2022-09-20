@@ -20,7 +20,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses
         public int PricePerDay { get; set; }
         public int ServiceFee { get; set; }
         public int TotalPrice { get; set; }
-        public int RezStatus { get; set; }
+        public string Status { get; set; }
 
         public Guid PropertyId { get; set; }
 

@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
             Property property = await CheckIfNotFoundThenReturnProperty(request);
-            //TimeSpan checkInTime = new(12, 00, 0);
+            
             // host un verdiyi checkInTime i menimsedirik.
             request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
             request.CheckOutDate = request.CheckOutDate.Date + property.CheckOutTime;
@@ -73,8 +73,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
                 .GetByIdAsync(request.PropertyId, null,"Host","Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
-            if (user is null) throw new UserNotFoundValidationException()
-            { ErrorMessage = $"User with is Id({request.AppUserId}) doesnt' exist" };
+            if (user is null) throw new UserIdNotFoundException();
             Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
 
             if (host is null) throw new HostNotFoundException(request.HostId);

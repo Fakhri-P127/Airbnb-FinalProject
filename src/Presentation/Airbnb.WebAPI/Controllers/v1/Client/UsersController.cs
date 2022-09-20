@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Features.Client.User.Commands.Delete;
 using Airbnb.Application.Features.Client.User.Commands.Update;
+using Airbnb.Application.Features.Client.User.Commands.VerifyEmail;
 using Airbnb.Application.Features.Client.User.Queries.GetAll;
 using Airbnb.Application.Features.Client.User.Queries.GetById;
 using Airbnb.Application.Filters.ActionFilters;
@@ -25,7 +26,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> GetAllUsers()
         {
             var result = await _mediatr.Send(new UserGetAllQuery());
-            //if (!result.Any()) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpGet("usersWithoutProfilePicture")]
@@ -36,10 +36,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
                 Expression = x => x.ProfilPicture == null
             };
             List<UserResponse> result = await _mediatr.Send(query);
-            //if (!result.Any()) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
+
         public async Task<IActionResult> GetUserById([FromRoute] string id)
         {
             var result = await _mediatr.Send(new UserGetByIdQuery(id));
@@ -52,6 +53,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             var result = await _mediatr.Send(command);
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> VerifyEmailOfUser([FromRoute] string id)
+        {
+            await _mediatr.Send(new UpdateUserVerifyEmailCommand(id));
+            return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] string id)

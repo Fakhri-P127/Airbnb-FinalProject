@@ -23,6 +23,12 @@ namespace Airbnb.Application.Helpers
             if (!guidResult) throw new IncorrectIdFormatValidationException();
             return Id;
         }
+        public static Guid GetHostIdFromRoute(IHttpContextAccessor _accessor)
+        {
+            bool guidResult = Guid.TryParse(_accessor.HttpContext.GetRouteValue("hostId").ToString(), out Guid Id);
+            if (!guidResult) throw new IncorrectIdFormatValidationException();
+            return Id;
+        }
         public static async Task GetIdFromExpression(BinaryExpression expressionBody, IUnitOfWork _unit)
         {
             MemberExpression expressionRight = (MemberExpression)expressionBody.Right;

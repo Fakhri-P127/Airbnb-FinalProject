@@ -25,6 +25,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         //relations
         public IFormFile MainPropertyImage { get; set; }
         public List<IFormFile> DetailPropertyImages { get; set; }
+        public List<IFormFile> BedImages { get; set; }
         public List<Guid> DeletedPropertyImages { get; set; }
         public List<Guid> PropertyAmenities { get; set; }
         public List<Guid> DeletedPropertyAmenities { get; set; }
