@@ -38,7 +38,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
             int daysLeftTillCheckOut = reservation.CheckOutDate.Subtract(DateTime.Now).Days;
             TimeSpan hoursLeftTillCheckIn = reservation.CheckInDate.Subtract(DateTime.Now);
 
-            if (DateTime.Now > reservation.CheckOutDate.AddDays(1))
+            if (DateTime.Now > reservation.CheckOutDate)
                 reservation.Status = (int)Enum_ReservationStatus.ReservationFinished;
             else if (daysLeftTillCheckIn >= 2)
                 reservation.Status = (int)Enum_ReservationStatus.Upcoming;

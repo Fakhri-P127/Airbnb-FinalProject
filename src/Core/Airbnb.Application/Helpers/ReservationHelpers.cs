@@ -49,9 +49,33 @@ namespace Airbnb.Application.Helpers
             reservation.ServiceFee = (int)(reservation.PricePerDay * 0.1);
             reservation.TotalPrice = reservation.PricePerDay + reservation.ServiceFee;
         }
-        //public static string ChangeStatusToString(int status)
-        //{
-
-        //}
+        public static string ChangeStatusToString(int status)
+        {
+            string statusStr;
+            switch (status)
+            {
+                case 1:
+                    statusStr = "Upcoming";
+                    return statusStr;
+                case 2:
+                    statusStr = "Arriving soon";
+                    return statusStr;
+                case 3:
+                    statusStr = "Currently hosting";
+                    return statusStr;
+                case 4:
+                    statusStr = "Checking out";
+                    return statusStr;
+                case 5:
+                    statusStr = "Reservation finished";
+                    return statusStr;
+                case 6:
+                    statusStr = "Reservation cancelled";
+                    return statusStr;
+                default:
+                    statusStr = "idk man";
+                    return statusStr;
+            }
+        }
     }
 }

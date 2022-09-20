@@ -22,6 +22,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedRespon
         public int ServiceFee { get; set; }
         public int TotalPrice { get; set; }
         // who ownes it
+        public string Status { get; set; }
         public Guid HostId { get; set; }
         // one to one
         public string AppUserId { get; set; }

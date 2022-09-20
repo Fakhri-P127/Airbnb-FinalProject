@@ -1,3 +1,4 @@
+using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Newtonsoft.Json;
 
@@ -23,8 +24,8 @@ namespace StatusUpdaterService
                     stoppingToken);
                 if (result.IsSuccessStatusCode)
                 {
-                    List<Reservation> reservations =  JsonConvert
-                        .DeserializeObject<List<Reservation>>(await result.Content.ReadAsStringAsync(stoppingToken));
+                    List<PostReservationResponse> reservations =  JsonConvert
+                        .DeserializeObject<List<PostReservationResponse>>(await result.Content.ReadAsStringAsync(stoppingToken));
                     await PatchReservationStatus(targetTime, result, reservations);
                 }
                 else
@@ -40,7 +41,7 @@ namespace StatusUpdaterService
             }
         }
 
-        private async Task PatchReservationStatus(DateTime targetTime, HttpResponseMessage result, List<Reservation> reservations)
+        private async Task PatchReservationStatus(DateTime targetTime, HttpResponseMessage result, List<PostReservationResponse> reservations)
         {
             reservations.ForEach(async x =>
             {

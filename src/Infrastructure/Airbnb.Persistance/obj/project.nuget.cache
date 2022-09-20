@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l+teYP8sMBHCfq8goLzjegDpTTvFvmevH2aqAc4YH9xx+3ZbOsohJQQyR/rQj2hr9C4pCzCD8Cb63C4hnLqUbQ==",
+  "dgSpecHash": "i4YU7f3FQzJzgW/jqeCDQAhLK/eoKHrhXBS0XpZRyxqT63dR0IFpfBeLzaMok6oa5ZW41shUlPk4n1ta6r6eBA==",
   "success": true,
   "projectFilePath": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Infrastructure\\Airbnb.Persistance\\Airbnb.Persistance.csproj",
   "expectedPackageFiles": [
@@ -48,6 +48,7 @@
     "C:\\Users\\efend\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\efend\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.configuration.configurationmanager\\4.7.0\\system.configuration.configurationmanager.4.7.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.diagnostics.diagnosticsource\\6.0.0\\system.diagnostics.diagnosticsource.6.0.0.nupkg.sha512",

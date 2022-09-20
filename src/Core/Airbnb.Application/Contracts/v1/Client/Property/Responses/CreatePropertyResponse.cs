@@ -26,14 +26,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses
         public decimal Longitude { get; set; }
         public TimeSpan CheckInTime { get; set; }
         public TimeSpan CheckOutTime { get; set; }
-        //hansi saatlar arasi check in ede bilerler
-        //public string FromCheckinTime { get; set; }
-        //// tocheckintime olmayada biler, belke tek 1 saatda qebul olunur.
-        //public string ToCheckinTime { get; set; }
-        //public string CheckoutTime { get; set; }
-
-        // status u burdan yigishdirib, get all edende ele statusu true olanlari cagir.
-
+      
         //relations
         public HostInPropertyResponse Host { get; set; }
         public List<PropertyImagesInPropertyResponse> PropertyImages { get; set; }

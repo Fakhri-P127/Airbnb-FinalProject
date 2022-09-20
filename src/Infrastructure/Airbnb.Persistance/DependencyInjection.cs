@@ -10,11 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Persistance
 {
@@ -35,7 +31,7 @@ namespace Airbnb.Persistance
                 opt.Password.RequiredLength = 6;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
-                opt.Password.RequireUppercase = false;
+                opt.Password.RequireUppercase = true;
                 opt.Lockout.AllowedForNewUsers = true;
             }).AddEntityFrameworkStores<AirbnbDbContext>();
 
@@ -68,7 +64,6 @@ namespace Airbnb.Persistance
             });
             //services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-           
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             return services;
         }

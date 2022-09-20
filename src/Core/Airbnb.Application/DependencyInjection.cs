@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Airbnb.Application.PiplineBehaviours;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,13 +14,15 @@ namespace Airbnb.Application
         public static IServiceCollection AddApplicationDI(this IServiceCollection services)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            services.AddFluentValidationAutoValidation()
-                .AddFluentValidationClientsideAdapters();
+            //services.AddFluentValidationAutoValidation()
+            //    .AddFluentValidationClientsideAdapters();
             services.AddValidatorsFromAssembly(assembly);
+
 
             services.AddMediatR(assembly);
             services.AddAutoMapper(assembly);
-         
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPiplineBehaviour<,>));
+
 
             return services;
         }

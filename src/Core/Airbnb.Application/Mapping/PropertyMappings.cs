@@ -3,6 +3,7 @@ using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses;
 using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 using Airbnb.Application.Features.Client.Properties.Commands.Create;
 using Airbnb.Application.Features.Client.Properties.Commands.Update;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -25,6 +26,10 @@ namespace Airbnb.Application.Mapping
             CreateMap<AirCover, AirCoverInPropertyResponse>();
             CreateMap<PrivacyType, PrivacyTypeInPropertyResponse>();
             CreateMap<AppUser, HostInPropertyResponse>();
+            CreateMap<Reservation, ReservationInPropertyResponse>()
+                .ForMember(dest=>dest.Status,opt=>opt
+                .MapFrom(src=>ReservationHelpers.ChangeStatusToString(src.Status)));
+
             CreateMap<PropertyReview, PropertyReviewsInReservation>();
             CreateMap<PropertyReview, PropertyReviewInReservationPropertyResponse>();
             CreateMap<Host, HostInPropertyResponse>();
@@ -38,7 +43,6 @@ namespace Airbnb.Application.Mapping
 
             CreateMap<UpdatePropertyCommand, Property>()
                 .ForMember(x => x.PropertyImages, d => d.Ignore())
-               
                 .ForMember(x => x.PropertyAmenities, d => d.Ignore())
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 

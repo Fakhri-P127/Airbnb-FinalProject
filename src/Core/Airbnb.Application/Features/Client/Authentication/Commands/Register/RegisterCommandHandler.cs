@@ -5,6 +5,7 @@ using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
+using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -19,7 +20,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         private readonly IWebHostEnvironment _env;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public RegisterCommandHandler(UserManager<AppUser> userManager,IMapper mapper,IUnitOfWork unit,
+        public RegisterCommandHandler(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unit,
             IWebHostEnvironment env,
             IJwtTokenGenerator jwtTokenGenerator)
         {
@@ -31,41 +32,47 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         }
         public async Task<AuthenticationResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.FindByEmailAsync(request.Email);
-            if (user is not null) throw new DuplicateEmailValidationException();
-            // 
-            List<AppUser> users = await _unit.UserRepository.GetAllAsync(x => x.PhoneNumber == request.PhoneNumber);
-            if (users.Any())
-                throw new DuplicatePhoneNumberException();
-
-            user = _mapper.Map<AppUser>(request);
+            await CheckAppUserErrors(request);
+            AppUser user = _mapper.Map<AppUser>(request);
+            if (request.PhoneNumber is not null) user.PhoneNumberConfirmed = true;
             user.CreatedAt = DateTime.UtcNow;
             user.ModifiedAt = DateTime.UtcNow;
-            user.PhoneNumberConfirmed = true;
             await ImageCheck(request, user);
             IdentityResult createdUser = await _userManager.CreateAsync(user, request.Password);
             if (!createdUser.Succeeded)
             {
                 await _userManager.DeleteAsync(user);
-                if(!string.IsNullOrWhiteSpace(user.ProfilPicture))
+                if (!string.IsNullOrWhiteSpace(user.ProfilPicture))
                     FileHelpers.FileDelete(_env.WebRootPath, "assets/images/UserProfilePictures", user.ProfilPicture);
-                
-                
                 throw new UserValidationException()
                 {
-                    ErrorMessage = createdUser.Errors.FirstOrDefault().Description
+                    ErrorMessage = "One or more validation errors occured while creating User.",
+                    //mence IEnumerable dan saxlamaga ehtiyac yox idi chunki ozu onsuzda hemishe 1 error verir
+                    ErrorMessages = createdUser.Errors
                 };
             }
             // if image exists it checks image size and sets the image
-        // register deki tokeni silmek olar
+            // register deki tokeni silmek olar
             string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
             var authResult = _mapper.Map<AuthenticationResponse>(user);
-           
+
             if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
             authResult.Token = token;
-            
+
             return authResult;
+        }
+
+        private async Task CheckAppUserErrors(RegisterCommand request)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(request.Email);
+            if (user is not null) throw new DuplicateEmailValidationException();
+            if (request.PhoneNumber is not null)
+            {
+                List<AppUser> users = await _unit.UserRepository.GetAllAsync(x => x.PhoneNumber == request.PhoneNumber);
+                if (users.Any())
+                    throw new DuplicatePhoneNumberException();
+            }
         }
 
         private async Task ImageCheck(RegisterCommand request, AppUser user)
@@ -74,7 +81,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             {
                 if (!request.ProfilPicture.IsImageOkay(2))
                 {
-                    throw new UserValidationException { ErrorMessage = "Image size too big" };
+                    throw new UserProfilPictureException { ErrorMessage = "Image size too big" };
                 }
 
                 user.ProfilPicture = await request.ProfilPicture

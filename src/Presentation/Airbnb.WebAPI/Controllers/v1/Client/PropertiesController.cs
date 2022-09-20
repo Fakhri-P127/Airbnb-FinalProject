@@ -38,7 +38,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> GetPropertById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new PropertyGetByIdQuery(id));
-            if (result is null) throw new Exception("Internal server error");
             return Ok(result);
         }
 
@@ -46,7 +45,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> CreateProperty([FromForm] CreatePropertyCommand command)
         {
             var result = await _mediatr.Send(command);
-            if (result is null) throw new Exception("Internal server error");
             return CreatedAtAction(nameof(GetPropertById), routeValues: new { id = result.Id }, result);
         }
 
@@ -54,7 +52,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> UpdateProperty([FromForm] UpdatePropertyCommand command)
         {   
             var result = await _mediatr.Send(command);
-            if (result is null) throw new Exception("Internal server error");
             return Ok(result);
         }
         [HttpPatch("{id}")]

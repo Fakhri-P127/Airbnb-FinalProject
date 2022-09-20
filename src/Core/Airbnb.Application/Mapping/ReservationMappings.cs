@@ -2,6 +2,7 @@
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses.NestedResponses;
 using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Application.Features.Client.Reservations.Commands.Update;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -18,9 +19,12 @@ namespace Airbnb.Application.Mapping
         public ReservationMappings()
         {
             CreateMap<Reservation, PostReservationResponse>()
-                .ForMember(dest => dest.Status, opt => opt.Ignore());
+                .ForMember(dest => dest.Status, opt => opt
+                .MapFrom(dest => ReservationHelpers.ChangeStatusToString(dest.Status)));
+
             CreateMap<Reservation, GetReservationResponse>()
-                .ForMember(dest => dest.Status, opt => opt.Ignore());
+                .ForMember(dest => dest.Status, opt => opt
+                .MapFrom(dest=> ReservationHelpers.ChangeStatusToString(dest.Status)));
             CreateMap<PropertyReview, PropertyReviewInReservationResponse>();
             CreateMap<GuestReview, GuestReviewInReservationResponse>();
 

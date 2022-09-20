@@ -1,8 +1,12 @@
 ﻿using Airbnb.Application.Exceptions;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Filters.ActionFilters;
+using FluentValidation;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Net;
 
 namespace Airbnb.WebAPI.Controllers.v1
@@ -15,18 +19,25 @@ namespace Airbnb.WebAPI.Controllers.v1
         public IActionResult ErrorHandler()
         {
             Exception exception = HttpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
+            ModelStateDictionary modelStateDictionary = new();
             HttpStatusCode statusCode;
             string errorMessage;
-            //List<string> errorMessages = new();
-     
+
             switch (exception)
             {
+                case ValidationException validationException:
+                    foreach (ValidationFailure error in validationException.Errors)
+                    {
+                        modelStateDictionary.AddModelError(error.ErrorCode, error.ErrorMessage);
+                    }
+                    return ValidationProblem(modelStateDictionary);
                 case UserValidationException createUserFailureException:
-                    statusCode = createUserFailureException.StatusCode;
-                    errorMessage = createUserFailureException.ErrorMessage;
-                   
-                    //errorMessages = createUserFailureException.Errors
-                    break;
+                    foreach (IdentityError error in createUserFailureException.ErrorMessages)
+                    {
+                        modelStateDictionary.AddModelError(error.Code, error.Description);
+                    }
+                    return ValidationProblem(title:createUserFailureException.ErrorMessage,
+                        modelStateDictionary:modelStateDictionary);
                 case IServiceException serviceException:
                     statusCode = serviceException.StatusCode;
                     errorMessage = serviceException.ErrorMessage;

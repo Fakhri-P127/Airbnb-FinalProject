@@ -21,8 +21,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         public int BedCount { get; set; }
         public decimal Latitude { get; set; }
         public decimal Longitude { get; set; }
-        public TimeSpan CheckInTime { get; set; }
-        public TimeSpan CheckOutTime { get; set; }
+        public TimeSpan CheckInTime { get; set; } = new TimeSpan(12, 00, 0);
+        public TimeSpan CheckOutTime { get; set; } = new TimeSpan(12, 00, 0);
 
         //relations
         public IFormFile MainPropertyImage { get; set; }

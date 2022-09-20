@@ -47,7 +47,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);
         }
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser([FromForm] UpdateUserCommand command)
         {
             var result = await _mediatr.Send(command);
