@@ -1,17 +1,10 @@
-﻿using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Delete;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetAll;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById;
-using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create;
+﻿using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetById;
-using Airbnb.Application.Filters;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
@@ -31,7 +24,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(new GetAllPropertyGroupsQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPropertyGroupById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new GetByIdPropertyGroupQuery(id));
@@ -51,7 +44,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePropertyGroup([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeletePropertyGroupCommand(id));

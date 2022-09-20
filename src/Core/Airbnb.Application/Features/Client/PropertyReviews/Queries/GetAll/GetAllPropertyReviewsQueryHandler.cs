@@ -4,11 +4,7 @@ using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetAll
 {
@@ -24,11 +20,17 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetAll
         }
         public async Task<List<PropertyReviewResponse>> Handle(GetAllPropertyReviewsQuery request, CancellationToken cancellationToken)
         {
+            // basehelper le de Id ni goturmek olardi amma maraqli olsun deye ferqli yollada etdim
+            if(request.Expression != null)
+                await BaseHelper.GetIdFromExpression((BinaryExpression)request.Expression.Body,_unit);
+            
             List<PropertyReview> propertyReviews = await _unit.PropertyReviewRepository
                 .GetAllAsync(request.Expression, PropertyReviewHelper.AllPropertyReviewIncludes());
             List<PropertyReviewResponse> responses = _mapper.Map<List<PropertyReviewResponse>>(propertyReviews);
             if (responses is null) throw new Exception("Internal server error");
             return responses;
         }
+
+        
     }
 }

@@ -2,7 +2,6 @@
 using Airbnb.Application.Features.Client.Hosts.Queries.GetAll;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
@@ -29,7 +28,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         public async Task<IActionResult> CreateHost([FromBody] CreateHostCommand command)
         {
             var result = await _mediatr.Send(command);
-            if (result is null) throw new Exception("Internal server error");
             return Ok(result);//createdAction ele
         }
     }

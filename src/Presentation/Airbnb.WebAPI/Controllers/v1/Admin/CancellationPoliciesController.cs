@@ -11,9 +11,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 {
     public class CancellationPoliciesController : BaseController
     {
-
         private readonly ISender _mediatr;
-
         public CancellationPoliciesController(ISender mediatr)
         {
             _mediatr = mediatr;
@@ -25,7 +23,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(new GetAllCancellationPolicyQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetCancellationPolicyById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new GetByIdCancellationPolicyQuery(id));
@@ -38,13 +36,13 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetCancellationPolicyById), routeValues: new { id = result.Id }, result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateCancellationPolicy([FromRoute] Guid id, [FromBody] UpdateCancellationPolicyCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCancellationPolicy([FromBody] UpdateCancellationPolicyCommand command)
         {
             var result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCancellationPolicy([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteCancellationPolicyCommand(id));

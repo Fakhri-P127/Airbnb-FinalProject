@@ -1,7 +1,12 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses;
+using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Exceptions.Hosts;
 using Airbnb.Application.Exceptions.Properties;
+using Airbnb.Application.Exceptions.Reservations;
+using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Application.Helpers;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
@@ -23,16 +28,27 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         }
         public async Task<CreatePropertyResponse> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
+            Host host = await CheckIfNotFoundThenReturnHost(request);
             Property property = _mapper.Map<Property>(request);
             await CheckAddMainImage(request, property);
             await CheckAddDetailImages(request, property);
             AddPropertyAmenities(request, property);
+            // null oldugda pending kimi qalir property. Confirmed deyeri varsa onda true
+            if (!host.AppUser.EmailConfirmed && !host.AppUser.PhoneNumberConfirmed)
+                property.IsDisplayed = null;
 
             await _unit.PropertyRepository.AddAsync(property);
             // bele etmesem Property nin relation classlari null olaraq qalir, gerek deyerlerini burda set etim. Bele daha yaxshidi mence
             return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
         }
+        private async Task<Host> CheckIfNotFoundThenReturnHost(CreatePropertyCommand request)
+        {
+            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null,"AppUser");
 
+            if (host is null) throw new HostNotFoundException(request.HostId);
+
+            return host;
+        }
         public async Task CheckAddDetailImages(CreatePropertyCommand request, Property property)
         {
             // detail images

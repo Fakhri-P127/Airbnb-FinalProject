@@ -3,16 +3,12 @@ using Airbnb.Application.Features.Admin.AirCovers.Commands.Delete;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetById;
-using Airbnb.Application.Filters;
-using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
 {
- 
     public class AirCoversController : BaseController
     {
         private readonly ISender _mediatr;

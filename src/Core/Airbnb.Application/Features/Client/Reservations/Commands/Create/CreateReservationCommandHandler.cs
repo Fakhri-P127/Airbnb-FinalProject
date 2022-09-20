@@ -26,14 +26,19 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
             Property property = await CheckIfNotFoundThenReturnProperty(request);
+            //TimeSpan checkInTime = new(12, 00, 0);
+            // host un verdiyi checkInTime i menimsedirik.
+            request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
+            request.CheckOutDate = request.CheckOutDate.Date + property.CheckOutTime;
             int reservedDays = CheckMaxGuestThenReturnInt(request, property);
-
+           
             ReservationHelpers.CheckOutDateValidationChecker(property, reservedDays);
             await CheckIfDateOccupied(request);
             Reservation reservation = _mapper.Map<Reservation>(request);
             SetReservationStatus(reservation);
             reservation.Property = property;
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
+            
             await _unit.ReservationRepository.AddAsync(reservation);
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }
@@ -50,7 +55,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             }
         }
 
-        private int CheckMaxGuestThenReturnInt(CreateReservationCommand request,
+        private static int CheckMaxGuestThenReturnInt(CreateReservationCommand request,
             Property property)
         {
             int reservedDays = request.CheckOutDate.Subtract(request.CheckInDate).Days;
@@ -65,7 +70,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request)
         {
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.PropertyId, null);
+                .GetByIdAsync(request.PropertyId, null,"Host","Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
             if (user is null) throw new UserNotFoundValidationException()

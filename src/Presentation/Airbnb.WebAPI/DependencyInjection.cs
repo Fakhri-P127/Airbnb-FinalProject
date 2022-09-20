@@ -4,11 +4,7 @@ namespace Airbnb.WebAPI
 {
     public static class DependencyInjection
     {
-        //public static IServiceCollection GeneralDIs(this IServiceCollection services)
-        //{
-            
-        //}
-        public static IServiceCollection AddSwaggerAndCustomJwtService(this IServiceCollection services)
+        public static IServiceCollection AddSwaggerAndConfigureJwtService(this IServiceCollection services)
             {
                 services.AddSwaggerGen(opt =>
                 {

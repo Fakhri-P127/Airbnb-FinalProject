@@ -25,7 +25,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(new GetAllAmenityQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAmenityById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new GetByIdAmenityQuery(id));
@@ -38,13 +38,13 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetAmenityById), routeValues: new { id = result.Id }, result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdateAmenity([FromRoute] Guid id, [FromBody] UpdateAmenityCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAmenity([FromBody] UpdateAmenityCommand command)
         {
             var result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAmenity([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteAmenityCommand(id));

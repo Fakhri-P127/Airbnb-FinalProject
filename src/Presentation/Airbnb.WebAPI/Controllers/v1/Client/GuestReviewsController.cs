@@ -25,21 +25,21 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<GuestReviewResponse> result = await _mediatr.Send(new GetAllGuestReviewsQuery());
             return Ok(result);
         }
-        [HttpGet("[action]/{hostId:guid}")]
+        [HttpGet("[action]/{hostId}")]
         public async Task<IActionResult> GetGuestReviewsWrittenByHost([FromRoute]Guid hostId)
         {
             List<GuestReviewResponse> result = await _mediatr
                 .Send(new GetAllGuestReviewsQuery(x=>x.HostId == hostId));
             return Ok(result);
         }
-        [HttpGet("[action]/{userId}")]
-        public async Task<IActionResult> GetGuestReviewsOfUser(string userId)
+        [HttpGet("[action]/{guestId}")]
+        public async Task<IActionResult> GetGuestReviewsOfUser(string guestId)
         {
             List<GuestReviewResponse> result = await _mediatr
-                .Send(new GetAllGuestReviewsQuery(x => x.AppUserId == userId));
+                .Send(new GetAllGuestReviewsQuery(x => x.AppUserId == guestId));
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGuestReviewById([FromRoute]Guid id)
         {
             GuestReviewResponse result = await _mediatr.Send(new GetGuestReviewByIdQuery(id));
@@ -52,14 +52,14 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             GuestReviewResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetGuestReviewById),new { id = result.Id}, result);
         }
-        [HttpPut("{id:guid}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGuestReview([FromRoute]Guid id,
             UpdateGuestReviewCommand command)
         {
             GuestReviewResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGuestReview([FromRoute]Guid id)
         {
             await _mediatr.Send(new DeleteGuestReviewCommand(id));

@@ -33,6 +33,9 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
             Reservation reservation = await _unit.ReservationRepository
                  .GetByIdAsync(Id, null, "Property");
             if (reservation is null) throw new ReservationNotFoundException(Id);
+
+            request.CheckOutDate = request.CheckOutDate.Date + reservation.Property.CheckOutTime;
+
             int reservedDays = request.CheckOutDate.Subtract(reservation.CheckInDate).Days;
             int existedReservedDays = reservation.CheckOutDate.Subtract(reservation.CheckInDate).Days;
             ReservationHelpers.CheckOutDateValidationChecker(reservation.Property, reservedDays);

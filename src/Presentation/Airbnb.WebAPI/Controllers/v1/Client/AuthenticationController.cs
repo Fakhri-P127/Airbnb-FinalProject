@@ -11,8 +11,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
     public class AuthenticationController : BaseController
     {
         private readonly ISender _mediatr;
-      
-
         public AuthenticationController(ISender mediatr)
         {
             _mediatr = mediatr;

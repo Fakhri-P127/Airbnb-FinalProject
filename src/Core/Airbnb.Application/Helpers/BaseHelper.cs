@@ -1,11 +1,16 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
+using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Exceptions.Common;
+using Airbnb.Application.Exceptions.Hosts;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.Base;
 using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Airbnb.Application.Helpers
 {
@@ -17,6 +22,40 @@ namespace Airbnb.Application.Helpers
             // bunun uchun action filter yazdim deye buna ehtiyac yoxdu amma yenede saxladim
             if (!guidResult) throw new IncorrectIdFormatValidationException();
             return Id;
+        }
+        public static async Task GetIdFromExpression(BinaryExpression expressionBody, IUnitOfWork _unit)
+        {
+            MemberExpression expressionRight = (MemberExpression)expressionBody.Right;
+            ConstantExpression constantExpression = (ConstantExpression)expressionRight.Expression;
+            var captureConstantValue = constantExpression.Value;
+            var expressionValue = ((FieldInfo)expressionRight.Member).GetValue(captureConstantValue);
+            #region other way to do it
+            //Guid? hostId = (Guid)((FieldInfo)productToPrice.Member).GetValue(captureConst);
+            //if (!hostId.HasValue) throw new IncorrectIdFormatValidationException();
+            //return hostId.Value;
+            #endregion
+
+            // appuser in Id-si stringdi amma yenede Guid formatinda olur, ona gore check edirem eger
+            // tryparse etmek olursa demeli duz gelib, sonrada kohne deyeri ishelede bilerem
+            if (expressionRight.Member.Name == "guestId") await CheckGuestId(expressionValue, _unit);
+            else if (expressionRight.Member.Name == "hostId") await CheckHostId(expressionValue, _unit);
+        }
+
+        private static async Task CheckHostId(object expressionValue, IUnitOfWork _unit)
+        {
+            bool result = Guid.TryParse(expressionValue.ToString(), out Guid hostId);
+            if (result is false) throw new IncorrectIdFormatValidationException();
+            if (await _unit.HostRepository.GetByIdAsync(hostId, null) is null)
+                throw new HostNotFoundException(hostId);
+        }
+
+        private static async Task CheckGuestId(object expressionValue, IUnitOfWork _unit)
+        {
+            string guestIdStr = expressionValue.ToString();
+            bool result = Guid.TryParse(guestIdStr, out Guid guestId);
+            if (result is false) throw new IncorrectIdFormatValidationException();
+            if (await _unit.UserRepository.GetByIdAsync(guestIdStr, null) is null)
+                throw new UserIdNotFoundException();
         }
     }
 }

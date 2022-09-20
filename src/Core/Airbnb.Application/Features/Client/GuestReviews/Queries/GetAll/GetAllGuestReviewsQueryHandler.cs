@@ -1,15 +1,10 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
-using Airbnb.Application.Exceptions.GuestReviews;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetAll
 {
@@ -25,6 +20,9 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetAll
         }
         public async Task<List<GuestReviewResponse>> Handle(GetAllGuestReviewsQuery request, CancellationToken cancellationToken)
         {
+            if (request.Expression != null)
+                await BaseHelper.GetIdFromExpression((BinaryExpression)request.Expression.Body, _unit);
+
             List<GuestReview> guestReviews = await _unit.GuestReviewRepository
               .GetAllAsync(request.Expression, GuestReviewHelper.AllGuestReviewIncludes());
             List<GuestReviewResponse> responses = _mapper.Map<List<GuestReviewResponse>>(guestReviews);

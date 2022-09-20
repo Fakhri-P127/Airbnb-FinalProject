@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
 {
-
     public class PrivacyTypesController : BaseController
     {
         private readonly ISender _mediatr;
@@ -25,7 +24,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(new GetAllPrivacyTypeQuery());
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetPrivacyTypeById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new GetByIdPrivacyTypeQuery(id));
@@ -38,13 +37,13 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
             var result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetPrivacyTypeById), routeValues: new { id = result.Id }, result);
         }
-        [HttpPut("{id:guid}")]
-        public async Task<IActionResult> UpdatePrivacyType([FromRoute] Guid id, [FromBody] UpdatePrivacyTypeCommand command)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePrivacyType([FromBody] UpdatePrivacyTypeCommand command)
         {
             var result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePrivacyType([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeletePrivacyTypeCommand(id));
