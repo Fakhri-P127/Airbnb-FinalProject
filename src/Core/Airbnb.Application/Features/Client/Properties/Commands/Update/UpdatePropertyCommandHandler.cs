@@ -1,12 +1,17 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses;
+using Airbnb.Application.Exceptions.Cities;
+using Airbnb.Application.Exceptions.Countries;
 using Airbnb.Application.Exceptions.Properties;
+using Airbnb.Application.Features.Client.Properties.Commands.Create;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
+using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using System.Diagnostics.Metrics;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 {
@@ -33,7 +38,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             if (property is null) throw new PropertyNotFoundException();
             _unit.PropertyRepository.Update(property);
             _mapper.Map(request, property);
-
+            await SetStateForProperty(request, property);
             RemoveImages(request, property);
             await CheckAddMainImage(request, property);
             await CheckAddDetailImages(request, property);
@@ -44,6 +49,48 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             await _unit.SaveChangesAsync();
             return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
 
+        }
+        private async Task SetStateForProperty(UpdatePropertyCommand request, Property property)
+        {
+            // eger hamisi nulldisa neyise deyishmeye ehtiyac yoxdu
+            if (request.RegionId is null && request.CountryId is null
+                && request.CityId is null && request.Street is null) return;
+            //eger hansisa deyeri deyishmirikse, null gelibse Property.State deki deyere beraber edek.
+            request.RegionId ??= property.State.RegionId;
+            request.CountryId ??= property.State.CountryId;
+            request.CityId ??= property.State.CityId;
+            request.Street ??= property.State.Street;
+            State existedState = await _unit.StateRepository
+                .GetSingleAsync(x => x.RegionId == request.RegionId
+                && x.CountryId == request.CountryId && x.CityId == request.CityId
+                && x.Street == request.Street.Trim().ToLower());
+            if (existedState is null)
+            {
+                await CheckForStateExceptions(request);
+                property.State = new()
+                {
+                    RegionId = (Guid)request.RegionId,
+                    CountryId = (Guid)request.CountryId,
+                    CityId = (Guid)request.CityId,
+                    Street = request.Street.Trim().ToLower(),
+                };
+                //property.State = state;
+            }
+            else
+            {
+                property.StateId = existedState.Id;
+            }
+        }
+
+        private async Task CheckForStateExceptions(UpdatePropertyCommand request)
+        {
+            Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null, "Countries");
+            Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null, "Cities");
+            City city = await _unit.CityRepository.GetByIdAsync((Guid)request.CityId, null);
+            if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
+                throw new CountryDoesntBelongToSpecificiedRegionException(country.Name, region.Name);
+            if (country.Cities.FirstOrDefault(c => c.Id == request.CityId) is null)
+                throw new CityDoesntBelongToSpecificiedCountryException(city.Name, country.Name);
         }
 
         private async Task CheckAddMainImage(UpdatePropertyCommand request, Property property)

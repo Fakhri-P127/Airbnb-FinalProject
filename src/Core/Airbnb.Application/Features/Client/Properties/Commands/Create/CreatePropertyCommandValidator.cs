@@ -25,9 +25,10 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             RuleFor(x => x.Description).Length(5,1000).NotEmpty();
             RuleFor(x => x.Latitude).NotEmpty();
             RuleFor(x => x.Longitude).NotEmpty();
-            RuleFor(x => x.City).Length(2, 50).NotEmpty();
-            RuleFor(x => x.Country).Length(2, 50).NotEmpty();
-            RuleFor(x => x.Street).Length(5, 50).NotEmpty();
+            RuleFor(x => x.RegionId).NotEmpty();
+            RuleFor(x => x.CountryId).NotEmpty();
+            RuleFor(x => x.CityId).NotEmpty();
+            RuleFor(x => x.Street).Length(3, 60).NotEmpty();
           
             RuleFor(x => x.MainPropertyImage).NotEmpty();
             RuleForEach(x => x.DetailPropertyImages).NotEmpty();

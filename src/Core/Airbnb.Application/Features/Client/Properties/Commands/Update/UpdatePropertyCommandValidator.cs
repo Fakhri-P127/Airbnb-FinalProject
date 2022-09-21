@@ -17,9 +17,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 
             RuleFor(x => x.Title).Length(3, 100);
             RuleFor(x => x.Description).Length(5, 1000);
-            RuleFor(x => x.City).Length(2, 50);
-            RuleFor(x => x.Country).Length(2, 50);
-            RuleFor(x => x.Street).Length(5, 50);
+            RuleFor(x => x.Street).Length(3, 50);
+            RuleFor(x => x.CityId).Must(x=>x.Value.GetType() == typeof(Guid)).WithMessage("type must be guid");
 
             //RuleForEach(x => x.PropertyAmenities);
             //RuleForEach(x => x.PropertyImages);

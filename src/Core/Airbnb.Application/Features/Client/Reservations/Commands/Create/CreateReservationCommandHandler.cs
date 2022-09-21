@@ -18,7 +18,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
 
-        public CreateReservationCommandHandler(IUnitOfWork unit,IMapper mapper)
+        public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper)
         {
             _unit = unit;
             _mapper = mapper;
@@ -26,21 +26,31 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
             Property property = await CheckIfNotFoundThenReturnProperty(request);
-            
+
             // host un verdiyi checkInTime i menimsedirik.
             request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
             request.CheckOutDate = request.CheckOutDate.Date + property.CheckOutTime;
             int reservedDays = CheckMaxGuestThenReturnInt(request, property);
-           
+
             ReservationHelpers.CheckOutDateValidationChecker(property, reservedDays);
             await CheckIfDateOccupied(request);
             Reservation reservation = _mapper.Map<Reservation>(request);
             SetReservationStatus(reservation);
-            reservation.Property = property;
+            ManuallySettingValuesToReservation(request, property, reservation);
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
-            
+
             await _unit.ReservationRepository.AddAsync(reservation);
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
+        }
+
+        private static void ManuallySettingValuesToReservation(CreateReservationCommand request, Property property, Reservation reservation)
+        {
+            reservation.Property = property;
+            if (request.PetCount != 0)
+            {
+                if (!reservation.Property.IsPetAllowed) throw new Reservation_PetsAreNotAllowedException();
+                reservation.PetCount = request.PetCount;
+            }
         }
 
         private static void SetReservationStatus(Reservation reservation)
@@ -70,7 +80,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request)
         {
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.PropertyId, null,"Host","Host.AppUser");
+                .GetByIdAsync(request.PropertyId, null, "Host", "Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
             if (user is null) throw new UserIdNotFoundException();
@@ -112,7 +122,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             if (occupiedCheckOutTime.Count != 0)
                 throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
         }
-        
+
 
         private async Task CheckIfCheckInIsOccupied(CreateReservationCommand request)
         {

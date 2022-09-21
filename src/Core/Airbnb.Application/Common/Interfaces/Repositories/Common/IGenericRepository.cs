@@ -11,6 +11,7 @@ namespace Airbnb.Application.Common.Interfaces.Repositories.Common
     {
         Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes);
         Task<T> GetByIdAsync(Guid id, Expression<Func<T, bool>> expression, params string[] includes);
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, params string[] includes);
         Task AddAsync(T entity);
         void Update(T entity, bool state = true);
         Task DeleteAsync(T entity);

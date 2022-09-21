@@ -1,7 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
+using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
 using Airbnb.Persistance.Common.Repositories.PropertyRelated;
+using Airbnb.Persistance.Common.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Persistance.Common.Repositories.UserRelated;
 using Airbnb.Persistance.Context;
 
@@ -26,6 +28,10 @@ namespace Airbnb.Persistance.Common
         public IPropertyTypeRepository PropertyTypeRepository { get => new PropertyTypeRepository(_context) ?? throw new NotImplementedException(); }
         public IReservationRepository ReservationRepository { get => new ReservationRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyReviewRepository PropertyReviewRepository { get => new PropertyReviewRepository(_context) ?? throw new NotImplementedException(); }
+        public IRegionRepository RegionRepository { get => new RegionRepository(_context) ?? throw new NotImplementedException(); }
+        public ICountryRepository CountryRepository { get => new CountryRepository(_context) ?? throw new NotImplementedException(); }
+        public ICityRepository CityRepository { get => new CityRepository(_context) ?? throw new NotImplementedException(); }
+        public IStateRepository StateRepository { get => new StateRepository(_context) ?? throw new NotImplementedException(); }
 
         public async Task SaveChangesAsync()
         {

@@ -25,8 +25,6 @@ namespace Airbnb.Persistance.Common.Repositories.Common
         }
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
         {
-            // if(x.checkInDate<"insertCheckIn" || x.checkOutDate > "insertCheckOut") burda exception mesaji ver ki bu araliq goturulub 
-
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
             if (includes.Length != 0)
@@ -51,6 +49,19 @@ namespace Airbnb.Persistance.Common.Repositories.Common
                 }
             }
             return await query.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        public virtual async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, params string[] includes)
+        {
+            IQueryable<T> query = expression is not null ?
+                _dbSet.Where(expression) : _dbSet.AsQueryable();
+            if (includes.Length != 0)
+            {
+                foreach (string include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+            return await query.FirstOrDefaultAsync();
         }
         public async Task AddAsync(T entity)
         {

@@ -31,7 +31,7 @@ namespace Airbnb.Persistance
                 opt.Password.RequiredLength = 6;
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequireDigit = false;
-                opt.Password.RequireUppercase = true;
+                opt.Password.RequireUppercase = false;
                 opt.Lockout.AllowedForNewUsers = true;
             }).AddEntityFrameworkStores<AirbnbDbContext>();
 

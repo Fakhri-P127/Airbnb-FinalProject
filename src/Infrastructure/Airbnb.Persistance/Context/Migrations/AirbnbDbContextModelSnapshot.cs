@@ -513,7 +513,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("AirCoverId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<byte?>("BathroomCount")
@@ -538,16 +537,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Property<TimeSpan>("CheckOutTime")
                         .HasColumnType("time");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -560,9 +549,13 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("IsDisplayed")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
+
+                    b.Property<bool>("IsPetAllowed")
+                        .HasColumnType("bit");
 
                     b.Property<decimal?>("Latitude")
                         .IsRequired()
@@ -581,6 +574,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<byte?>("MinNightCount")
+                        .IsRequired()
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime>("ModifiedAt")
@@ -591,6 +585,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("int");
 
                     b.Property<Guid?>("PrivacyTypeId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("PropertyGroupId")
@@ -601,10 +596,8 @@ namespace Airbnb.Persistance.Context.Migrations
                         .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<Guid?>("StateId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -624,6 +617,8 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("PropertyGroupId");
 
                     b.HasIndex("PropertyTypeId");
+
+                    b.HasIndex("StateId");
 
                     b.ToTable("Properties");
                 });
@@ -948,6 +943,139 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.ToTable("Reservations");
                 });
 
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Region");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsDisplayed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("RegionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("RegionId");
+
+                    b.ToTable("State");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1160,9 +1288,7 @@ namespace Airbnb.Persistance.Context.Migrations
                 {
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.AirCover", "AirCover")
                         .WithMany()
-                        .HasForeignKey("AirCoverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AirCoverId");
 
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.CancellationPolicy", "CancellationPolicy")
                         .WithMany("Properties")
@@ -1178,7 +1304,9 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.PrivacyType", "PrivacyType")
                         .WithMany("Properties")
-                        .HasForeignKey("PrivacyTypeId");
+                        .HasForeignKey("PrivacyTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", "PropertyGroup")
                         .WithMany("Properties")
@@ -1192,6 +1320,10 @@ namespace Airbnb.Persistance.Context.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", "State")
+                        .WithMany("Properties")
+                        .HasForeignKey("StateId");
+
                     b.Navigation("AirCover");
 
                     b.Navigation("CancellationPolicy");
@@ -1203,6 +1335,8 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("PropertyGroup");
 
                     b.Navigation("PropertyType");
+
+                    b.Navigation("State");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyAmenity", b =>
@@ -1306,6 +1440,55 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("Host");
 
                     b.Navigation("Property");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", b =>
+                {
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", "Country")
+                        .WithMany("Cities")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", b =>
+                {
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", "Region")
+                        .WithMany("Countries")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Region");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", b =>
+                {
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", "City")
+                        .WithMany("States")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", "Country")
+                        .WithMany("States")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", "Region")
+                        .WithMany("States")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Region");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1441,6 +1624,30 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("GuestReview");
 
                     b.Navigation("PropertyReview");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", b =>
+                {
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", b =>
+                {
+                    b.Navigation("Cities");
+
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", b =>
+                {
+                    b.Navigation("Countries");
+
+                    b.Navigation("States");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", b =>
+                {
+                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }

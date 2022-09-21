@@ -1,15 +1,23 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses;
+using Airbnb.Application.Exceptions.AirCovers;
+using Airbnb.Application.Exceptions.CancellationPolicies;
+using Airbnb.Application.Exceptions.Cities;
+using Airbnb.Application.Exceptions.Countries;
 using Airbnb.Application.Exceptions.Hosts;
+using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Exceptions.Properties;
+using Airbnb.Application.Exceptions.PropertyGroups;
+using Airbnb.Application.Exceptions.PropertyTypes;
+using Airbnb.Application.Exceptions.Regions;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
+using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 {
@@ -27,8 +35,9 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         }
         public async Task<CreatePropertyResponse> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            Host host = await CheckIfNotFoundThenReturnHost(request);
+            Host host = await CheckExceptionsThenReturnHost(request);
             Property property = _mapper.Map<Property>(request);
+            await SetStateForProperty(request, property);
             await CheckAddMainImage(request, property);
             await CheckAddDetailImages(request, property);
             await CheckAddBedImages(request, property);
@@ -41,21 +50,66 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             // bele etmesem Property nin relation classlari null olaraq qalir, gerek deyerlerini burda set etim. Bele daha yaxshidi mence
             return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
         }
-        private async Task<Host> CheckIfNotFoundThenReturnHost(CreatePropertyCommand request)
+
+        private async Task SetStateForProperty(CreatePropertyCommand request, Property property)
         {
-            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null,"AppUser");
+
+            State existedState = await _unit.StateRepository
+                .GetSingleAsync(x => x.RegionId == request.RegionId
+                && x.CountryId == request.CountryId && x.CityId == request.CityId 
+                && x.Street == request.Street.Trim().ToLower());
+            if (existedState is null)
+            {
+                property.State = new()
+                {
+                    RegionId = request.RegionId,
+                    CountryId = request.CountryId,
+                    CityId = request.CityId,
+                    Street = request.Street.Trim().ToLower(),
+                };
+                //property.State = state;
+            }
+            else
+            {
+                property.StateId = existedState.Id;
+            }
+        }
+
+        private async Task<Host> CheckExceptionsThenReturnHost(CreatePropertyCommand request)
+        {
+            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, "AppUser");
             if (host is null) throw new HostNotFoundException(request.HostId);
+            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.AirCoverId, null);
+            if (airCover is null) throw new AirCoverNotFoundException();
+            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.CancellationPolicyId, null);
+            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
+            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.PrivacyTypeId, null);
+            if (privacyType is null) throw new PrivacyTypeNotFoundException();
+            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.PropertyGroupId, null);
+            if (propertyGroup is null) throw new PropertyGroupNotFoundException();
+            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(request.PropertyTypeId, null);
+            if (propertyType is null) throw new PropertyTypeNotFoundException();
+            Region region = await _unit.RegionRepository.GetByIdAsync(request.RegionId, null);
+            if (region is null) throw new RegionNotFoundException();
+            Country country = await _unit.CountryRepository.GetByIdAsync(request.CountryId, null);
+            if (country is null) throw new CountryNotFoundException();
+            City city = await _unit.CityRepository.GetByIdAsync(request.CityId, null);
+            if (city is null) throw new CityNotFoundException();
+            if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
+                throw new CountryDoesntBelongToSpecificiedRegionException(country.Name,region.Name);
+            if (country.Cities.FirstOrDefault(c => c.Id == city.Id) is null)
+                throw new CityDoesntBelongToSpecificiedCountryException(city.Name,country.Name);
             return host;
         }
-        public async Task CheckAddBedImages(CreatePropertyCommand request,Property property)
+        public async Task CheckAddBedImages(CreatePropertyCommand request, Property property)
         {
-            if(request.BedImages is not null)
+            if (request.BedImages is not null)
             {
                 byte counter = 1;
                 foreach (IFormFile image in request.BedImages)
                 {
                     PropertyHelper.CheckImageIsOkay(image);
-                     await PropertyHelper.CreateBedImage(property, image, counter, _env);
+                    await PropertyHelper.CreateBedImage(property, image, counter, _env);
                     counter++;
                 }
             }
@@ -78,13 +132,13 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 
         private async Task CheckAddMainImage(CreatePropertyCommand request, Property property)
         {
-            if (request.MainPropertyImage is null)  throw new PropertyImageValidationException
-                { ErrorMessage = "You must have 1 main image, please enter main image" };
+            if (request.MainPropertyImage is null) throw new PropertyImageValidationException
+            { ErrorMessage = "You must have 1 main image, please enter main image" };
             PropertyHelper.CheckImageIsOkay(request.MainPropertyImage);
 
             await PropertyHelper.CreateMainImage(request.MainPropertyImage, property, _env);
         }
-      
+
         private static void AddPropertyAmenities(CreatePropertyCommand request, Property property)
         {
             foreach (Guid amenityId in request.PropertyAmenities)

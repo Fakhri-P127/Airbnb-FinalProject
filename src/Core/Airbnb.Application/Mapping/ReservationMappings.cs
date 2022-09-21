@@ -28,12 +28,14 @@ namespace Airbnb.Application.Mapping
             CreateMap<PropertyReview, PropertyReviewInReservationResponse>();
             CreateMap<GuestReview, GuestReviewInReservationResponse>();
 
-            CreateMap<CreateReservationCommand, Reservation>();
+            CreateMap<CreateReservationCommand, Reservation>()
+                .ForMember(dest=>dest.PetCount,opt=>opt.Ignore());
 
             CreateMap<UpdateReservationCommand, Reservation>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.HostId, opt => opt.Ignore())
                 .ForMember(dest => dest.PropertyId, opt => opt.Ignore())
+                .ForMember(dest=>dest.PetCount,opt=>opt.Ignore())
                 .ForMember(dest => dest.AdultCount, opt =>
                  {
                      opt.PreCondition((src, dest, context) => src.AdultCount != dest.AdultCount);

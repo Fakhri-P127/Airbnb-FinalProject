@@ -10,9 +10,11 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
+        public Guid RegionId { get; set; }
+        public Guid CountryId { get; set; }
+        public Guid CityId { get; set; }
         public string Street { get; set; }
+        public bool? IsPetAllowed { get; set; } = true;
         public int MinNightCount { get; set; } = 1;
         public int MaxNightCount { get; set; } = 60; // default 60 - sehifede beledi(max 60 olur)
         public int MaxGuestCount { get; set; }

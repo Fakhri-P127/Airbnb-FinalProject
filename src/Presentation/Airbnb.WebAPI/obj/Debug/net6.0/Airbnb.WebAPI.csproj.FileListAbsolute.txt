@@ -66,7 +66,6 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\De
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.AssemblyInfoInputs.cache
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.AssemblyInfo.cs
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.csproj.CoreCompileInputs.cache
-C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\staticwebassets.build.json
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\staticwebassets.development.json

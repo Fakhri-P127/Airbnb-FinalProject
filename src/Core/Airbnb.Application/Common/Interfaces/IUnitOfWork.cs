@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
+using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,10 @@ namespace Airbnb.Application.Common.Interfaces
         IPropertyTypeRepository PropertyTypeRepository { get; }
         IReservationRepository ReservationRepository { get; }
         IPropertyReviewRepository PropertyReviewRepository { get; }
+        IRegionRepository RegionRepository { get; }
+        ICountryRepository CountryRepository { get; }
+        ICityRepository CityRepository { get; }
+        IStateRepository StateRepository { get; }
         
         Task SaveChangesAsync();
     }

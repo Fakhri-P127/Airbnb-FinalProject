@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Application.Exceptions.Reservations;
+using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -42,6 +43,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
             // onda if shertini yoxlamaq alinmayacaq
             int reservedGuestCount = reservation.AdultCount + reservation.ChildCount;
             _mapper.Map(request, reservation);
+            ManuallySettingValuesToReservation(request, reservation);
             // eger guest countda deyishiklik varsa qiymeti yeniden hesablasin, yoxdusa ehtiyac yoxdu
             if (requestGuestCount != reservedGuestCount || existedReservedDays != reservedDays)
                 ReservationHelpers.CalculatePrice(reservation, reservedDays);
@@ -49,7 +51,14 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
 
         }
-
+        private static void ManuallySettingValuesToReservation(UpdateReservationCommand request, Reservation reservation)
+        {
+            if (request.PetCount != 0)
+            {
+                if (!reservation.Property.IsPetAllowed) throw new Reservation_PetsAreNotAllowedException();
+                reservation.PetCount = request.PetCount;
+            }
+        }
         private static void SetReqCheckInAndOutTimes(UpdateReservationCommand request, Reservation reservation)
         {
             if (request.CheckInDate is not null)

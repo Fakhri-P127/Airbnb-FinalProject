@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
+using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 
 namespace Airbnb.Persistance.Context
 {
@@ -48,6 +49,12 @@ namespace Airbnb.Persistance.Context
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+            ConfigureDeleteBehaviour(builder);
+            base.OnModelCreating(builder);
+        }
+
+        private static void ConfigureDeleteBehaviour(ModelBuilder builder)
+        {
             builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host)
                 .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)
@@ -56,10 +63,14 @@ namespace Airbnb.Persistance.Context
                 .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Reservation>().HasOne(x => x.GuestReview).WithOne(x => x.Reservation)
                 .OnDelete(DeleteBehavior.NoAction);
-
-
-            base.OnModelCreating(builder);
+            #region states
+            builder.Entity<State>().HasOne(x => x.Region).WithMany(x => x.States)
+              .HasForeignKey(x => x.RegionId).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<State>().HasOne(x => x.Country).WithMany(x => x.States)
+               .HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
         }
+
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             AutoUpdateCreatedAndModifiedValue();
@@ -68,13 +79,10 @@ namespace Airbnb.Persistance.Context
         }
         private void AutoUpdateCreatedAndModifiedValue()
         {
-            var entries = ChangeTracker
-            .Entries()
-            .Where(e => e.Entity is BaseEntity && (
-            e.State == EntityState.Added
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity 
+            && ( e.State == EntityState.Added
             || e.State == EntityState.Modified
-            || e.State == EntityState.Unchanged
-            ));
+            || e.State == EntityState.Unchanged));
 
             foreach (var entityEntry in entries)
             {
