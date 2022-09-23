@@ -60,7 +60,7 @@ namespace Airbnb.Application.Helpers
             string guestIdStr = expressionValue.ToString();
             bool result = Guid.TryParse(guestIdStr, out Guid guestId);
             if (result is false) throw new IncorrectIdFormatValidationException();
-            if (await _unit.UserRepository.GetByIdAsync(guestIdStr, null) is null)
+            if (await _unit.UserRepository.GetByIdAsync(guestId, null) is null)
                 throw new UserIdNotFoundException();
         }
     }

@@ -24,7 +24,7 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses
         public Guid PropertyId { get; set; }
        
         // who's reserving
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         // one to one
         //public PropertyReviewsInReservation PropertyReview { get; set; }
         //public GuestReviewInHostResponse GuestReview { get; set; }

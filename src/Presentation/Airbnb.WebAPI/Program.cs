@@ -3,7 +3,6 @@ using Airbnb.Application.Filters.ResourceFilters;
 using Airbnb.Persistance;
 using Airbnb.WebAPI;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,8 +19,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationDI();
 builder.Services.AddInfrastructureDI(builder.Configuration);
 builder.Services.AddSwaggerAndConfigureJwtService();
-builder.Services.AddHttpClient();
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

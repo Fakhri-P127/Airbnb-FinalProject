@@ -22,7 +22,7 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public List<GuestReview> ReviewsByYou { get; set; }
         public List<PropertyReview> ReviewsAboutYourProperty { get; set; }
         public List<Reservation> Reservations { get; set; }
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         public AppUser AppUser { get; set; }
     }
 }

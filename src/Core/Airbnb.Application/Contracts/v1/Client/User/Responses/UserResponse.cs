@@ -1,26 +1,18 @@
-﻿using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Airbnb.Application.Contracts.v1.Base;
+using Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses;
 
 namespace Airbnb.Application.Contracts.v1.Client.User.Responses
 {
-    public class UserResponse
+    public class UserResponse:BaseResponse
     {
         public UserResponse()
         {
             Verifications = new();
         }
-        public string Id { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public DateTime CreatedAt { get; set; } 
-        public DateTime ModifiedAt { get; set; }
-        //banned suspended or active
-        //public bool Status { get; set; }
+      
         //optionals
         public string PhoneNumber { get; set; }
         public GenderInUserResponse Gender { get; set; }

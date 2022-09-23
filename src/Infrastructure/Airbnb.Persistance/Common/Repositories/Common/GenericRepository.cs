@@ -1,16 +1,8 @@
-﻿using Airbnb.Application.Common.Interfaces.Repositories;
-using Airbnb.Application.Common.Interfaces.Repositories.Common;
-using Airbnb.Domain.Entities.AppUserRelated;
+﻿using Airbnb.Application.Common.Interfaces.Repositories.Common;
 using Airbnb.Domain.Entities.Base;
 using Airbnb.Persistance.Context;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Common.Repositories.Common
 {

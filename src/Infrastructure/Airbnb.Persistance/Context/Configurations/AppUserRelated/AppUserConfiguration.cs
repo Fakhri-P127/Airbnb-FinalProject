@@ -23,7 +23,8 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
             builder.Property(x => x.DateOfBirth).IsRequired();
             builder.Property(x => x.Email).HasMaxLength(30).IsRequired();
             builder.Property(x => x.PhoneNumber).HasMaxLength(15);
-            
+            builder.Property(x => x.IsDisplayed).HasDefaultValue(true).IsRequired();
+
         }
     }
 }

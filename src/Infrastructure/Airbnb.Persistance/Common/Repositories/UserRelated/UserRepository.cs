@@ -2,6 +2,7 @@
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Airbnb.Persistance.Common.Repositories.UserRelated
@@ -18,7 +19,7 @@ namespace Airbnb.Persistance.Common.Repositories.UserRelated
         public async Task<List<AppUser>> GetAllAsync(Expression<Func<AppUser, bool>> expression, params string[] includes)
         {
             IQueryable<AppUser> query = expression is not null ?
-               _context.AppUsers.Where(expression) : _dbSet.AsQueryable();
+               _context.Users.Where(expression) : _dbSet.AsQueryable();
             if (includes.Length != 0)
             {
                 foreach (string include in includes)
@@ -30,7 +31,7 @@ namespace Airbnb.Persistance.Common.Repositories.UserRelated
         }
 
 
-        public virtual async Task<AppUser> GetByIdAsync(string id, Expression<Func<AppUser, bool>> expression, params string[] includes)
+        public virtual async Task<AppUser> GetByIdAsync(Guid id, Expression<Func<AppUser, bool>> expression, params string[] includes)
         {
             IQueryable<AppUser> query = expression is not null ?
                  _dbSet.Where(expression) : _dbSet.AsQueryable();
@@ -42,6 +43,19 @@ namespace Airbnb.Persistance.Common.Repositories.UserRelated
                 }
             }
             return await query.FirstOrDefaultAsync(x => x.Id == id);
+        }
+        public virtual async Task<AppUser> GetSingleAsync(Expression<Func<AppUser, bool>> expression, params string[] includes)
+        {
+            IQueryable<AppUser> query = expression is not null ?
+                _dbSet.Where(expression) : _dbSet.AsQueryable();
+            if (includes.Length != 0)
+            {
+                foreach (string include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+            return await query.FirstOrDefaultAsync();
         }
         public async Task AddAsync(AppUser entity)
         {

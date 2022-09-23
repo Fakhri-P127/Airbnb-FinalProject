@@ -13,7 +13,7 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Responses.NestedResponses
         public string Text { get; set; }
         public float GuestScore { get; set; }
         // guest id
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
      
         // booking e gore bunu yaza bilsin.
         public Guid ReservationId { get; set; }

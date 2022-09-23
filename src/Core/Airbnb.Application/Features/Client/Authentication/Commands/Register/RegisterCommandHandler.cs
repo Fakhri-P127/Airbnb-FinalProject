@@ -1,34 +1,39 @@
-﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Common.Interfaces.Authentication;
+﻿using Airbnb.Application.Common.Interfaces.Email;
+using Airbnb.Application.Contracts.v1.Admin.EmailRelated.Responses;
 using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
 using AutoMapper;
-using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
 {
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, AuthenticationResponse>
     {
-        private readonly UserManager<AppUser> _userManager;
+        private readonly CustomUserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unit;
         private readonly IWebHostEnvironment _env;
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly LinkGenerator _generator;
+        private readonly IEmailSender _emailSender;
+        private readonly IHttpContextAccessor _accessor;
 
-        public RegisterCommandHandler(UserManager<AppUser> userManager, IMapper mapper, IUnitOfWork unit,
-            IWebHostEnvironment env,
-            IJwtTokenGenerator jwtTokenGenerator)
+        public RegisterCommandHandler(CustomUserManager<AppUser> userManager, IMapper mapper,
+            IWebHostEnvironment env,LinkGenerator generator,IEmailSender emailSender
+            ,IHttpContextAccessor accessor)
         {
             _userManager = userManager;
             _mapper = mapper;
-            _unit = unit;
             _env = env;
-            _jwtTokenGenerator = jwtTokenGenerator;
+            _generator = generator;
+            _emailSender = emailSender;
+            _accessor = accessor;
         }
         public async Task<AuthenticationResponse> Handle(RegisterCommand request, CancellationToken cancellationToken)
         {
@@ -38,39 +43,55 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             user.CreatedAt = DateTime.UtcNow;
             user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
-            IdentityResult createdUser = await _userManager.CreateAsync(user, request.Password);
-            if (!createdUser.Succeeded)
+            IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
+            await CheckIfResultIsSuccessful(user, createdUserResult,"creating User.");
+            //FormFileCollection files = new();
+            //files.Add(request.ProfilPicture);
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            string confirmationLink = _generator.GetUriByAction(_accessor.HttpContext, "ConfirmEmail",
+                "Authentication", new { token, email = user.Email }, _accessor.HttpContext.Request.Scheme);
+            MessageResponse message = new(new string[] { user.Email, "efendiyev1902@gmail.com" },
+                "Confirmation Email Link", confirmationLink, null);
+
+            await _emailSender.SendEmailAsync(message);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "Guest");
+            await CheckIfResultIsSuccessful(user, roleResult, "adding Role to User.");
+            // register deki tokeni silmek olar
+            //string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
+            //var authResult = _mapper.Map<AuthenticationResponse>(user);
+            //if (authResult is null) throw new Exception("Internal server error");
+            //authResult.Token = token;
+            //if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
+            //if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
+            return new AuthenticationResponse();
+            //return authResult;
+        }
+
+        private async Task CheckIfResultIsSuccessful(AppUser user, IdentityResult result,
+            string errorMessage)
+        {
+            if (!result.Succeeded)
             {
                 await _userManager.DeleteAsync(user);
                 if (!string.IsNullOrWhiteSpace(user.ProfilPicture))
                     FileHelpers.FileDelete(_env.WebRootPath, "assets/images/UserProfilePictures", user.ProfilPicture);
                 throw new UserValidationException()
                 {
-                    ErrorMessage = "One or more validation errors occured while creating User.",
-                    //mence IEnumerable dan saxlamaga ehtiyac yox idi chunki ozu onsuzda hemishe 1 error verir
-                    ErrorMessages = createdUser.Errors
+                    ErrorMessage = $"One or more validation errors occured while {errorMessage}",
+                    ErrorMessages = result.Errors
                 };
             }
-            // if image exists it checks image size and sets the image
-            // register deki tokeni silmek olar
-            string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
-            var authResult = _mapper.Map<AuthenticationResponse>(user);
-
-            if (user.EmailConfirmed) authResult.Verifications.Add("Email verified");
-            if (user.PhoneNumberConfirmed) authResult.Verifications.Add("Phone number verified");
-            authResult.Token = token;
-
-            return authResult;
         }
 
         private async Task CheckAppUserErrors(RegisterCommand request)
         {
-            AppUser user = await _userManager.FindByEmailAsync(request.Email);
-            if (user is not null) throw new DuplicateEmailValidationException();
+            //AppUser user = await _userManager.FindByEmailAsync(request.Email);
+            //if (user is not null) throw new DuplicateEmailValidationException();
             if (request.PhoneNumber is not null)
             {
-                List<AppUser> users = await _unit.UserRepository.GetAllAsync(x => x.PhoneNumber == request.PhoneNumber);
-                if (users.Any())
+                //AppUser user = await _unit.UserRepository.GetSingleAsync(x => x.PhoneNumber == request.PhoneNumber)
+                AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
+                if (user is not null )
                     throw new DuplicatePhoneNumberException();
             }
         }

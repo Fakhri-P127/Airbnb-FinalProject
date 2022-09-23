@@ -18,7 +18,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedRespon
         public float ValueScore { get; set; }
         // check ele ki AppUserId bu property uchun edilen bookingde Id si var :# 
         // bu appUser reserve i edendi
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         public Guid ReservationId { get; set; }
 
     }

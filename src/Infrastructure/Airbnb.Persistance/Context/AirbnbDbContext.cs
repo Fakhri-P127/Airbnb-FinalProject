@@ -3,25 +3,21 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
+using Microsoft.AspNetCore.Identity;
+using Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses;
 
 namespace Airbnb.Persistance.Context
 {
-    public class AirbnbDbContext : IdentityDbContext<AppUser>
+    public class AirbnbDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
         public AirbnbDbContext(DbContextOptions<AirbnbDbContext> options) : base(options)
         {
 
         }
         #region User related sets
-        public DbSet<AppUser> AppUsers { get; set; }
+        //public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<AppUserLanguage> AppUserLanguages { get; set; }
@@ -55,14 +51,26 @@ namespace Airbnb.Persistance.Context
 
         private static void ConfigureDeleteBehaviour(ModelBuilder builder)
         {
+            #region hosts
             builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host)
                 .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)
-                .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<PropertyReview>().HasOne(x => x.AppUser).WithMany(x => x.ReviewsByYou)
-                .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region reservations
             builder.Entity<Reservation>().HasOne(x => x.GuestReview).WithOne(x => x.Reservation)
                 .OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Reservation>().HasOne(x => x.Host).WithMany(x => x.Reservations)
+               .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region property reviews
+            builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)
+              .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<PropertyReview>().HasOne(x => x.AppUser).WithMany(x => x.ReviewsByYou)
+                .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region guest reviews
+            builder.Entity<GuestReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsByYou)
+              .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
             #region states
             builder.Entity<State>().HasOne(x => x.Region).WithMany(x => x.States)
               .HasForeignKey(x => x.RegionId).OnDelete(DeleteBehavior.NoAction);
@@ -79,20 +87,35 @@ namespace Airbnb.Persistance.Context
         }
         private void AutoUpdateCreatedAndModifiedValue()
         {
-            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity 
-            && ( e.State == EntityState.Added
+            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity || e.Entity is AppUser
+            && (e.State == EntityState.Added
             || e.State == EntityState.Modified
             || e.State == EntityState.Unchanged));
-
-            foreach (var entityEntry in entries)
+            if (entries.FirstOrDefault().Entity is BaseEntity)
             {
-                ((BaseEntity)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
-
-                if (entityEntry.State == EntityState.Added)
+                foreach (var entityEntry in entries)
                 {
-                    ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
+                    ((BaseEntity)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+
+                    if (entityEntry.State == EntityState.Added)
+                    {
+                        ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
+                    }
                 }
             }
+            else if (entries.FirstOrDefault().Entity is AppUser)
+            {
+                foreach (var entityEntry in entries)
+                {
+                    ((AppUser)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+
+                    if (entityEntry.State == EntityState.Added)
+                    {
+                        ((AppUser)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
+                    }
+                }
+            }
+
         }
     }
 }

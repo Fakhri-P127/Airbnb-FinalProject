@@ -15,7 +15,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         public RegisterCommandValidator()
         {
            
-            RuleFor(x => x.Email).NotEmpty().EmailAddress().Length(10,30);
+            RuleFor(x => x.Email).NotEmpty().EmailAddress().Length(6,30);
             RuleFor(x => x.Firstname).NotEmpty().Length(2,15);
             RuleFor(x => x.Lastname).NotEmpty().Length(2,15);
             RuleFor(x => x.Password).NotEmpty().Length(8,30);

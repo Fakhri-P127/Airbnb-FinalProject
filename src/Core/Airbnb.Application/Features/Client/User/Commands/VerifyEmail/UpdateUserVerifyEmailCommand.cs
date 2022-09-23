@@ -9,8 +9,8 @@ namespace Airbnb.Application.Features.Client.User.Commands.VerifyEmail
 {
     public class UpdateUserVerifyEmailCommand:IRequest
     {
-        public string Id { get; set; }
-        public UpdateUserVerifyEmailCommand(string id)
+        public Guid Id { get; set; }
+        public UpdateUserVerifyEmailCommand(Guid id)
         {
             Id = id;
         }

@@ -7,9 +7,9 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetById
 {
     public class UserGetByIdQuery:IRequest<UserResponse>
     {
+        public Guid Id { get; set; }
         public Expression<Func<AppUser, bool>> Expression { get; set; }
-        public string Id { get; set; }
-        public UserGetByIdQuery(string id, Expression<Func<AppUser, bool>> expression = null)
+        public UserGetByIdQuery(Guid id, Expression<Func<AppUser, bool>> expression = null)
         {
             Id = id;
             Expression = expression;

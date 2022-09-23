@@ -1,11 +1,5 @@
 ﻿using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Domain.Entities.PropertyRelated
 {
@@ -25,7 +19,7 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         public Guid PropertyId { get; set; }
         public Property Property { get; set; }
         // who's reserving
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         // who ownes it
         public Guid HostId { get; set; }

@@ -40,7 +40,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
             AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
             if (user is null) throw new UserIdNotFoundException(); 
 
-            if (reservation.AppUserId != user.Id) throw new PropertyReview_UserIdNotMatchedException(request.AppUserId,reservation.AppUserId);
+            if (reservation.AppUserId != user.Id) throw new PropertyReview_UserIdNotMatchedException(request.AppUserId, (Guid)reservation.AppUserId);
 
             return reservation;
         }

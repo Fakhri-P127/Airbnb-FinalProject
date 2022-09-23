@@ -15,7 +15,7 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public Guid HostId { get; set; }
         public Host Host { get; set; }
         // guest id
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         // booking e gore bunu yaza bilsin.
         public Guid ReservationId { get; set; }

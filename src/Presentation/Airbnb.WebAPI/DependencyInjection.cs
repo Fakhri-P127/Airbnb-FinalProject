@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Airbnb.Persistance.Email;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -41,8 +42,10 @@ namespace Airbnb.WebAPI
             new List<string>()
                       }
               });
-            });
-            //AddApiVersioningAndApiExplorer(services);
+            })
+                //.AddApiVersioningAndApiExplorer()
+                .AddHttpClient();
+
             return services;
         }
         public static IServiceCollection AddApiVersioningAndApiExplorer(this IServiceCollection services)
@@ -56,10 +59,10 @@ namespace Airbnb.WebAPI
                                                                 new HeaderApiVersionReader("x-api-version"),
                                                                 new MediaTypeApiVersionReader("x-api-version"));
 
-                //opt.ApiVersionReader = new HeaderApiVersionReader("X-API-VERSION");
             });
             services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
             return services;
         }
+
     }
 }

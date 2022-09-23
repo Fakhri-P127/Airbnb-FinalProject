@@ -12,7 +12,7 @@ namespace Airbnb.Application.Exceptions.PropertyReviews
         public HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
         public string ErrorMessage { get; set; }
-        public PropertyReview_UserIdNotMatchedException(string propertyReviewUserId, string reservationUserId)
+        public PropertyReview_UserIdNotMatchedException(Guid propertyReviewUserId, Guid reservationUserId)
         {
             ErrorMessage = $"User Id of Property Review doesn't match with the Id of Reservation. {propertyReviewUserId} ❌ {reservationUserId}";
         }

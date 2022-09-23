@@ -25,7 +25,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses
         public Guid PropertyId { get; set; }
    
         // who's reserving
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
    
         // who ownes it
         public Guid HostId { get; set; }

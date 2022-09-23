@@ -15,7 +15,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
         public float GuestScore { get; set; }
         public Guid HostId { get; set; }
         // guest
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         // booking e gore bunu yaza bilsin.
         public Guid ReservationId { get; set; }
     }

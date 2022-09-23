@@ -37,7 +37,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
             if (reservation.GuestReview is not null)
                 throw new GuestReviewDuplicateValidationException(request.ReservationId);
             if (request.AppUserId != reservation.AppUserId)
-                throw new GuestReview_UserIdNotMatchedException(request.AppUserId, reservation.AppUserId);
+                throw new GuestReview_UserIdNotMatchedException(request.AppUserId, (Guid)reservation.AppUserId);
         }
 
         private async Task<Reservation> CheckIfNotFoundThenReturnReservation(CreateGuestReviewCommand request)

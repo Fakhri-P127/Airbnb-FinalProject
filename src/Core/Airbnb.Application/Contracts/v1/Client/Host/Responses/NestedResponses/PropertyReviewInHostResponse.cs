@@ -11,7 +11,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses
     {
         public string Text { get; set; }
         public float OverallScore { get; set; }
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         public Guid ReservationId { get; set; }
     }
 }

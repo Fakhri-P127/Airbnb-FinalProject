@@ -34,7 +34,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpGet("[action]/{guestId}")]
-        public async Task<IActionResult> GetPropertyReviewsWrittenByGuest([FromRoute] string guestId)
+        public async Task<IActionResult> GetPropertyReviewsWrittenByGuest([FromRoute] Guid guestId)
         {
             List<PropertyReviewResponse> result = await _mediatr
                 .Send(new GetAllPropertyReviewsQuery(x => x.AppUserId == guestId));

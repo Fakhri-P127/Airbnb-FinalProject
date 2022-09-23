@@ -33,7 +33,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpGet("[action]/{guestId}")]
-        public async Task<IActionResult> GetGuestReviewsOfUser(string guestId)
+        public async Task<IActionResult> GetGuestReviewsOfUser(Guid guestId)
         {
             List<GuestReviewResponse> result = await _mediatr
                 .Send(new GetAllGuestReviewsQuery(x => x.AppUserId == guestId));

@@ -1,14 +1,10 @@
-﻿using Airbnb.Domain.Entities.PropertyRelated;
+﻿using Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses;
+using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Domain.Entities.AppUserRelated
 {
-    public class AppUser : IdentityUser
+    public class AppUser : CustomIdentityUser
     {
         public AppUser()
         {
@@ -20,8 +16,6 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
       
         //optionals
         public string ProfilPicture { get; set; }
@@ -34,6 +28,5 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public List<PropertyReview> ReviewsByYou { get; set; }
         public List<GuestReview> ReviewsAboutYou { get; set; }
         public List<Reservation> ReservationsYouMade { get; set; }
-
     }
 }

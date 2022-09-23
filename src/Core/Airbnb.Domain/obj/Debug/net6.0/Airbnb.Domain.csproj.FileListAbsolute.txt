@@ -10,3 +10,5 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\refint\Airbnb.Domain.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\ref\Airbnb.Domain.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.Xmls.Resources.resources
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.csproj.GenerateResource.cache

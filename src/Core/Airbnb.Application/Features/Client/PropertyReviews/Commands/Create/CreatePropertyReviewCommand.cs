@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
         public float ValueScore { get; set; }
         // check ele ki AppUserId bu property uchun edilen bookingde Id si var :# 
         // bu appUser reserve i edendi
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
         // guestin etdiyi reservation deki prop Id bunla ust uste dushurse icaze ver
         //public Guid PropertyId { get; set; }
         //public Property Property { get; set; }

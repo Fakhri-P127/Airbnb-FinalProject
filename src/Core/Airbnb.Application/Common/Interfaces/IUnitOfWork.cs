@@ -1,4 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces.Authentication;
+using Airbnb.Application.Common.Interfaces.Email;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
@@ -12,6 +13,7 @@ namespace Airbnb.Application.Common.Interfaces
 {
     public interface IUnitOfWork
     {
+        #region repositories
         IUserRepository UserRepository { get; }
         IHostRepository HostRepository { get; }
         IGenderRepository GenderRepository { get; }
@@ -31,7 +33,7 @@ namespace Airbnb.Application.Common.Interfaces
         ICountryRepository CountryRepository { get; }
         ICityRepository CityRepository { get; }
         IStateRepository StateRepository { get; }
-        
+        #endregion
         Task SaveChangesAsync();
     }
 }

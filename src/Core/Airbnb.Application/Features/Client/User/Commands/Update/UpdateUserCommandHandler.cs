@@ -28,7 +28,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
         public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            AppUser user = await _unit.UserRepository.GetByIdAsync(Id.ToString(),null, AppUserHelper.AllUserIncludes());
+            AppUser user = await _unit.UserRepository.GetByIdAsync(Id,null, AppUserHelper.AllUserIncludes());
             if (user is null) throw new UserIdNotFoundException();
             _unit.UserRepository.Update(user);
             _mapper.Map(request, user);

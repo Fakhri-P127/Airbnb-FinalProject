@@ -33,7 +33,7 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
                     throw new HostNotFoundException(hostId);
             }
             List<Property> properties = await _unit.PropertyRepository
-                .GetAllAsync(request.Expression, PropertyHelper.AllPropertyIncludes());
+                .GetAllAsync(request.Expression);
 
             List<GetPropertyResponse> response = _mapper.Map<List<GetPropertyResponse>>(properties);
             if (response is null) throw new Exception("Internal server error");

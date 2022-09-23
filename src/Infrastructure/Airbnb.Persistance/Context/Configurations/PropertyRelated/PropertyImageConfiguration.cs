@@ -18,7 +18,6 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             //builder.Property(x => x.Alternative).HasMaxLength(25);
             builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
 
-            //maybe isunique name ele
         }
     }
 }

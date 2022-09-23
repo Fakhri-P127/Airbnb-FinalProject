@@ -17,7 +17,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses.NestedRes
         public float AccuracyScore { get; set; }
         public float LocationScore { get; set; }
         public float ValueScore { get; set; }
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
       
     }
 }

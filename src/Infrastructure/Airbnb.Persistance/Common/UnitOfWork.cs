@@ -1,4 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Common.Interfaces.Email;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Application.Common.Interfaces.Repositories.UserRelated;
@@ -6,13 +7,15 @@ using Airbnb.Persistance.Common.Repositories.PropertyRelated;
 using Airbnb.Persistance.Common.Repositories.PropertyRelated.StateRelated;
 using Airbnb.Persistance.Common.Repositories.UserRelated;
 using Airbnb.Persistance.Context;
+using Airbnb.Persistance.Email;
 
 namespace Airbnb.Persistance.Common
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AirbnbDbContext _context;
- 
+
+        #region repositories
         public IUserRepository UserRepository { get => new UserRepository(_context) ?? throw new NotImplementedException(); }
         public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
         public IGenderRepository GenderRepository { get => new GenderRepository(_context) ?? throw new NotImplementedException(); }
@@ -32,7 +35,8 @@ namespace Airbnb.Persistance.Common
         public ICountryRepository CountryRepository { get => new CountryRepository(_context) ?? throw new NotImplementedException(); }
         public ICityRepository CityRepository { get => new CityRepository(_context) ?? throw new NotImplementedException(); }
         public IStateRepository StateRepository { get => new StateRepository(_context) ?? throw new NotImplementedException(); }
-
+        #endregion
+        
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

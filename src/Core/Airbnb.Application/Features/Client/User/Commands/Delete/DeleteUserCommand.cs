@@ -9,8 +9,8 @@ namespace Airbnb.Application.Features.Client.User.Commands.Delete
 {
     public class DeleteUserCommand:IRequest
     {
-        public string Id { get; set; }
-        public DeleteUserCommand(string id)
+        public Guid Id { get; set; }
+        public DeleteUserCommand(Guid id)
         {
             Id = id;
         }

@@ -19,7 +19,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         public Guid PropertyId { get; set; }
 
         // who's reserving
-        public string AppUserId { get; set; }
+        public Guid AppUserId { get; set; }
 
         // who ownes it
         public Guid HostId { get; set; }

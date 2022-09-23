@@ -48,3 +48,7 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\Airbnb.Application.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\Airbnb.Application.pdb
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\MailKit.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\MimeKit.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\NETCore.MailKit.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\StatusUpdaterService\bin\Debug\net6.0\BouncyCastle.Crypto.dll

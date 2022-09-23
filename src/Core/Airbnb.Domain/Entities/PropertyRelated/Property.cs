@@ -17,13 +17,6 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         public string Description { get; set; }
         public int? Price { get; set; }
         public bool IsPetAllowed { get; set; }
-        //public Guid RegionId { get; set; }
-        //public Region Region { get; set; }
-        //public Guid CountryId { get; set; }
-        //public Country Country { get; set; }
-        //public Guid CityId { get; set; }
-        //public City City { get; set; }
-        //public string Street { get; set; }
         public Guid StateId { get; set; }
         public State State { get; set; }
         public byte? MinNightCount { get; set; }

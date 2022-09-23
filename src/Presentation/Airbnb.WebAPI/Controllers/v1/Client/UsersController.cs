@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
-    [SkipMyGlobalResourceFilter]
+    //[SkipMyGlobalResourceFilter]
     public class UsersController : BaseController
     {
         private readonly ISender _mediatr;
@@ -41,7 +41,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
 
-        public async Task<IActionResult> GetUserById([FromRoute] string id)
+        public async Task<IActionResult> GetUserById([FromRoute] Guid id)
         {
             var result = await _mediatr.Send(new UserGetByIdQuery(id));
             if (result is null) throw new Exception("Internal server error");
@@ -55,13 +55,13 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpPatch("{id}")]
-        public async Task<IActionResult> VerifyEmailOfUser([FromRoute] string id)
+        public async Task<IActionResult> VerifyEmailOfUser([FromRoute] Guid id)
         {
             await _mediatr.Send(new UpdateUserVerifyEmailCommand(id));
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] string id)
+        public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteUserCommand(id));
             return NoContent();
