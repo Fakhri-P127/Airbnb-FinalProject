@@ -19,7 +19,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationDI();
 builder.Services.AddInfrastructureDI(builder.Configuration);
 builder.Services.AddSwaggerAndConfigureJwtService();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -43,7 +43,7 @@ namespace Airbnb.WebAPI
                       }
               });
             })
-                //.AddApiVersioningAndApiExplorer()
+                .AddApiVersioningAndApiExplorer()
                 .AddHttpClient();
 
             return services;
@@ -55,9 +55,7 @@ namespace Airbnb.WebAPI
                 opt.ReportApiVersions = true;
                 opt.AssumeDefaultVersionWhenUnspecified = true;
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
-                opt.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(),
-                                                                new HeaderApiVersionReader("x-api-version"),
-                                                                new MediaTypeApiVersionReader("x-api-version"));
+                opt.ApiVersionReader = new UrlSegmentApiVersionReader();
 
             });
             services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");

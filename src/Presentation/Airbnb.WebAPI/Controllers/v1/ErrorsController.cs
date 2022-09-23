@@ -11,7 +11,7 @@ using System.Net;
 
 namespace Airbnb.WebAPI.Controllers.v1
 {
-    [SkipMyGlobalResourceFilter]
+    [SkipMyGlobalFilter]
     public class ErrorsController : ControllerBase
     {
         [Route("/error")]

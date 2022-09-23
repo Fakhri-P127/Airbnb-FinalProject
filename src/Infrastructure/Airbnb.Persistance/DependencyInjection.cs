@@ -7,6 +7,7 @@ using Airbnb.Persistance.Common;
 using Airbnb.Persistance.Context;
 using Airbnb.Persistance.Email;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,7 @@ namespace Airbnb.Persistance
                 opt.UseSqlServer(configuration.GetConnectionString("Default"));
             });
 
+
             services.AddIdentity<AppUser,IdentityRole<Guid>>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
@@ -38,10 +40,16 @@ namespace Airbnb.Persistance
                 opt.Lockout.AllowedForNewUsers = true;
                 
                 opt.SignIn.RequireConfirmedEmail = true;
-            }).AddEntityFrameworkStores<AirbnbDbContext>().AddDefaultTokenProviders();
+
+                opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+            }).AddEntityFrameworkStores<AirbnbDbContext>()
+            .AddDefaultTokenProviders()
+            .AddTokenProvider<EmailConfirmationTokenProvider<AppUser>>("emailconfirmation");
+
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
             opt.TokenLifespan = TimeSpan.FromMinutes(15));
-
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+            opt.TokenLifespan = TimeSpan.FromDays(3));
        
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
             services.AddSingleton(jwtSettings);
@@ -69,6 +77,7 @@ namespace Airbnb.Persistance
                 opt.TokenValidationParameters = tokenValidationParameters;
 
             });
+          
             //services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();

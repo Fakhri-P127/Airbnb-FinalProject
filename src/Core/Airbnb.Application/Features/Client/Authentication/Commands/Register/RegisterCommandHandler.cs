@@ -40,20 +40,14 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             await CheckAppUserErrors(request);
             AppUser user = _mapper.Map<AppUser>(request);
             if (request.PhoneNumber is not null) user.PhoneNumberConfirmed = true;
-            user.CreatedAt = DateTime.UtcNow;
-            user.ModifiedAt = DateTime.UtcNow;
+            //user.CreatedAt = DateTime.UtcNow;
+            //user.ModifiedAt = DateTime.UtcNow;
             await ImageCheck(request, user);
             IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
-            await CheckIfResultIsSuccessful(user, createdUserResult,"creating User.");
+            await CheckIfResultIsSuccessful(user, createdUserResult, "creating User.");
             //FormFileCollection files = new();
             //files.Add(request.ProfilPicture);
-            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            string confirmationLink = _generator.GetUriByAction(_accessor.HttpContext, "ConfirmEmail",
-                "Authentication", new { token, email = user.Email }, _accessor.HttpContext.Request.Scheme);
-            MessageResponse message = new(new string[] { user.Email, "efendiyev1902@gmail.com" },
-                "Confirmation Email Link", confirmationLink, null);
-
-            await _emailSender.SendEmailAsync(message);
+            await AuthenticationHelper.SendConfirmationEmail(user,null,_userManager,_generator,_accessor,_emailSender);
             IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "Guest");
             await CheckIfResultIsSuccessful(user, roleResult, "adding Role to User.");
             // register deki tokeni silmek olar
@@ -67,8 +61,10 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             //return authResult;
         }
 
+  
+
         private async Task CheckIfResultIsSuccessful(AppUser user, IdentityResult result,
-            string errorMessage)
+           string errorMessage)
         {
             if (!result.Succeeded)
             {

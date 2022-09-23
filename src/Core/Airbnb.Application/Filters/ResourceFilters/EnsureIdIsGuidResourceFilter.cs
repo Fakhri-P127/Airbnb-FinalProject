@@ -39,7 +39,7 @@ namespace Airbnb.Application.Filters.ResourceFilters
 
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
-            if (context.Filters.Any(x => x.GetType() == typeof(SkipMyGlobalResourceFilterAttribute))) return;
+            if (context.Filters.Any(x => x.GetType() == typeof(SkipMyGlobalFilterAttribute))) return;
             var value = context.RouteData.Values["id"];
             //// route da id valuesi gelmeyende 
             if (value is null) return;

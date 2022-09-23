@@ -5,6 +5,7 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
@@ -26,8 +27,10 @@ namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
         }
         public async Task<AuthenticationResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
+            
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();
+            if (_signInManager.Context.User.Identity.IsAuthenticated)   throw new User_LoginedAlreadyException();
             //if (!user.EmailConfirmed) throw new User_EmailNotConfirmedException();
 
             SignInResult result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);

@@ -2,7 +2,7 @@
 
 namespace Airbnb.Application.Filters.ActionFilters
 {
-    public class SkipMyGlobalResourceFilterAttribute : ActionFilterAttribute
+    public class SkipMyGlobalFilterAttribute : ActionFilterAttribute
     {
     }
 }

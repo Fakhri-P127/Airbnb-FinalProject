@@ -1,10 +1,8 @@
 ﻿using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Features.Client.User.Commands.Delete;
 using Airbnb.Application.Features.Client.User.Commands.Update;
-using Airbnb.Application.Features.Client.User.Commands.VerifyEmail;
 using Airbnb.Application.Features.Client.User.Queries.GetAll;
 using Airbnb.Application.Features.Client.User.Queries.GetById;
-using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +26,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             var result = await _mediatr.Send(new UserGetAllQuery());
             return Ok(result);
         }
-        [HttpGet("usersWithoutProfilePicture")]
+        [HttpGet("usersWithoutProfilePicture")]// bunu filterlemek lazimdi, bele sehvdi
         public async Task<IActionResult> GetUsersWithoutProfilePicture()
         {
             var query = new UserGetAllQuery
@@ -53,12 +51,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             var result = await _mediatr.Send(command);
             if (result is null) throw new Exception("Internal server error");
             return Ok(result);
-        }
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> VerifyEmailOfUser([FromRoute] Guid id)
-        {
-            await _mediatr.Send(new UpdateUserVerifyEmailCommand(id));
-            return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] Guid id)
