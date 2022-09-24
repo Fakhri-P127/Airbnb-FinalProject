@@ -1,6 +1,5 @@
 ﻿using Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses;
 using Airbnb.Domain.Entities.PropertyRelated;
-using Microsoft.AspNetCore.Identity;
 
 namespace Airbnb.Domain.Entities.AppUserRelated
 {

@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Common.Interfaces;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Exceptions.Hosts;
@@ -10,6 +11,8 @@ using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
+using System.Threading;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 {
@@ -17,15 +20,17 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly CustomUserManager<AppUser> _userManager;
 
-        public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper)
+        public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper,CustomUserManager<AppUser> userManager)
         {
             _unit = unit;
             _mapper = mapper;
+            _userManager = userManager;
         }
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-            Property property = await CheckIfNotFoundThenReturnProperty(request);
+            Property property = await CheckIfNotFoundThenReturnProperty(request,cancellationToken);
 
             // host un verdiyi checkInTime i menimsedirik.
             request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
@@ -77,12 +82,12 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             return reservedDays;
         }
 
-        private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request)
+        private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request,CancellationToken cancellationToken=default)
         {
             Property property = await _unit.PropertyRepository
                 .GetByIdAsync(request.PropertyId, null, "Host", "Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
-            AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
+            AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
             if (user is null) throw new UserIdNotFoundException();
             Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
 

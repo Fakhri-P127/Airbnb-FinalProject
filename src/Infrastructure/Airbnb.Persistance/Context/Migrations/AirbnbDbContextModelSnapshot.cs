@@ -258,7 +258,9 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsDisplayed")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<bool>("IsSuperHost")
                         .HasColumnType("bit");

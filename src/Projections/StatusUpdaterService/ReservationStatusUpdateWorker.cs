@@ -31,6 +31,9 @@ namespace StatusUpdaterService
                 else
                 {
                     _logger.LogError("Something went wrong. Status code: {StatusCode}", result.StatusCode);
+                    //CancellationTokenSource source = new();
+                    //stoppingToken = source.Token;
+                    //source.Cancel();
                 }
                 // bele olmalidi eslinde
                 //targetTime = targetTime.AddDays(1);

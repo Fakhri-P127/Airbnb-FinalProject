@@ -4,11 +4,11 @@ using Airbnb.Application.Features.Client.Hosts.Queries.GetAll;
 using Airbnb.Application.Features.Client.Hosts.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
-
     public class HostsController : BaseController
     {
         private readonly ISender _mediatr;
@@ -18,11 +18,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             _mediatr = mediatr;
         }
 
-
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllHosts()
         {
-            var result = await _mediatr.Send(new GetAllHostQuery());
+            List<GetHostResponse> result = await _mediatr.Send(new GetAllHostQuery());
             return Ok(result);
         }
         [HttpGet("{id}")]
@@ -33,9 +33,10 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateHost([FromBody] CreateHostCommand command)
+        [Authorize(Roles ="Guest")]
+        public async Task<IActionResult> BecomeHost([FromBody] CreateHostCommand command)
         {
-            var result = await _mediatr.Send(command);
+            PostHostResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetHostById), new { id = result.Id }, result);
         }
     }

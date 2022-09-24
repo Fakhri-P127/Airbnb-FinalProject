@@ -1,4 +1,6 @@
-﻿using Airbnb.Persistance.Email;
+﻿using Airbnb.Application.Middlewares;
+using Airbnb.Persistance.Email;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Any;
@@ -44,8 +46,8 @@ namespace Airbnb.WebAPI
               });
             })
                 .AddApiVersioningAndApiExplorer()
-                .AddHttpClient();
-
+                .AddHttpClient()
+            .AddSingleton<IAuthorizationMiddlewareResultHandler,MyAuthorizationMiddlewareResultHandler>();
             return services;
         }
         public static IServiceCollection AddApiVersioningAndApiExplorer(this IServiceCollection services)

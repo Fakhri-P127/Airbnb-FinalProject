@@ -14,7 +14,6 @@ namespace Airbnb.Application.Common.Interfaces
     public interface IUnitOfWork
     {
         #region repositories
-        IUserRepository UserRepository { get; }
         IHostRepository HostRepository { get; }
         IGenderRepository GenderRepository { get; }
         ILanguageRepository LanguageRepository { get; }

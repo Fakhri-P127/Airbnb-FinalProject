@@ -1,8 +1,6 @@
-﻿using Airbnb.Application.PiplineBehaviours;
-using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.PiplineBehaviours;
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -22,9 +20,8 @@ namespace Airbnb.Application
                 .AddAutoMapper(assembly)
                 .AddHttpContextAccessor();
 
-            services.AddScoped(typeof(CustomUserManager<>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPiplineBehaviour<,>));
-
+            services.AddScoped(typeof(CustomUserManager<>));
 
             return services;
         }

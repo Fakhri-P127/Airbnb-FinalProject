@@ -3,7 +3,7 @@
 
 namespace Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses
 {
-    internal static class Base32
+    public static class Base32
     {
         private const string _base32Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 

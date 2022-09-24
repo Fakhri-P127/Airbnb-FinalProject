@@ -1,11 +1,14 @@
-﻿using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create;
+﻿using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses;
+using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
 {
@@ -19,32 +22,36 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllPropertyGroups()
         {
-            var result = await _mediatr.Send(new GetAllPropertyGroupsQuery());
+            List<GetPropertyGroupResponse> result = await _mediatr.Send(new GetAllPropertyGroupsQuery());
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetPropertyGroupById([FromRoute] Guid id)
         {
-            var result = await _mediatr.Send(new GetByIdPropertyGroupQuery(id));
+            GetPropertyGroupResponse result = await _mediatr.Send(new GetByIdPropertyGroupQuery(id));
             return Ok(result);
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreatePropertyGroup([FromForm] CreatePropertyGroupCommand command)
         {
-            var result = await _mediatr.Send(command);
+            PostPropertyGroupResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetPropertyGroupById), routeValues: new { id = result.Id }, result);
         }
         [HttpPut("{id}")]
-        //[EnsureIdIsGuidActionFilter]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdatePropertyGroup([FromForm] UpdatePropertyGroupCommand command)
         {
-            var result = await _mediatr.Send(command);
+            PostPropertyGroupResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePropertyGroup([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeletePropertyGroupCommand(id));

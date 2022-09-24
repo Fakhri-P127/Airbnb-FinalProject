@@ -1,43 +1,47 @@
-﻿using Airbnb.Application.Common.Interfaces;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Exceptions.AuthenticationExceptions;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Airbnb.Application.Features.Client.User.Commands.Update
 {
     public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, UserResponse>
     {
-        private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
         private readonly IHttpContextAccessor _accessor;
+        private readonly CustomUserManager<AppUser> _userManager;
 
-        public UpdateUserCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env
-            ,IHttpContextAccessor accessor)
+        public UpdateUserCommandHandler(IMapper mapper, IWebHostEnvironment env
+            ,IHttpContextAccessor accessor,CustomUserManager<AppUser> userManager)
         {
-            _unit = unit;
             _mapper = mapper;
             _env = env;
             _accessor = accessor;
+            _userManager = userManager;
         }
         public async Task<UserResponse> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            AppUser user = await _unit.UserRepository.GetByIdAsync(Id,null, AppUserHelper.AllUserIncludes());
+            AppUser user = await _userManager.Users.GetUserByIdAsync(Id,cancellationToken,AppUserHelper.AllUserIncludes());
             if (user is null) throw new UserIdNotFoundException();
-            _unit.UserRepository.Update(user);
+            if (user.Id.ToString() != _accessor.HttpContext.User.GetUserIdFromClaim())
+                throw new Authentication_UserIdNotSameWithAuthenticatedUserId();
+           
             _mapper.Map(request, user);
             await ImageCheck(request, user);
             CheckRemoveLanguages(request, user);
             CheckAddLanguage(request, user);
-            await _unit.SaveChangesAsync();
+            await _userManager.UpdateAsync(user);
             UserResponse response = _mapper.Map<UserResponse>(user);
-            // birinci gender verence deyer null olur, gel repo ile genderi tap ve responsedaki gendere beraber et eger nulldisa
+           
             if (user.EmailConfirmed) response.Verifications.Add("Email verified");
             if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
 
@@ -63,7 +67,6 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             {
                 foreach (Guid languageId in request.AppUserLanguages)
                 {
-                    // Amenity amenity = _unit.AmenityRepoGetById edib add etmek olar
                     AppUserLanguage appUserLanguage = new()
                     {
                         LanguageId = languageId,
@@ -72,16 +75,17 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
                     user.AppUserLanguages.Add(appUserLanguage);
                 }
             }
-            if (!user.AppUserLanguages.Any())
-            {
-                throw new UserLanguageValidationException()
-                { ErrorMessage = "You must have at least 1 language" };
-            }
+            //if (!user.AppUserLanguages.Any())
+            //{
+            //    throw new UserLanguageValidationException()
+            //    { ErrorMessage = "You must have at least 1 language" };
+            //}
 
         }
         private static void CheckRemoveLanguages(UpdateUserCommand request, AppUser user)
         {
-            if (request.DeletedAppUserLanguages != null && request.DeletedAppUserLanguages.Count != 0)
+            if (request.DeletedAppUserLanguages != null && request.DeletedAppUserLanguages.Count != 0
+                && user.AppUserLanguages != null && user.AppUserLanguages.Count != 0)
             {
                 List<Guid> removableAppUserLanguageIds = new();
                 request.DeletedAppUserLanguages.ForEach(languageId =>

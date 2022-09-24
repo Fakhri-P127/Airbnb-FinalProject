@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,7 +15,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.ResetPasswo
             _userManager = userManager;
         }
         public async Task<Unit> Handle(ResetPasswordCommand request, CancellationToken cancellationToken)
-        {
+        {   
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null)  throw new UserNotFoundValidationException() 
             {

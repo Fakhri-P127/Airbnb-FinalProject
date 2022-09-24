@@ -33,9 +33,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
 
         [HttpGet]
         // object i string email,string password kimi gondersen swaggerde de ishleyecek.
-        public async Task<IActionResult> Login(string email, string password, bool rememberme)
+        public async Task<IActionResult> Login([FromQuery]LoginQuery query)
         {
-            var result = await _mediatr.Send(new LoginQuery(email, password, rememberme));
+            var result = await _mediatr.Send(query);
             return Ok(result); ;
         }
         //[HttpPost]

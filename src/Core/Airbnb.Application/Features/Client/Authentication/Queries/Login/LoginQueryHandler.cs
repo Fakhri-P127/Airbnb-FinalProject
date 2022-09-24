@@ -2,15 +2,14 @@
 using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
 {
-    public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthenticationResponse>
+    public class LoginQueryHandler : IRequestHandler<LoginQuery, LoginResponse>
     {
         private readonly CustomUserManager<AppUser> _userManager;
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
@@ -25,27 +24,20 @@ namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
             _signInManager = signInManager;
             _mapper = mapper;
         }
-        public async Task<AuthenticationResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<LoginResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();
-            if (_signInManager.Context.User.Identity.IsAuthenticated)   throw new User_LoginedAlreadyException();
             //if (!user.EmailConfirmed) throw new User_EmailNotConfirmedException();
 
             SignInResult result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             await CheckIfSignInHappenedSuccessfully(user, result);
 
-            var authResult = _mapper.Map<AuthenticationResponse>(user);
-            if (authResult is null) throw new Exception("Internal server error");
-            authResult.Token = await _jwtTokenGenerator.GenerateTokenAsync(user);
+            LoginResponse response = _mapper.Map<LoginResponse>(user);
+            if (response is null) throw new Exception("Internal server error");
+            response.Token = await _jwtTokenGenerator.GenerateTokenAsync(user);
 
-            //var sa = _signInManager.Context.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier);
-            //foreach (var claim in _signInManager.Context.User.Claims)
-            //{
-            //    authResult.Verifications.Add($"Type: {claim.Type} Value: {claim.Value}");
-            //}
-            return authResult;
+            return response;
         }
 
         private async Task CheckIfSignInHappenedSuccessfully(AppUser user, SignInResult result)

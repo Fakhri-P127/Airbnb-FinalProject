@@ -86,4 +86,3 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\De
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\MimeKit.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\NETCore.MailKit.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\BouncyCastle.Crypto.dll
-C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.MvcApplicationPartsAssemblyInfo.cs

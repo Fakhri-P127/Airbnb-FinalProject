@@ -1,7 +1,9 @@
 using Airbnb.Application;
+using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.Application.Filters.ResourceFilters;
 using Airbnb.Persistance;
 using Airbnb.WebAPI;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(config =>
 {
     config.Filters.Add<EnsureIdIsGuidResourceFilter>();
+    config.Filters.Add<EnsureEnteredUserIdIsSameWithAuthenticatedUserId_ActionFilterAttribute>();
 }
-);
+)
+.AddJsonOptions(opt => opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

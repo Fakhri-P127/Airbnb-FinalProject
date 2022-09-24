@@ -7,6 +7,7 @@ using System.Reflection;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using Microsoft.AspNetCore.Identity;
 using Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Airbnb.Persistance.Context
 {
@@ -14,10 +15,11 @@ namespace Airbnb.Persistance.Context
     {
         public AirbnbDbContext(DbContextOptions<AirbnbDbContext> options) : base(options)
         {
-
+            
+            
         }
         #region User related sets
-        //public DbSet<AppUser> AppUsers { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Gender> Genders { get; set; }
         public DbSet<AppUserLanguage> AppUserLanguages { get; set; }
@@ -44,7 +46,6 @@ namespace Airbnb.Persistance.Context
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
             ConfigureDeleteBehaviour(builder);
             base.OnModelCreating(builder);
         }
@@ -87,35 +88,47 @@ namespace Airbnb.Persistance.Context
         }
         private void AutoUpdateCreatedAndModifiedValue()
         {
-            var entries = ChangeTracker.Entries().Where(e => e.Entity is BaseEntity || e.Entity is AppUser
+            var entries = ChangeTracker.Entries().Where(e => (e.Entity is BaseEntity || e.Entity is AppUser)
             && (e.State == EntityState.Added
-            || e.State == EntityState.Modified
-            || e.State == EntityState.Unchanged));
-            if (entries.FirstOrDefault().Entity is BaseEntity)
-            {
-                foreach (var entityEntry in entries)
-                {
-                    ((BaseEntity)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+            || e.State == EntityState.Modified));
+            //if (entries.FirstOrDefault().Entity is BaseEntity)
+            //{
+            if (entries.Any(x => x.Entity is BaseEntity)) UpdateDateTimesForBaseEntity(entries);
+            if (entries.Any(x => x.Entity is AppUser)) UpdateDateTimesForAppUser(entries);
 
-                    if (entityEntry.State == EntityState.Added)
-                    {
-                        ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
-                    }
+            //}
+            //else if (entries.FirstOrDefault().Entity is AppUser)
+            //{
+            //UpdateDateTimesForAppUser(entries);
+            //UpdateDateTimesForBasEntity(entries);
+            //}
+
+        }
+
+        private static void UpdateDateTimesForBaseEntity(IEnumerable<EntityEntry> entries)
+        {
+            foreach (var entityEntry in entries.Where(x => x.Entity is BaseEntity))
+            {
+                ((BaseEntity)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((BaseEntity)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
                 }
             }
-            else if (entries.FirstOrDefault().Entity is AppUser)
-            {
-                foreach (var entityEntry in entries)
-                {
-                    ((AppUser)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+        }
 
-                    if (entityEntry.State == EntityState.Added)
-                    {
-                        ((AppUser)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
-                    }
+        private static void UpdateDateTimesForAppUser(IEnumerable<EntityEntry> entries)
+        {
+            foreach (var entityEntry in entries.Where(x => x.Entity is AppUser))
+            {
+                ((AppUser)entityEntry.Entity).ModifiedAt = DateTime.UtcNow;
+
+                if (entityEntry.State == EntityState.Added)
+                {
+                    ((AppUser)entityEntry.Entity).CreatedAt = DateTime.UtcNow;
                 }
             }
-
         }
     }
 }

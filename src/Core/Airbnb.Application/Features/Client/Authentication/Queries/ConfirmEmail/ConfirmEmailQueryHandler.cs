@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 

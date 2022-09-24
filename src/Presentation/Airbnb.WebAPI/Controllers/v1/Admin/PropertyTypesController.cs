@@ -1,10 +1,12 @@
-﻿using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Create;
+﻿using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
+using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update;
 using Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
@@ -19,31 +21,36 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllPropertyTypes()
         {
-            var result = await _mediatr.Send(new GetAllPropertyTypesQuery());
+            List<GetPropertyTypeResponse> result = await _mediatr.Send(new GetAllPropertyTypesQuery());
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetPropertyTypeById([FromRoute] Guid id)
         {
-            var result = await _mediatr.Send(new GetByIdPropertyTypeQuery(id));
+            GetPropertyTypeResponse result = await _mediatr.Send(new GetByIdPropertyTypeQuery(id));
             return Ok(result);
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreatePropertyType([FromBody] CreatePropertyTypeCommand command)
         {
-            var result = await _mediatr.Send(command);
+            PostPropertyTypeResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetPropertyTypeById), routeValues: new { id = result.Id }, result);
         }
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdatePropertyType([FromBody] UpdatePropertyTypeCommand command)
         {
-            var result = await _mediatr.Send(command);
+            PostPropertyTypeResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeletePropertyType([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeletePropertyTypeCommand(id));

@@ -1,13 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces.Email;
 using Airbnb.Application.Contracts.v1.Admin.EmailRelated.Responses;
-using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
-using Microsoft.AspNetCore.Hosting;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
-using System.Reflection.Emit;
 
 namespace Airbnb.Application.Helpers
 {

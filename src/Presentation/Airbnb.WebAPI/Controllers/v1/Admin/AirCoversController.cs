@@ -1,10 +1,12 @@
-﻿using Airbnb.Application.Features.Admin.AirCovers.Commands.Create;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
+using Airbnb.Application.Features.Admin.AirCovers.Commands.Create;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Delete;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll;
 using Airbnb.Application.Features.Admin.AirCovers.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Admin
@@ -19,32 +21,36 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllAirCovers()
         {
-            var result = await _mediatr.Send(new AirCoverGetAllQuery());
+            List<AirCoverResponse> result = await _mediatr.Send(new AirCoverGetAllQuery());
             return Ok(result);
         }
         [HttpGet("{id}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAirCoverById([FromRoute]Guid id)
         {
-            var result = await _mediatr.Send(new AirCoverGetByIdQuery(id));
+            AirCoverResponse result = await _mediatr.Send(new AirCoverGetByIdQuery(id));
             return Ok(result);
         }
 
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> CreateAirCover([FromBody] CreateAirCoverCommand command)
         {
-            var result = await _mediatr.Send(command);
+            AirCoverResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetAirCoverById), routeValues: new {id=result.Id},result);
         }
         [HttpPut("{id}")]
-        //[EnsureIdIsGuidActionFilter]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAirCover([FromBody] UpdateAirCoverCommand command)
         {
-            var result = await _mediatr.Send(command);
+            AirCoverResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAirCover([FromRoute] Guid id)
         {
             await _mediatr.Send(new DeleteAirCoverCommand(id));

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
 {
-    public class RegisterCommand:IRequest<AuthenticationResponse>
+    public class RegisterCommand:IRequest<RegisterResponse>
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }

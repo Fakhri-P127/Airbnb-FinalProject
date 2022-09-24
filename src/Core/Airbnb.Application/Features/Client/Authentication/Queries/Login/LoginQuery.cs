@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
 {
-    public class LoginQuery:IRequest<AuthenticationResponse>
+    public class LoginQuery:IRequest<LoginResponse>
     {
         public string Email { get; set; }
         public string Password { get; set; }

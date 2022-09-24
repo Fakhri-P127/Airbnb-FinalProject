@@ -27,7 +27,7 @@ namespace Airbnb.Application.Filters.ActionFilters
                 Status = StatusCodes.Status409Conflict,
                 Detail = "You're already logged in. You need to logout to use this feature"
             };
-            context.Result = new BadRequestObjectResult(problemDetails);
+            context.Result = new ObjectResult(problemDetails);
         }
     }
 }

@@ -6,6 +6,7 @@ using Airbnb.Application.Features.Client.GuestReviews.Queries.GetAll;
 using Airbnb.Application.Features.Client.GuestReviews.Queries.GetById;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,13 +20,16 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         {
             _mediatr = mediatr;
         }
+        
         [HttpGet]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllGuestReviews()
         {
             List<GuestReviewResponse> result = await _mediatr.Send(new GetAllGuestReviewsQuery());
             return Ok(result);
         }
         [HttpGet("[action]/{hostId}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetGuestReviewsWrittenByHost([FromRoute]Guid hostId)
         {
             List<GuestReviewResponse> result = await _mediatr
@@ -33,6 +37,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpGet("[action]/{guestId}")]
+        [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetGuestReviewsOfUser(Guid guestId)
         {
             List<GuestReviewResponse> result = await _mediatr
@@ -49,19 +54,21 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         }
 
         [HttpPost]
+        [Authorize(Roles ="Host")]
         public async Task<IActionResult> WriteGuestReview([FromBody] CreateGuestReviewCommand command)
         {
             GuestReviewResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetGuestReviewById),new { id = result.Id}, result);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGuestReview([FromRoute]Guid id,
-            UpdateGuestReviewCommand command)
+        [Authorize(Roles = "Host")]
+        public async Task<IActionResult> UpdateGuestReview(UpdateGuestReviewCommand command)
         {
             GuestReviewResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Host,Moderator,Admin")]
         public async Task<IActionResult> DeleteGuestReview([FromRoute]Guid id)
         {
             await _mediatr.Send(new DeleteGuestReviewCommand(id));

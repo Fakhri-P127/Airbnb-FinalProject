@@ -2,10 +2,10 @@
 using Airbnb.Application.Contracts.v1.Admin.EmailRelated.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.ForgotPassword
 {
@@ -38,8 +38,6 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.ForgotPassw
                 .GetUriByAction(_accessor.HttpContext,
                 "ResetPassword", "Authentication", new { token, email = user.Email },
                 _accessor.HttpContext.Request.Scheme);
-            //BodyBuilder bodyBuilder = new() { HtmlBody = string
-            //    .Format($"<div style='background-color:black;'><div ><h3 style='color:#f4f4f4;'>Token</h3><p style='color:#f4f4f4;'>{token}</p></div><div ><h3 style='color:#f4f4f4;'>Email</h3><p style='color:#f4f4f4;'>{user.Email}</p></div></div>") };
             MessageResponse message = new(new string[] { user.Email },
                 "Reset password token", callback, null);
             await _emailSender.SendEmailAsync(message);

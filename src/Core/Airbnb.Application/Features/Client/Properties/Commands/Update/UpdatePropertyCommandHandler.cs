@@ -74,7 +74,6 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                     CityId = (Guid)request.CityId,
                     Street = request.Street.Trim().ToLower(),
                 };
-                //property.State = state;
             }
             else
             {

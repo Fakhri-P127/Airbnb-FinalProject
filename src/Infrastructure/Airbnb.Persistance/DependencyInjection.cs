@@ -7,10 +7,10 @@ using Airbnb.Persistance.Common;
 using Airbnb.Persistance.Context;
 using Airbnb.Persistance.Email;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -25,6 +25,7 @@ namespace Airbnb.Persistance
             services.AddDbContext<AirbnbDbContext>(opt =>
             {
                 opt.UseSqlServer(configuration.GetConnectionString("Default"));
+                opt.ConfigureWarnings(w => w.Log(RelationalEventId.MultipleCollectionIncludeWarning));
             });
 
 
@@ -78,10 +79,10 @@ namespace Airbnb.Persistance
 
             });
           
-            //services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IEmailSender, EmailSender>();
+
             services.AddAndConfigureEmailService(configuration);
             return services;
         }

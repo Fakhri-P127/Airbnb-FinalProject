@@ -1,6 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

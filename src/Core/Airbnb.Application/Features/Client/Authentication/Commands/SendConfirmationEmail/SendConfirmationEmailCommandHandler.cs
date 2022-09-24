@@ -2,7 +2,7 @@
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Persistance.Authentication.CustomFrameworkClasses;
+using Airbnb.Application.Common.CustomFrameworkImpl;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;

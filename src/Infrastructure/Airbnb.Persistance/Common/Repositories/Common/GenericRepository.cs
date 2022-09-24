@@ -19,13 +19,7 @@ namespace Airbnb.Persistance.Common.Repositories.Common
         {
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
-            if (includes.Length != 0)
-            {
-                foreach (string include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
+            query = SetIncludes(query,includes);
             return await query.ToListAsync();
         }
 
@@ -33,26 +27,14 @@ namespace Airbnb.Persistance.Common.Repositories.Common
         {
             IQueryable<T> query = expression is not null ?
                  _dbSet.Where(expression) : _dbSet.AsQueryable();
-            if (includes.Length != 0)
-            {
-                foreach (string include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
+            query = SetIncludes(query, includes);
             return await query.FirstOrDefaultAsync(x => x.Id == id);
         }
         public virtual async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, params string[] includes)
         {
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
-            if (includes.Length != 0)
-            {
-                foreach (string include in includes)
-                {
-                    query = query.Include(include);
-                }
-            }
+            query = SetIncludes(query, includes);
             return await query.FirstOrDefaultAsync();
         }
         public async Task AddAsync(T entity)
@@ -78,6 +60,17 @@ namespace Airbnb.Persistance.Common.Repositories.Common
             _dbSet.Remove(entity);
             await _context.SaveChangesAsync();
         }
+        private static IQueryable<T> SetIncludes(IQueryable<T> query, string[] includes)
+        {
+            if (includes.Length != 0)
+            {
+                foreach (string include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
 
+            return query;
+        }
     }
 }

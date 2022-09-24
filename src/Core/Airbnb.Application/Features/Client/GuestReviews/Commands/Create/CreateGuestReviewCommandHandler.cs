@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Common.Interfaces;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Exceptions.GuestReviews;
@@ -9,6 +10,7 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
+using System.Threading;
 
 namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
 {
@@ -16,15 +18,17 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
+        private readonly CustomUserManager<AppUser> _userManager;
 
-        public CreateGuestReviewCommandHandler(IUnitOfWork unit,IMapper mapper)
+        public CreateGuestReviewCommandHandler(IUnitOfWork unit,IMapper mapper,CustomUserManager<AppUser> userManager)
         {
             _unit = unit;
             _mapper = mapper;
+            _userManager = userManager;
         }
         public async Task<GuestReviewResponse> Handle(CreateGuestReviewCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await CheckIfNotFoundThenReturnReservation(request);
+            Reservation reservation = await CheckIfNotFoundThenReturnReservation(request,cancellationToken);
             ExceptionChecks(request, reservation);
             GuestReview guestReview = _mapper.Map<GuestReview>(request);
             await _unit.GuestReviewRepository.AddAsync(guestReview);
@@ -37,10 +41,10 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
             if (reservation.GuestReview is not null)
                 throw new GuestReviewDuplicateValidationException(request.ReservationId);
             if (request.AppUserId != reservation.AppUserId)
-                throw new GuestReview_UserIdNotMatchedException(request.AppUserId, (Guid)reservation.AppUserId);
+                throw new GuestReview_UserIdNotMatchedException(request.AppUserId, reservation.AppUserId);
         }
 
-        private async Task<Reservation> CheckIfNotFoundThenReturnReservation(CreateGuestReviewCommand request)
+        private async Task<Reservation> CheckIfNotFoundThenReturnReservation(CreateGuestReviewCommand request, CancellationToken cancellationToken=default)
         {
             Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
             if (host is null) throw new HostNotFoundException(request.HostId);
@@ -48,7 +52,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
                 .GetByIdAsync(request.ReservationId, null,"GuestReview");
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
             
-            AppUser user = await _unit.UserRepository.GetByIdAsync(request.AppUserId, null);
+            AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
             if (user is null) throw new UserIdNotFoundException();
             return reservation;
         }

@@ -16,7 +16,6 @@ namespace Airbnb.Persistance.Common
         private readonly AirbnbDbContext _context;
 
         #region repositories
-        public IUserRepository UserRepository { get => new UserRepository(_context) ?? throw new NotImplementedException(); }
         public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
         public IGenderRepository GenderRepository { get => new GenderRepository(_context) ?? throw new NotImplementedException(); }
         public ILanguageRepository LanguageRepository { get => new LanguageRepository(_context) ?? throw new NotImplementedException(); }
