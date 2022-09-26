@@ -30,17 +30,17 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<GetReservationResponse> result = await _mediatr.Send(new GetAllReservationsQuery());
             return Ok(result);
         }
-        [HttpGet("[action]")]
-        [AllowAnonymous]
-        [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAvailableReservations()
-        {
-            List<GetReservationResponse> result = await _mediatr
-                .Send(new GetAllReservationsQuery(x =>
-                x.Status != (int)Enum_ReservationStatus.ReservationCancelled
-               && x.Status != (int)Enum_ReservationStatus.ReservationFinished));
-            return Ok(result);
-        }
+        //[HttpGet("[action]")]
+        //[AllowAnonymous]
+        //[ResponseCache(Duration = 30)]
+        //public async Task<IActionResult> GetAvailableReservations()
+        //{
+        //    List<GetReservationResponse> result = await _mediatr
+        //        .Send(new GetAllReservationsQuery(x =>
+        //        x.Status != (int)Enum_ReservationStatus.ReservationCancelled
+        //       && x.Status != (int)Enum_ReservationStatus.ReservationFinished));
+        //    return Ok(result);
+        //}
 
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
@@ -73,12 +73,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpPatch("[action]/{id}")]
+        [HttpPatch("[action]")]
         [AllowAnonymous]
 
-        public async Task<IActionResult> UpdateReservationStatus([FromRoute] Guid id)
+        public async Task<IActionResult> UpdateReservationStatus()
         {
-            await _mediatr.Send(new UpdateReservationStatusCommand(id));
+            await _mediatr.Send(new UpdateReservationStatusCommand());
             return NoContent();
         }
 

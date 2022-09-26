@@ -1,9 +1,4 @@
 ﻿using Airbnb.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Domain.Entities.PropertyRelated.StateRelated
 {
@@ -19,6 +14,5 @@ namespace Airbnb.Domain.Entities.PropertyRelated.StateRelated
         public Region Region { get; set; }
         public List<City> Cities { get; set; }
         public List<State> States { get; set; }
-
     }
 }

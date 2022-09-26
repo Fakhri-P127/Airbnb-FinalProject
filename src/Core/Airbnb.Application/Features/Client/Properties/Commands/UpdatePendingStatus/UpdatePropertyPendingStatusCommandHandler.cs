@@ -15,7 +15,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.UpdatePendingSt
         }
         public async Task<Unit> Handle(UpdatePropertyPendingStatusCommand request, CancellationToken cancellationToken)
         {
-            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null
+            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null,true
                 ,"Host","Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
 

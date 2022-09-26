@@ -31,7 +31,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
             Reservation reservation = await _unit.ReservationRepository
-                 .GetByIdAsync(Id, null, "Property");
+                 .GetByIdAsync(Id, null,true, "Property");
             if (reservation is null) throw new ReservationNotFoundException(Id);
 
             request.CheckOutDate = request.CheckOutDate.Date + reservation.Property.CheckOutTime;

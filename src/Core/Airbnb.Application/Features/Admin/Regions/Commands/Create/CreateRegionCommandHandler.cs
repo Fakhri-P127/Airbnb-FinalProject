@@ -13,7 +13,7 @@ namespace Airbnb.Application.Features.Admin.Regions.Commands.Create
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
 
-        public CreateRegionCommandHandler(IUnitOfWork unit,IMapper mapper)
+        public CreateRegionCommandHandler(IUnitOfWork unit, IMapper mapper)
         {
             _unit = unit;
             _mapper = mapper;
@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.Regions.Commands.Create
         {
             Region region = await _unit.RegionRepository.GetSingleAsync(x => x.Name == request.Name);
             if (region is not null) throw new Region_DuplicateNameException(request.Name);
-            region.Name = request.Name;
+            region = new Region { Name = request.Name };
             await _unit.RegionRepository.AddAsync(region);
             return await RegionHelper.ReturnResponse(region, _unit, _mapper);
         }

@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Delete
         }
         public async Task<Unit> Handle(DeleteCancellationPolicyCommand request, CancellationToken cancellationToken)
         {
-            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.Id, null);
+            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.Id, null,true);
             if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
             await _unit.CancellationPolicyRepository.DeleteAsync(cancellationPolicy);
             return await Task.FromResult(Unit.Value);

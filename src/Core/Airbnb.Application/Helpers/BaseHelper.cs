@@ -13,6 +13,12 @@ namespace Airbnb.Application.Helpers
 {
     public static class BaseHelper
     {
+        public static Guid TryParseIdToGuid(this Guid? id)
+        {
+            bool result = Guid.TryParse(id.ToString(), out Guid Id);
+            if (!result) throw new IncorrectIdFormatValidationException();
+            return Id;
+        }
         public static Guid GetIdFromRoute(IHttpContextAccessor _accessor)
         {
             bool guidResult = Guid.TryParse(_accessor.HttpContext.GetRouteValue("id").ToString(), out Guid Id);

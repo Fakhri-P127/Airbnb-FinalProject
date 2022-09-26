@@ -3,11 +3,6 @@ using Airbnb.Application.Exceptions.Reservations;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Enums.Reservations;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReservationStatus
 {
@@ -21,12 +16,19 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
         }
         public async Task<Unit> Handle(UpdateReservationStatusCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null);
-            if (reservation is null) throw new ReservationNotFoundException(request.Id);
-            CheckStatusExceptions(reservation);
-            _unit.ReservationRepository.Update(reservation, false);
-
-            SetReservationStatus(reservation);
+            List<Reservation> reservations = await _unit.ReservationRepository.GetAllAsync(x=>
+             x.Status != (int)Enum_ReservationStatus.ReservationCancelled
+               && x.Status != (int)Enum_ReservationStatus.ReservationFinished,true);
+            //Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null,true);
+            if (reservations is null || !reservations.Any())
+                return await Task.FromResult(Unit.Value);
+            reservations.ForEach(reservation =>
+            {
+                //CheckStatusExceptions(reservation);
+                _unit.ReservationRepository.Update(reservation, false);
+                SetReservationStatus(reservation);
+            });
+           
             await _unit.SaveChangesAsync();
             return await Task.FromResult(Unit.Value);
         }

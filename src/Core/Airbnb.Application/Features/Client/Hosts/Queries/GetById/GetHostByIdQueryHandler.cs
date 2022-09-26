@@ -20,7 +20,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Queries.GetById
         }
         public async Task<GetHostResponse> Handle(GetHostByIdQuery request, CancellationToken cancellationToken)
         {
-            Host host = await _unit.HostRepository.GetByIdAsync(request.Id,request.Expression,
+            Host host = await _unit.HostRepository.GetByIdAsync(request.Id,request.Expression,false,
              HostHelper.AllHostIncludes());
             if (host is null) throw new HostNotFoundException(request.Id);
             GetHostResponse response = _mapper.Map<GetHostResponse>(host);

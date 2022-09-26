@@ -1,6 +1,5 @@
 ﻿using Airbnb.Application.Contracts.v1.Admin.Cities.Responses.NestedResponses;
 using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 
 namespace Airbnb.Application.Contracts.v1.Admin.Cities.Responses
 {
@@ -8,6 +7,6 @@ namespace Airbnb.Application.Contracts.v1.Admin.Cities.Responses
     {
         public string Name { get; set; }
         public CountryInCityResponse Country { get; set; }
-        public List<State> States { get; set; }
+        public List<StateInCityResponse> States { get; set; }
     }
 }

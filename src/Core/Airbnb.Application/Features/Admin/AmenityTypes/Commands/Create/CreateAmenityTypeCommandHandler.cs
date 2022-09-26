@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
@@ -29,10 +30,8 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Create
                 Name = request.Name
             };
             await _unit.AmenityTypeRepository.AddAsync(amenityType);
-            amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(amenityType.Id, null);
-            AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
-            if (response is null) throw new Exception("Internal server error");
-            return response;
+            return await AmenityTypeHelpers.ReturnResponse(amenityType, _unit, _mapper);
+
         }
     }
 }

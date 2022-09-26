@@ -85,7 +85,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request,CancellationToken cancellationToken=default)
         {
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.PropertyId, null, "Host", "Host.AppUser");
+                .GetByIdAsync(request.PropertyId, null,false, "Host", "Host.AppUser");
             if (property is null) throw new PropertyNotFoundException();
             AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
             if (user is null) throw new UserIdNotFoundException();

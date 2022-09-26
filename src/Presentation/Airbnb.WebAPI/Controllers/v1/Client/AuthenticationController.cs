@@ -31,9 +31,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
 
-        [HttpGet]
+        [HttpPost]
         // object i string email,string password kimi gondersen swaggerde de ishleyecek.
-        public async Task<IActionResult> Login([FromQuery]LoginQuery query)
+        public async Task<IActionResult> Login([FromBody]LoginQuery query)
         {
             var result = await _mediatr.Send(query);
             return Ok(result); ;
@@ -42,7 +42,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         //public async Task<IActionResult> Logout()
         //{
         //    await _signInManager.SignOutAsync();
-        //    return Ok("Successfuly logged out");
+        //    return Ok();
         //}
         [HttpPost]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)

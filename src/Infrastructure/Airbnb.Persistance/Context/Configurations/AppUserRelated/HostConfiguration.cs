@@ -15,7 +15,7 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
         {
             builder.Property(x => x.AppUserId).IsRequired();
             builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
-            builder.Property(x => x.IsSuperHost).IsRequired();
+            builder.Property(x => x.IsSuperHost).HasDefaultValue(false);//onsuz beledi amma yenede
 
         }
     }

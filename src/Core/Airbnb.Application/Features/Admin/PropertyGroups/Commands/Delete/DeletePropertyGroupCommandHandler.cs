@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Delete
         }
         public async Task<Unit> Handle(DeletePropertyGroupCommand request, CancellationToken cancellationToken)
         {
-            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.Id, null);
+            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.Id, null,true);
             if (propertyGroup is null) throw new PropertyGroupNotFoundException();
             FileHelpers.FileDelete(_env.WebRootPath, "assets/images/PropertyGroupImages", propertyGroup.Image);
             await _unit.PropertyGroupRepository.DeleteAsync(propertyGroup);

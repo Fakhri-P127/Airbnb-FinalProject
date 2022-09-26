@@ -12,7 +12,7 @@ namespace Airbnb.Application.Helpers
         public async static Task<RegionResponse> ReturnResponse(Region region,
         IUnitOfWork _unit, IMapper _mapper)
         {
-            region = await _unit.RegionRepository.GetByIdAsync(region.Id, null,
+            region = await _unit.RegionRepository.GetByIdAsync(region.Id, null,false,
                 AllRegionIncludes());
             RegionResponse response = _mapper.Map<RegionResponse>(region);
             if (response is null) throw new Exception("Internal server error");

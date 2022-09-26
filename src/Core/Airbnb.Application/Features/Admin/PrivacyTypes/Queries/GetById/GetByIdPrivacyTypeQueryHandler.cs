@@ -1,16 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
-using Airbnb.Application.Exceptions.Common;
 using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById
 {
@@ -27,7 +20,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById
         public async Task<PrivacyTypeResponse> Handle(GetByIdPrivacyTypeQuery request, CancellationToken cancellationToken)
         {
             PrivacyType privacyType = await _unit.PrivacyTypeRepository
-                .GetByIdAsync(request.Id, request.Expression);
+                .GetByIdAsync(request.Id, request.Expression,false, "Properties");
             if (privacyType is null) throw new PrivacyTypeNotFoundException();
             PrivacyTypeResponse response = _mapper.Map<PrivacyTypeResponse>(privacyType);
             if (response is null) throw new Exception("Internal server error");

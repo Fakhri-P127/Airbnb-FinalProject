@@ -24,8 +24,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Delete
         }
         public async Task<Unit> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.Users.GetUserByIdAsync(request.Id,cancellationToken,
-                AppUserHelper.AllUserIncludes());
+            AppUser user = await _userManager.Users.GetUserByIdAsync(request.Id,cancellationToken);
             if (user is null) throw new UserIdNotFoundException();
             if (user.Id.ToString() != _accessor.HttpContext.User.GetUserIdFromClaim())
                 throw new Authentication_UserIdNotSameWithAuthenticatedUserId();

@@ -20,7 +20,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Delete
         }
         public async Task<Unit> Handle(DeleteReservationCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null);
+            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null,true);
             if (reservation is null) throw new ReservationNotFoundException(request.Id);
             await _unit.ReservationRepository.DeleteAsync(reservation);
             return await Task.FromResult(Unit.Value);

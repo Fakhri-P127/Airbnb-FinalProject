@@ -16,7 +16,6 @@ namespace Airbnb.Persistance.Email
         }
         public async Task SendEmailAsync(MessageResponse message)
         {
-            //MimeMessage emailMessage = CreateEmailMessage(message);
             await SendAsync(CreateEmailMessage(message));
         }
         private MimeMessage CreateEmailMessage(MessageResponse message)

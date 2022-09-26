@@ -16,7 +16,7 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Delete
         }
         public async Task<Unit> Handle(DeleteAirCoverCommand request, CancellationToken cancellationToken)
         {
-            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.Id, null);
+            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.Id, null,true);
             if (airCover is null) throw new AirCoverNotFoundException();
             await _unit.AirCoverRepository.DeleteAsync(airCover);
 

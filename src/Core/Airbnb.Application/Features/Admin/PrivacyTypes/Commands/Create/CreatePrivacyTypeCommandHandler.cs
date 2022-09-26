@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
@@ -28,10 +29,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create
                 Name = request.Name
             };
             await _unit.PrivacyTypeRepository.AddAsync(privacyType);
-            privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(privacyType.Id, null,"Properties");
-            PrivacyTypeResponse response = _mapper.Map<PrivacyTypeResponse>(privacyType);
-            if (response is null) throw new Exception("Internal server error");
-            return response;
+            return await PrivacyTypeHelpers.ReturnResponse(privacyType, _unit, _mapper);
         }
     }
 }

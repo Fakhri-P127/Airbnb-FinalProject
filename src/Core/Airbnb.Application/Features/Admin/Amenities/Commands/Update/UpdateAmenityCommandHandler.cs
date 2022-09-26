@@ -1,8 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Application.Exceptions.Amenities;
-using Airbnb.Application.Exceptions.Common;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
@@ -27,16 +25,12 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
         { 
             // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(Id, null);
+            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(Id, null,true);
             if (amenity is null) throw new AmenityNotFoundException();
             _unit.AmenityRepository.Update(amenity);
             _mapper.Map(request, amenity);
             await _unit.SaveChangesAsync();
-            amenity = await _unit.AmenityRepository.GetByIdAsync(amenity.Id, null);
-            PostAmenityResponse response = _mapper.Map<PostAmenityResponse>(amenity);
-            if (response is null) throw new Exception("Internal server error");
-
-            return response;
+            return await AmenityHelpers.ReturnResponse(amenity, _unit, _mapper);
         }
     }
 }

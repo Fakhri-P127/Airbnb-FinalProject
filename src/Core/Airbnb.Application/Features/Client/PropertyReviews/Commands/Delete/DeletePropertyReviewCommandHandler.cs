@@ -20,7 +20,8 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Delete
         }
         public async Task<Unit> Handle(DeletePropertyReviewCommand request, CancellationToken cancellationToken)
         {
-            PropertyReview propertyReview = await _unit.PropertyReviewRepository.GetByIdAsync(request.Id, null);
+            PropertyReview propertyReview = await _unit.PropertyReviewRepository.GetByIdAsync(request.Id,
+                null,true);
             if (propertyReview is null) throw new PropertyReview_NotFoundException(request.Id);
             await _unit.PropertyReviewRepository.DeleteAsync(propertyReview);
             return await Task.FromResult(Unit.Value);

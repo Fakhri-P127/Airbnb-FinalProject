@@ -2,6 +2,8 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\bin\Debug\net6
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\bin\Debug\net6.0\Airbnb.Domain.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\bin\Debug\net6.0\Airbnb.Domain.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.csproj.AssemblyReference.cache
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.Xmls.Resources.resources
+C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.csproj.GenerateResource.cache
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.AssemblyInfoInputs.cache
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.AssemblyInfo.cs
@@ -10,5 +12,3 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\refint\Airbnb.Domain.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\ref\Airbnb.Domain.dll
-C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.Xmls.Resources.resources
-C:\Users\efend\source\repos\Backend\Airbnb\src\Core\Airbnb.Domain\obj\Debug\net6.0\Airbnb.Domain.csproj.GenerateResource.cache

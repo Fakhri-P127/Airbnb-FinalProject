@@ -29,7 +29,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetAll
                 await BaseHelper.GetIdFromExpression((BinaryExpression)request.Expression.Body,_unit,_userManager);
             
             List<PropertyReview> propertyReviews = await _unit.PropertyReviewRepository
-                .GetAllAsync(request.Expression, PropertyReviewHelper.AllPropertyReviewIncludes());
+                .GetAllAsync(request.Expression,false, PropertyReviewHelper.AllPropertyReviewIncludes());
             List<PropertyReviewResponse> responses = _mapper.Map<List<PropertyReviewResponse>>(propertyReviews);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

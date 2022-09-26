@@ -34,16 +34,12 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Update
         {
             // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            AmenityType amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(Id, null);
+            AmenityType amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(Id, null,true);
             if (amenityType is null) throw new AmenityTypeNotFoundException();
             _unit.AmenityTypeRepository.Update(amenityType,false);
             amenityType.Name = request.Name;
             await _unit.SaveChangesAsync();
-            amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(amenityType.Id, null,"Amenities");
-            AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
-            if (response is null) throw new Exception("Internal server error");
-
-            return response;
+            return await AmenityTypeHelpers.ReturnResponse(amenityType, _unit, _mapper);
 
         }
     }

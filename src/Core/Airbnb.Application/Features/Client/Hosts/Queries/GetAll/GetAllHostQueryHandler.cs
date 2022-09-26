@@ -19,7 +19,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Queries.GetAll
         }
         public async Task<List<GetHostResponse>> Handle(GetAllHostQuery request, CancellationToken cancellationToken)
         {
-            List<Host> hosts = await _unit.HostRepository.GetAllAsync(request.Expression,
+            List<Host> hosts = await _unit.HostRepository.GetAllAsync(request.Expression,false,
                 HostHelper.AllHostIncludes());
             
             List<GetHostResponse> responses = _mapper.Map<List<GetHostResponse>>(hosts);

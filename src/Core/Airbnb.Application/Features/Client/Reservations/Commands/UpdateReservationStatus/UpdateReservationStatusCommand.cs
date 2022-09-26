@@ -9,10 +9,10 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
 {
     public class UpdateReservationStatusCommand:IRequest
     {
-        public Guid Id { get; set; }
-        public UpdateReservationStatusCommand(Guid id)
-        {
-            Id = id;
-        }
+        //public Guid Id { get; set; }
+        //public UpdateReservationStatusCommand(Guid id)
+        //{
+        //    Id = id;
+        //}
     }
 }

@@ -19,9 +19,7 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.Description).HasMaxLength(300);//not required
             builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
 
-            builder.HasIndex(x => x.Icon).IsUnique();
             builder.HasIndex(x => x.Name).IsUnique();
-            builder.HasIndex(x => x.Description).IsUnique();
         }
     }
 }

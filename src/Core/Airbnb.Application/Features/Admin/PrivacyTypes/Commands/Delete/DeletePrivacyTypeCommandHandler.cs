@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Delete
 
         public async Task<Unit> Handle(DeletePrivacyTypeCommand request, CancellationToken cancellationToken)
         {
-            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.Id, null);
+            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.Id, null,true);
             if (privacyType is null) throw new PrivacyTypeNotFoundException();
             await _unit.PrivacyTypeRepository.DeleteAsync(privacyType);
 

@@ -6,14 +6,6 @@ using Airbnb.Domain.Entities.AppUserRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Update
 {
@@ -33,7 +25,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Update
         {
             // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            GuestReview guestReview = await _unit.GuestReviewRepository.GetByIdAsync(Id, null);
+            GuestReview guestReview = await _unit.GuestReviewRepository.GetByIdAsync(Id, null,true);
             if (guestReview is null) throw new GuestReviewNotFoundException(Id);
             _unit.GuestReviewRepository.Update(guestReview);
             _mapper.Map(request, guestReview);

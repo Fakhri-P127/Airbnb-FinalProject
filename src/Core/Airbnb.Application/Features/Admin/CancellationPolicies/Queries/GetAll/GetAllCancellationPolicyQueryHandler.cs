@@ -24,7 +24,7 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Queries.GetAll
         public async Task<List<CancellationPolicyResponse>> Handle(GetAllCancellationPolicyQuery request, CancellationToken cancellationToken)
         {
             List<CancellationPolicy> cancellationPolicies = await _unit.CancellationPolicyRepository
-                 .GetAllAsync(request.Expression, "Properties");
+                 .GetAllAsync(request.Expression,false, "Properties");
             List<CancellationPolicyResponse> responses = _mapper
                 .Map<List<CancellationPolicyResponse>>(cancellationPolicies);
             if (responses is null) throw new Exception("Internal Server Error");

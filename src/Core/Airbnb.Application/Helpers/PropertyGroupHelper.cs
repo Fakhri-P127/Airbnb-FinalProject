@@ -17,7 +17,7 @@ namespace Airbnb.Application.Helpers
         public async static Task<PostPropertyGroupResponse> ReturnResponse(PropertyGroup propertyGroup,
           IUnitOfWork _unit, IMapper _mapper)
         {
-            propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(propertyGroup.Id, null,
+            propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(propertyGroup.Id, null,false,
                 AllPropertyGroupIncludes());
             PostPropertyGroupResponse response = _mapper.Map<PostPropertyGroupResponse>(propertyGroup);
             if (response is null) throw new Exception("Internal server error");

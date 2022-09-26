@@ -402,13 +402,6 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("AmenityTypeId");
 
-                    b.HasIndex("Description")
-                        .IsUnique()
-                        .HasFilter("[Description] IS NOT NULL");
-
-                    b.HasIndex("Icon")
-                        .IsUnique();
-
                     b.HasIndex("Name")
                         .IsUnique();
 
@@ -1006,6 +999,9 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.HasIndex("RegionId");
 
                     b.ToTable("Country");
@@ -1034,6 +1030,9 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("nvarchar(25)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("Region");
                 });

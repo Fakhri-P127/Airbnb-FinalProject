@@ -3,7 +3,6 @@ using Airbnb.Application.Contracts.v1.Client.Property.Responses;
 using Airbnb.Application.Exceptions.Cities;
 using Airbnb.Application.Exceptions.Countries;
 using Airbnb.Application.Exceptions.Properties;
-using Airbnb.Application.Features.Client.Properties.Commands.Create;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
@@ -11,7 +10,6 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics.Metrics;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 {
@@ -34,7 +32,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(Id, null, PropertyHelper.AllPropertyIncludes());
+                .GetByIdAsync(Id, null,true, PropertyHelper.AllPropertyIncludes());
             if (property is null) throw new PropertyNotFoundException();
             _unit.PropertyRepository.Update(property);
             _mapper.Map(request, property);
@@ -83,8 +81,10 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 
         private async Task CheckForStateExceptions(UpdatePropertyCommand request)
         {
-            Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null, "Countries");
-            Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null, "Cities");
+            Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null, false,
+                "Countries");
+            Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null,false,
+                "Cities");
             City city = await _unit.CityRepository.GetByIdAsync((Guid)request.CityId, null);
             if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
                 throw new CountryDoesntBelongToSpecificiedRegionException(country.Name, region.Name);

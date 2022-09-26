@@ -30,7 +30,7 @@ namespace Airbnb.Application.Mapping
 
             CreateMap<PropertyReview, PropertyReviewResponse>();
                 //.ForMember(dest=>dest.Property,opt=>opt
-                //.MapFrom(src=>$"https://localhost:7146/api/v1/propertyreviews/{src.PropertyId}"));
+                //.MapFrom(src=>$"{ApiRoutes.BaseUrl}/ApiRoutes.PropertyReviews.Name/{src.PropertyId}"));
             CreateMap<AppUser, AppUserInPropertyReviewResponse>();
             CreateMap<Reservation, ReservationInPropertyReviewResponse>();
         }

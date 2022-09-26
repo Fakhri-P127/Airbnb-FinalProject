@@ -15,27 +15,30 @@ namespace Airbnb.Persistance.Common.Repositories.Common
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression, params string[] includes)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
         {
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
-            query = SetIncludes(query,includes);
-            return await query.ToListAsync();
+            query = SetIncludes(query, includes);
+            return tracked is false ?
+                 await query.AsNoTrackingWithIdentityResolution().ToListAsync() : await query.ToListAsync();
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id, Expression<Func<T, bool>> expression, params string[] includes)
+        public virtual async Task<T> GetByIdAsync(Guid id, Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
         {
             IQueryable<T> query = expression is not null ?
                  _dbSet.Where(expression) : _dbSet.AsQueryable();
             query = SetIncludes(query, includes);
-            return await query.FirstOrDefaultAsync(x => x.Id == id);
+            return tracked is false ? await query.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id)
+                : await query.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public virtual async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression, params string[] includes)
+        public virtual async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
         {
             IQueryable<T> query = expression is not null ?
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
             query = SetIncludes(query, includes);
-            return await query.FirstOrDefaultAsync();
+            return tracked is false ?  await query.AsNoTracking().FirstOrDefaultAsync() 
+                : await query.FirstOrDefaultAsync();
         }
         public async Task AddAsync(T entity)
         {

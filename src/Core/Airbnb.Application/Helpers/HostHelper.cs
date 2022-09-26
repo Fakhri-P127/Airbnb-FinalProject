@@ -9,7 +9,7 @@ namespace Airbnb.Application.Helpers
     {
         public async static Task<PostHostResponse> ReturnResponse(Host host, IUnitOfWork _unit, IMapper _mapper)
         {
-            host = await _unit.HostRepository.GetByIdAsync(host.Id, null,
+            host = await _unit.HostRepository.GetByIdAsync(host.Id, null,false,
                 AllHostIncludes());
             PostHostResponse response = _mapper.Map<PostHostResponse>(host);
             if (response is null) throw new Exception("Internal server error");

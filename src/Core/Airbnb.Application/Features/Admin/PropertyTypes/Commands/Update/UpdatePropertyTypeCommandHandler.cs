@@ -1,18 +1,11 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
-using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Exceptions.PropertyTypes;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update
 {
@@ -31,7 +24,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update
         public async Task<PostPropertyTypeResponse> Handle(UpdatePropertyTypeCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(Id, null);
+            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(Id, null,true);
             if (propertyType is null) throw new PropertyTypeNotFoundException();
             _unit.PropertyTypeRepository.Update(propertyType, false);
             _mapper.Map(request, propertyType);

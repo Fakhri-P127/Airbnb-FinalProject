@@ -7,9 +7,11 @@ namespace Airbnb.Application.Features.Admin.Regions.Queries.GetById
 {
     public class GetRegionByIdQuery:IRequest<RegionResponse>
     {
+        public Guid Id { get; set; }
         public Expression<Func<Region, bool>> Expression { get; set; }
-        public GetRegionByIdQuery(Expression<Func<Region, bool>> expression = null)
+        public GetRegionByIdQuery(Guid id, Expression<Func<Region, bool>> expression = null)
         {
+            Id = id;
             Expression = expression;
         }
     }

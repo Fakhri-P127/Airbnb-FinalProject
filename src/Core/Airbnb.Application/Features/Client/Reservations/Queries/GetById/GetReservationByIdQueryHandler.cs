@@ -19,7 +19,7 @@ public class GetReservationByIdQueryHandler : IRequestHandler<GetReservationById
     public async Task<GetReservationResponse> Handle(GetReservationByIdQuery request, CancellationToken cancellationToken)
     {
         Reservation reservation = await _unit.ReservationRepository
-                .GetByIdAsync(request.Id,request.Expression, "PropertyReview", "GuestReview");
+                .GetByIdAsync(request.Id,request.Expression,false, "PropertyReview", "GuestReview");
         if (reservation is null) throw new ReservationNotFoundException(request.Id);
 
         GetReservationResponse responses = _mapper.Map<GetReservationResponse>(reservation);

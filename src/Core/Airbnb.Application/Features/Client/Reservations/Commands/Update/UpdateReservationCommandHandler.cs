@@ -25,7 +25,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Update
         public async Task<PostReservationResponse> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(Id, null,
+            Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(Id, null,true,
                 "Property", "Host");
 
             if (reservation is null) throw new ReservationNotFoundException(Id);

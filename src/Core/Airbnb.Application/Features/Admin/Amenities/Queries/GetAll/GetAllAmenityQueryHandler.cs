@@ -20,7 +20,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetAll
         }
         public async Task<List<GetAmenityResponse>> Handle(GetAllAmenityQuery request, CancellationToken cancellationToken)
         {
-            List<Amenity> amenities = await _unit.AmenityRepository.GetAllAsync(request.Expression,"PropertyAmenities");
+            List<Amenity> amenities = await _unit.AmenityRepository.GetAllAsync(request.Expression,false,"PropertyAmenities");
             List<GetAmenityResponse> responses = _mapper.Map<List<GetAmenityResponse>>(amenities);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

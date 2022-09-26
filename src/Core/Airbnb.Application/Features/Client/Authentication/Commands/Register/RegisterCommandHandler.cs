@@ -42,9 +42,11 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             await ImageCheck(request, user);
             IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
             await CheckIfResultIsSuccessful(user, createdUserResult, "creating User.");
-            //FormFileCollection files = new();
-            //files.Add(request.ProfilPicture);
-            await AuthenticationHelper.SendConfirmationEmail(user,null,_userManager,_generator,_accessor,_emailSender);
+            FormFileCollection files = new()
+            {
+                request.ProfilPicture
+            };
+            await AuthenticationHelper.SendConfirmationEmail(user,files,_userManager,_generator,_accessor,_emailSender);
             IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "Guest");
             await CheckIfResultIsSuccessful(user, roleResult, "adding Role to User.");
             // register deki tokeni silmek olar

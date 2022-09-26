@@ -27,7 +27,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetAll
                 await BaseHelper.GetIdFromExpression((BinaryExpression)request.Expression.Body, _unit,_userManager);
 
             List<GuestReview> guestReviews = await _unit.GuestReviewRepository
-              .GetAllAsync(request.Expression, GuestReviewHelper.AllGuestReviewIncludes());
+              .GetAllAsync(request.Expression,false, GuestReviewHelper.AllGuestReviewIncludes());
             List<GuestReviewResponse> responses = _mapper.Map<List<GuestReviewResponse>>(guestReviews);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

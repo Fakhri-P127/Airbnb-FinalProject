@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Delete
         }
         public async Task<Unit> Handle(DeletePropertyTypeCommand request, CancellationToken cancellationToken)
         {
-            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(request.Id, null);
+            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(request.Id, null,true);
             if (propertyType is null) throw new PropertyTypeNotFoundException();
             await _unit.PropertyTypeRepository.DeleteAsync(propertyType);
 

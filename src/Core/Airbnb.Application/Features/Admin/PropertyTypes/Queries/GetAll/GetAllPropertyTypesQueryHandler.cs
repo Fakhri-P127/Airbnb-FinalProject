@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetAll
         public async Task<List<GetPropertyTypeResponse>> Handle(GetAllPropertyTypesQuery request, CancellationToken cancellationToken)
         {
             List<PropertyType> propertyTypes = await _unit.PropertyTypeRepository
-                .GetAllAsync(request.Expression, "Properties","PropertyGroupTypes",
+                .GetAllAsync(request.Expression,false, "Properties","PropertyGroupTypes",
                 "PropertyGroupTypes.PropertyGroup", "PropertyGroupTypes.PropertyGroup.Properties");
 
             List<GetPropertyTypeResponse> responses = _mapper.Map<List<GetPropertyTypeResponse>>(propertyTypes);

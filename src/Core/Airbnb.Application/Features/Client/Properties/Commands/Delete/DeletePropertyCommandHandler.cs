@@ -14,14 +14,15 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Delete
         private readonly IUnitOfWork _unit;
         private readonly IWebHostEnvironment _env;
 
-        public DeletePropertyCommandHandler(IUnitOfWork unit,IWebHostEnvironment env)
+        public DeletePropertyCommandHandler(IUnitOfWork unit, IWebHostEnvironment env)
         {
             _unit = unit;
             _env = env;
         }
         public async Task<Unit> Handle(DeletePropertyCommand request, CancellationToken cancellationToken)
         {
-            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null,PropertyHelper.AllPropertyIncludes());
+            Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, null, true,
+            "PropertyImages");
             if (property is null) throw new PropertyNotFoundException();
 
             property.PropertyImages.ForEach(image =>

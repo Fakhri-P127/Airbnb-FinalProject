@@ -77,7 +77,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 
         private async Task<Host> CheckExceptionsThenReturnHost(CreatePropertyCommand request)
         {
-            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, "AppUser");
+            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
             if (host is null) throw new HostNotFoundException(request.HostId);
             AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.AirCoverId, null);
             if (airCover is null) throw new AirCoverNotFoundException();

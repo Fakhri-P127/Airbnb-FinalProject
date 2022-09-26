@@ -19,7 +19,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetAll
         public async Task<List<PrivacyTypeResponse>> Handle(GetAllPrivacyTypeQuery request, CancellationToken cancellationToken)
         {
             List<PrivacyType> privacyTypes = await _unit.PrivacyTypeRepository
-                .GetAllAsync(request.Expression,"Properties");
+                .GetAllAsync(request.Expression,false,"Properties");
             
             List<PrivacyTypeResponse> responses = _mapper.Map<List<PrivacyTypeResponse>>(privacyTypes);
             if (responses is null) throw new Exception("Internal server error");

@@ -28,7 +28,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
         public async Task<PostPropertyGroupResponse> Handle(UpdatePropertyGroupCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(Id, null);
+            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(Id, null,true);
             if (propertyGroup is null) throw new PropertyGroupNotFoundException();
             _unit.PropertyGroupRepository.Update(propertyGroup);
             _mapper.Map(request, propertyGroup);

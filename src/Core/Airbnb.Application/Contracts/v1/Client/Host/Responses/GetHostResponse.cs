@@ -6,7 +6,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
 {
     public class GetHostResponse:BaseResponse
     {
-        public bool IsSuperHost { get; set; }
+        public bool? IsSuperHost { get; set; } = false;
         public AppUserInGetHostResponse AppUser { get; set; }
         public List<PropertyInGetHostResponse> Properties { get; set; }
         public List<GuestReviewInHostResponse> ReviewsByYou { get; set; }

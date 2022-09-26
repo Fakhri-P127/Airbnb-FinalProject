@@ -24,7 +24,8 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
         }
         public async Task<PostHostResponse> Handle(CreateHostCommand request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.AppUserId,cancellationToken);
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.AppUserId,
+                cancellationToken);
             if (user is null) throw new UserIdNotFoundException();
             await _userManager.AddToRoleAsync(user, "Host");
             Host host = _mapper.Map<Host>(request);

@@ -12,7 +12,7 @@ namespace Airbnb.Domain.Entities.AppUserRelated
             ReviewsAboutYourProperty = new();
             Reservations = new();
         }
-        public bool IsSuperHost { get; set; }
+        public bool? IsSuperHost { get; set; }
         public List<Property> Properties { get; set; }
         public List<GuestReview> ReviewsByYou { get; set; }
         public List<PropertyReview> ReviewsAboutYourProperty { get; set; }

@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
         {
             // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(Id, null);
+            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(Id, null,true);
             if (airCover is null) throw new AirCoverNotFoundException();
             _unit.AirCoverRepository.Update(airCover);
             _mapper.Map(request, airCover);

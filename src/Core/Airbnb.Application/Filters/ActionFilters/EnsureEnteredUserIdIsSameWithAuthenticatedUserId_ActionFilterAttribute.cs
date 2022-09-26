@@ -33,6 +33,7 @@ namespace Airbnb.Application.Filters.ActionFilters
             {
                 // dynamic type la runtime da deyeri menimseyir ve ona gore ishledirem.
                 // bilirem dynamic in ishletmemeyimiz daha yaxshidi amma bu sitasiya uchun yaxshi oldugunu dushundum.
+                // stream den istifade ederekde yazmaq olar amma
                 bool result = context.ActionArguments.TryGetValue("command", out dynamic command);
                 if (result is false || command is null) return;
                 // check edirem ki AppUserId li property var ya yox

@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Commands.Delete
 
         public async Task<Unit> Handle(DeleteAmenityCommand request, CancellationToken cancellationToken)
         {
-            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, null);
+            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, null,true);
             if (amenity is null) throw new AmenityNotFoundException();
             await _unit.AmenityRepository.DeleteAsync(amenity);
 

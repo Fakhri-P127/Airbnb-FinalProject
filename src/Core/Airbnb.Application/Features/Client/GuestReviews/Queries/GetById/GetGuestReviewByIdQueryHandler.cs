@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetById
         public async Task<GuestReviewResponse> Handle(GetGuestReviewByIdQuery request, CancellationToken cancellationToken)
         {
              GuestReview guestReview = await _unit.GuestReviewRepository
-                .GetByIdAsync(request.Id, request.Expression, GuestReviewHelper.AllGuestReviewIncludes());
+                .GetByIdAsync(request.Id, request.Expression,false, GuestReviewHelper.AllGuestReviewIncludes());
             if (guestReview is null) throw new GuestReviewNotFoundException(request.Id);
             GuestReviewResponse response = _mapper.Map<GuestReviewResponse>(guestReview);
             if (response is null) throw new Exception("Internal server error");

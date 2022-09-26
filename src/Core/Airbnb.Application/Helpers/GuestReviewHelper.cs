@@ -16,7 +16,7 @@ namespace Airbnb.Application.Helpers
     {
         public async static Task<GuestReviewResponse> ReturnResponse(GuestReview guestReview, IUnitOfWork _unit, IMapper _mapper)
         {
-            guestReview = await _unit.GuestReviewRepository.GetByIdAsync(guestReview.Id, null,
+            guestReview = await _unit.GuestReviewRepository.GetByIdAsync(guestReview.Id, null,false,
                 AllGuestReviewIncludes());
             GuestReviewResponse response = _mapper.Map<GuestReviewResponse>(guestReview);
             if (response is null) throw new Exception("Internal server error");

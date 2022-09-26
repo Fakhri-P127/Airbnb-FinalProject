@@ -6,11 +6,6 @@ using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Update
 {
@@ -29,7 +24,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Update
         public async Task<PropertyReviewResponse> Handle(UpdatePropertyReviewCommand request, CancellationToken cancellationToken)
         {
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PropertyReview propertyReview = await _unit.PropertyReviewRepository.GetByIdAsync(Id, null);
+            PropertyReview propertyReview = await _unit.PropertyReviewRepository.GetByIdAsync(Id, null,true);
             if (propertyReview is null) throw new PropertyReview_NotFoundException(Id);
             _unit.PropertyReviewRepository.Update(propertyReview);
             _mapper.Map(request,propertyReview);

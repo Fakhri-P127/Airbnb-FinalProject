@@ -663,6 +663,7 @@
           "MediatR.Extensions.Microsoft.DependencyInjection": "10.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.8",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
+          "Microsoft.EntityFrameworkCore": "6.0.8",
           "NETCore.MailKit": "2.1.0",
           "Newtonsoft.Json": "13.0.1"
         },
@@ -672,7 +673,6 @@
       },
       "Airbnb.Domain/1.0.0": {
         "dependencies": {
-          "MediatR": "10.0.1",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.8"
         },
         "runtime": {

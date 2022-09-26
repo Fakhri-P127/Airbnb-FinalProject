@@ -18,8 +18,6 @@ namespace Airbnb.Application.Middlewares
         public async Task HandleAsync(RequestDelegate next, HttpContext context,
             AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
         {
-            
-            policy.Requirements.Any(x => x is RolesAuthorizationRequirement);
             if (authorizeResult.Challenged)
             {
                 await CreateAuthorizationIsChallangedResponse(context);

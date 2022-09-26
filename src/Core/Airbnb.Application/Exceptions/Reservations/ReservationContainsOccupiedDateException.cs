@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace Airbnb.Application.Exceptions.Reservations
 {
@@ -12,6 +7,5 @@ namespace Airbnb.Application.Exceptions.Reservations
         public HttpStatusCode StatusCode => HttpStatusCode.Conflict;
 
         public string ErrorMessage => "This timeframe includes already reserved days. Please select dates that doesn't contain reserved days";
-      
     }
 }
