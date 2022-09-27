@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "44DKM+6b4rhtEd0Lnz4lZ+wL2jhl1nnn4WlQ8awindbYb+JmvPMeYf0JFHVIH16NrEd9j8pkp9ZsNlEXe4mAiw==",
+  "dgSpecHash": "o7X6wyuwGtydGF328zUEPnP4h3efRvA90IkYdhKynsU8ZPlXE/SWWlB1PXakFKuOc4IsFKwzk+qCgcI4iyLnkw==",
   "success": true,
   "projectFilePath": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\Airbnb.WebAPI.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\efend\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.2.1\\fluentvalidation.aspnetcore.11.2.1.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.2.1\\fluentvalidation.dependencyinjectionextensions.11.2.1.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\efend\\.nuget\\packages\\linqkit.core\\1.2.2\\linqkit.core.1.2.2.nupkg.sha512",
+    "C:\\Users\\efend\\.nuget\\packages\\linqkit.microsoft.entityframeworkcore\\6.1.2\\linqkit.microsoft.entityframeworkcore.6.1.2.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\mailkit\\3.2.0\\mailkit.3.2.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\mediatr\\10.0.1\\mediatr.10.0.1.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512",

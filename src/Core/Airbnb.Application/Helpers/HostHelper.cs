@@ -23,5 +23,24 @@ namespace Airbnb.Application.Helpers
                 "ReviewsAboutYourProperty", "ReviewsByYou", "Reservations", "AppUser" };
             return includes;
         }
+        public static string ChangeStatusToString(int status)
+        {
+            string statusStr;
+            switch (status)
+            {
+                case 1:
+                    statusStr = "Basic host";
+                    return statusStr;
+                case 2:
+                    statusStr = "Expert host";
+                    return statusStr;
+                case 3:
+                    statusStr = "Super host";
+                    return statusStr;
+                default:
+                    statusStr = "idk man";
+                    return statusStr;
+            }
+        }
     }
 }

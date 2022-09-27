@@ -26,7 +26,8 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetById
         }
         public async Task<GetAmenityResponse> Handle(GetByIdAmenityQuery request, CancellationToken cancellationToken)
         {
-            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, request.Expression);
+            Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(request.Id, request.Expression,false,
+                "AmenityType", "PropertyAmenities");
             if (amenity is null) throw new AmenityNotFoundException();
             GetAmenityResponse response = _mapper.Map<GetAmenityResponse>(amenity);
             if (response is null) throw new Exception("Internal server error");

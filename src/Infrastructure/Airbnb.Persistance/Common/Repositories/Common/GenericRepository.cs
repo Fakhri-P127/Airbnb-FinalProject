@@ -1,6 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces.Repositories.Common;
 using Airbnb.Domain.Entities.Base;
 using Airbnb.Persistance.Context;
+//using LinqKit;
+//using LinqKit;
+using LinqKit.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -15,11 +18,12 @@ namespace Airbnb.Persistance.Common.Repositories.Common
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
+        public virtual async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
         {
-            IQueryable<T> query = expression is not null ?
-                _dbSet.Where(expression) : _dbSet.AsQueryable();
+            IQueryable<T> query = (expression is not null ?       
+                _dbSet.Where(expression) : _dbSet.AsQueryable());
             query = SetIncludes(query, includes);
+            
             return tracked is false ?
                  await query.AsNoTrackingWithIdentityResolution().ToListAsync() : await query.ToListAsync();
         }

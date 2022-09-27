@@ -7,6 +7,7 @@ using Airbnb.Application.Common.CustomFrameworkImpl;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Airbnb.Domain.Enums.Reservations;
 
 namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
 {
@@ -27,9 +28,9 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
             AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.Id == request.AppUserId,
                 cancellationToken);
             if (user is null) throw new UserIdNotFoundException();
-            await _userManager.AddToRoleAsync(user, "Host");
             Host host = _mapper.Map<Host>(request);
             await _unit.HostRepository.AddAsync(host);
+            await _userManager.AddToRoleAsync(user, "Host");
             return await HostHelper.ReturnResponse(host, _unit, _mapper);
         }
     }

@@ -2,9 +2,12 @@
 using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Application.Exceptions.Common;
+using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
+using LinqKit;
 using MediatR;
+using System.Linq.Expressions;
 
 namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetAll
 {
@@ -20,10 +23,29 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetAll
         }
         public async Task<List<GetAmenityResponse>> Handle(GetAllAmenityQuery request, CancellationToken cancellationToken)
         {
-            List<Amenity> amenities = await _unit.AmenityRepository.GetAllAsync(request.Expression,false,"PropertyAmenities");
+            //ExpressionStarter<Amenity> predicate = FilterRequest(request);
+            List<Amenity> amenities = await _unit.AmenityRepository.GetAllAsync(FilterRequest(request), false, "AmenityType",
+                "PropertyAmenities");
             List<GetAmenityResponse> responses = _mapper.Map<List<GetAmenityResponse>>(amenities);
             if (responses is null) throw new Exception("Internal server error");
             return responses;
         }
+
+        private static ExpressionStarter<Amenity> FilterRequest(GetAllAmenityQuery request)
+        {
+            ExpressionStarter<Amenity> predicate = PredicateBuilder.New<Amenity>(true);
+            if (request.Parameters.AmenityTypeId.HasValue) predicate = predicate
+                    .And(x => x.AmenityTypeId == request.Parameters.AmenityTypeId);
+            if (!string.IsNullOrWhiteSpace(request.Parameters.Name)) predicate = predicate
+                    .And(x => x.Name.Contains(request.Parameters.Name));
+            if (!string.IsNullOrWhiteSpace(request.Parameters.Description)) predicate = predicate
+                    .And(x => x.Description.Contains(request.Parameters.Description));
+            if (request.Expression != null) predicate = predicate.And(request.Expression);
+            // burda bildiririk ki, eger predicate deyeri f=>true dusa demeli
+            // filter uchun hech ne gonderilmeyib. onda null a beraber edirik ki
+            // getAll da expressionsiz AsQueryable() edek.
+            return ExpressionHelpers<Amenity>.FilteredPredicateOrIfNoFilterReturnNull(predicate);
+        }
     }
 }
+

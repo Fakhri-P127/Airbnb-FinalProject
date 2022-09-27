@@ -1,11 +1,6 @@
 ﻿using Airbnb.Domain.Entities.AppUserRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
 {
@@ -15,7 +10,7 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
         {
             builder.Property(x => x.AppUserId).IsRequired();
             builder.Property(x => x.IsDisplayed).HasDefaultValue(true);
-            builder.Property(x => x.IsSuperHost).HasDefaultValue(false);//onsuz beledi amma yenede
+            builder.Property(x => x.Status).IsRequired();
 
         }
     }

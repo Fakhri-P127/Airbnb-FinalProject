@@ -1,6 +1,7 @@
 ﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.PiplineBehaviours;
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -15,6 +16,7 @@ namespace Airbnb.Application
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
 
+            services.AddFluentValidationAutoValidation(x => x.DisableDataAnnotationsValidation=true);
             services.AddValidatorsFromAssembly(assembly)
                 .AddMediatR(assembly)
                 .AddAutoMapper(assembly)

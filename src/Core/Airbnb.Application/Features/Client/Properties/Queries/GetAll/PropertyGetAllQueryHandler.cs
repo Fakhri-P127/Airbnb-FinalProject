@@ -4,6 +4,7 @@ using Airbnb.Application.Exceptions.Hosts;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
+using LinqKit;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -39,5 +40,10 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
             if (response is null) throw new Exception("Internal server error");
             return response;
         }
+        //private static ExpressionStarter<Property> FilterRequest(PropertyGetAllQuery request)
+        //{
+        //    ExpressionStarter<Property> filters = PredicateBuilder.New<Property>(true);
+        //    //if(request)
+        //}
     }
 }

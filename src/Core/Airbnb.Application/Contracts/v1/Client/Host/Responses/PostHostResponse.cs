@@ -12,8 +12,6 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
     {
         // hansi usere aiddi
         public Guid AppUserId { get; set; }
-
-        public bool IsSuperHost { get; set; } = false;
-
+        public string Status { get; set; }
     }
 }

@@ -25,10 +25,7 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         public Guid HostId { get; set; }
         public Host Host { get; set; }
         // one to one
-        //bunlari fluent api ile yaz
         public PropertyReview PropertyReview { get; set; }
         public GuestReview GuestReview { get; set; }
-        //status default dan false olacaq ve propreview da null. true olduqda rezerv bitmish
-        //demekdi ve o vaxt propRev elave ede bilerik
     }
 }

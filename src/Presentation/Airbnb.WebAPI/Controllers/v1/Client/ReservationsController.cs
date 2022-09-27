@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
+﻿using Airbnb.Application.Contracts.v1.Client.Reservation.Parameters;
+using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Application.Features.Client.Reservations.Commands.Delete;
 using Airbnb.Application.Features.Client.Reservations.Commands.ExtendReservationDuration;
@@ -25,9 +26,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllReservations()
+        public async Task<IActionResult> GetAllReservations([FromQuery]ReservationParameters parameters)
         {
-            List<GetReservationResponse> result = await _mediatr.Send(new GetAllReservationsQuery());
+            List<GetReservationResponse> result = await _mediatr.Send(new GetAllReservationsQuery(parameters));
             return Ok(result);
         }
         //[HttpGet("[action]")]

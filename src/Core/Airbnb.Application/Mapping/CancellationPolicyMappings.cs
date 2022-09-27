@@ -3,11 +3,6 @@ using Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Create;
 using Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Update;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Mapping
 {

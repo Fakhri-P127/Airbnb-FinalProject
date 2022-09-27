@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Host.Responses;
+﻿using Airbnb.Application.Contracts.v1.Client.Host.Parameters;
+using Airbnb.Application.Contracts.v1.Client.Host.Responses;
 using Airbnb.Application.Features.Client.Hosts.Commands.Create;
 using Airbnb.Application.Features.Client.Hosts.Commands.UpdateHostStatus;
 using Airbnb.Application.Features.Client.Hosts.Queries.GetAll;
@@ -21,10 +22,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllHosts()
+        public async Task<IActionResult> GetAllHosts([FromQuery] HostParameters parameters)
         {
-            List<GetHostResponse> result = await _mediatr.Send(new GetAllHostQuery());
+           
+            List<GetHostResponse> result = await _mediatr.Send(new GetAllHostQuery(parameters,null));
             return Ok(result);
+            //return Ok(result?.Skip((parameters.PageNumber-1)*parameters.PageSize).Take(parameters.PageSize));
         }
         //[HttpGet("[action]")]
         //[AllowAnonymous]

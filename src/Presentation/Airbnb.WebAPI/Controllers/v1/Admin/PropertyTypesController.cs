@@ -25,6 +25,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         public async Task<IActionResult> GetAllPropertyTypes()
         {
             List<GetPropertyTypeResponse> result = await _mediatr.Send(new GetAllPropertyTypesQuery());
+            var salam = result.GetType().GetProperties();
             return Ok(result);
         }
         [HttpGet("{id}")]

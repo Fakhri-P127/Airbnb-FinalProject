@@ -72,6 +72,26 @@
           }
         }
       },
+      "LinqKit.Core/1.2.2": {
+        "runtime": {
+          "lib/netstandard2.1/LinqKit.Core.dll": {
+            "assemblyVersion": "1.2.2.0",
+            "fileVersion": "1.2.2.0"
+          }
+        }
+      },
+      "LinqKit.Microsoft.EntityFrameworkCore/6.1.2": {
+        "dependencies": {
+          "LinqKit.Core": "1.2.2",
+          "Microsoft.EntityFrameworkCore": "6.0.8"
+        },
+        "runtime": {
+          "lib/net6.0/LinqKit.Microsoft.EntityFrameworkCore.dll": {
+            "assemblyVersion": "6.1.2.0",
+            "fileVersion": "6.1.2.0"
+          }
+        }
+      },
       "MailKit/3.2.0": {
         "dependencies": {
           "MimeKit": "3.2.0"
@@ -597,6 +617,7 @@
           "FluentValidation": "11.2.1",
           "FluentValidation.AspNetCore": "11.2.1",
           "FluentValidation.DependencyInjectionExtensions": "11.2.1",
+          "LinqKit.Microsoft.EntityFrameworkCore": "6.1.2",
           "MediatR.Extensions.Microsoft.DependencyInjection": "10.0.1",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.8",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
@@ -658,6 +679,20 @@
       "sha512": "sha512-WqR2kt0OidUCg9xS+YOoiDmdCu7EnYLLgQb/bX+5fTTVor+90dWmr1OdJaWlLZvg2nbwV9EfxA9FZp91+JmQtg==",
       "path": "fluentvalidation.dependencyinjectionextensions/11.2.1",
       "hashPath": "fluentvalidation.dependencyinjectionextensions.11.2.1.nupkg.sha512"
+    },
+    "LinqKit.Core/1.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ORnvvVKcuAak657JmRTRw4CGjo/1Aba/dMDYUlSrT9Gv2/LBKusR+IQrGR3sOLdGVQLyHvLlCUsptqWQ/XIT1Q==",
+      "path": "linqkit.core/1.2.2",
+      "hashPath": "linqkit.core.1.2.2.nupkg.sha512"
+    },
+    "LinqKit.Microsoft.EntityFrameworkCore/6.1.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-qCqghpEPakB6/zAMFvCfB/uMLNUXAKytfPtE8FSf8Z9sW2m7G0y5O5ENhiIXxR1iWbTdUqrtR8isaAv2lSEEzg==",
+      "path": "linqkit.microsoft.entityframeworkcore/6.1.2",
+      "hashPath": "linqkit.microsoft.entityframeworkcore.6.1.2.nupkg.sha512"
     },
     "MailKit/3.2.0": {
       "type": "package",

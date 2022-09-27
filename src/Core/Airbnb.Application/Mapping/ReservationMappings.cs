@@ -25,6 +25,7 @@ namespace Airbnb.Application.Mapping
             CreateMap<Reservation, GetReservationResponse>()
                 .ForMember(dest => dest.Status, opt => opt
                 .MapFrom(dest=> ReservationHelpers.ChangeStatusToString(dest.Status)));
+
             CreateMap<PropertyReview, PropertyReviewInReservationResponse>();
             CreateMap<GuestReview, GuestReviewInReservationResponse>();
 

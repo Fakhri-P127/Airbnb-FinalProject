@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Domain.Enums.Reservations;
 using MediatR;
 
 namespace Airbnb.Application.Features.Client.Hosts.Commands.UpdateHostStatus
@@ -22,8 +23,9 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.UpdateHostStatus
             hosts.ForEach(host =>
             {
                 _unit.HostRepository.Update(host, false);
-                if (host.Reservations.Count >= 6 && host.Reservations.Count <= 10) host.IsSuperHost = null;
-                if (host.Reservations.Count > 10) host.IsSuperHost = true;
+                if (host.Reservations.Count >= 6 && host.Reservations.Count <= 10) host.Status = 
+                    (int)Enum_HostStatus.ExpertHost;
+                if (host.Reservations.Count > 10) host.Status = (int)Enum_HostStatus.SuperHost;
             });
             await _unit.SaveChangesAsync();
             return await Task.FromResult(Unit.Value);

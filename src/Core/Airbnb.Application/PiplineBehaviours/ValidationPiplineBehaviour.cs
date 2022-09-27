@@ -21,7 +21,7 @@ namespace Airbnb.Application.PiplineBehaviours
                     .Select(v => v.ValidateAsync(context, cancellationToken)));
                 List<ValidationFailure> errors = validationResults
                     .SelectMany(r => r.Errors).Where(f => f != null).ToList();
-
+                
                 if (errors.Any())
                     throw new ValidationException(errors);
 
