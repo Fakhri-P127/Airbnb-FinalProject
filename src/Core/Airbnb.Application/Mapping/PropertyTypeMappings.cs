@@ -14,8 +14,8 @@ namespace Airbnb.Application.Mapping
             CreateMap<PropertyType, GetPropertyTypeResponse>()
                 .ForMember(dest => dest.PropertyCount, opt => opt.MapFrom(src => src.Properties.Count));
             CreateMap<PropertyType, PostPropertyTypeResponse>();
-            CreateMap<PropertyGroupType, PropertyGroupTypeInPropertyType>();
-            CreateMap<PropertyGroup, PropertyGroupInPropertyGroupType>();
+            
+            CreateMap<PropertyGroup, PropertyGroupInPropertyType>();
 
             CreateMap<CreatePropertyTypeCommand, PropertyType>();
             CreateMap<UpdatePropertyTypeCommand, PropertyType>()

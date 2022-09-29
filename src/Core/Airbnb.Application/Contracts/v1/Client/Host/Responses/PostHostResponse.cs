@@ -1,10 +1,4 @@
 ﻿using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Application.Contracts.v1.Client.Host.Responses.NestedResponses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
 {
@@ -13,5 +7,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
         // hansi usere aiddi
         public Guid AppUserId { get; set; }
         public string Status { get; set; }
+        public string Token { get; set; }
+
     }
 }

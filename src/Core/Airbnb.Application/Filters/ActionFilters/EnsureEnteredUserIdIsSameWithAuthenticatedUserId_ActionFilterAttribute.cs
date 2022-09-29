@@ -29,7 +29,7 @@ namespace Airbnb.Application.Filters.ActionFilters
             {
             }
 
-            public  void OnActionExecuting(ActionExecutingContext context)
+            public void OnActionExecuting(ActionExecutingContext context)
             {
                 // dynamic type la runtime da deyeri menimseyir ve ona gore ishledirem.
                 // bilirem dynamic in ishletmemeyimiz daha yaxshidi amma bu sitasiya uchun yaxshi oldugunu dushundum.
@@ -42,21 +42,22 @@ namespace Airbnb.Application.Filters.ActionFilters
                 Guid userId = commandProp.GetValue(command);
                 string authenticatedUserId = context.HttpContext.User.GetUserIdFromClaim();
                 // bele bir user var ya yo o check olunur, yoxdusa notfoundexception() varsa da basqa if sherti
-                if (_userManager.Users.FirstOrDefault(x => x.Id == userId) is null) 
+                if (_userManager.Users.FirstOrDefault(x => x.Id == userId) is null)
                     throw new UserIdNotFoundException();
+                var sa = userId.ToString();
+                if (userId.ToString() == authenticatedUserId) return;
+
                 // eger login olunmush userin Id si ile gonderilen Id duz gelmirse onda short circuit edirik.
-                if (userId.ToString() != authenticatedUserId) return;
+                ProblemDetails problemDetails = new()
                 {
-                    ProblemDetails problemDetails = new()
-                    {
-                        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
-                        Title = "Authentication error occured",
-                        Status = (int)HttpStatusCode.Conflict,
-                        Detail = "You can't change another users data."
-                    };
-                    context.Result = new ObjectResult(problemDetails);
-                    //throw new Authentication_UserIdNotSameWithAuthenticatedUserId();
-                }
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.8",
+                    Title = "Authentication error occured",
+                    Status = (int)HttpStatusCode.Conflict,
+                    Detail = "You can't change another users data."
+                };
+                context.Result = new ObjectResult(problemDetails);
+                //throw new Authentication_UserIdNotSameWithAuthenticatedUserId();
+
             }
         }
     }

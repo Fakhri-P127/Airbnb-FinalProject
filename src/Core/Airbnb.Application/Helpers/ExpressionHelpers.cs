@@ -1,7 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Host;
-using Airbnb.Domain.Entities.AppUserRelated;
-using LinqKit;
-using System.Linq.Expressions;
+﻿using LinqKit;
 
 namespace Airbnb.Application.Helpers
 {

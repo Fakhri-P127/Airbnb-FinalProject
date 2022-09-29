@@ -11,7 +11,6 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
 {
     public class CreatePropertyReviewCommand : IRequest<PropertyReviewResponse>
     {
-        //one to one rating ile
         public string Text { get; set; }
         //public float OverallScore { get; set; }
         public float CleanlinessScore { get; set; }
@@ -20,15 +19,9 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
         public float AccuracyScore { get; set; }
         public float LocationScore { get; set; }
         public float ValueScore { get; set; }
-        // check ele ki AppUserId bu property uchun edilen bookingde Id si var :# 
-        // bu appUser reserve i edendi
-        public Guid AppUserId { get; set; }
-        // guestin etdiyi reservation deki prop Id bunla ust uste dushurse icaze ver
-        //public Guid PropertyId { get; set; }
-        //public Property Property { get; set; }
+
+        //public Guid AppUserId { get; set; }
         public Guid ReservationId { get; set; }
-        //public Guid HostId { get; set; }
-        //public Guid PropertyId { get; set; }
 
         public float AverageOverallScore()
         {

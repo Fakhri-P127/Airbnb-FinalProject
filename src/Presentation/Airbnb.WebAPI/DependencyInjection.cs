@@ -18,7 +18,7 @@ namespace Airbnb.WebAPI
                 opt.MapType<TimeSpan>(() => new OpenApiSchema
                 {
                     Type = "string",
-                    Example = new OpenApiString("00:00")////////check if this works
+                    Example = new OpenApiString(string.Empty)
                 });
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -47,7 +47,8 @@ namespace Airbnb.WebAPI
             })
                 .AddApiVersioningAndApiExplorer()
                 .AddHttpClient()
-            .AddSingleton<IAuthorizationMiddlewareResultHandler,MyAuthorizationMiddlewareResultHandler>();
+                // singletion olanda gerek serveri saxlayib tezden giresen(ya da tezden login).
+            .AddSingleton<IAuthorizationMiddlewareResultHandler, MyAuthorizationMiddlewareResultHandler>();
             return services;
         }
         public static IServiceCollection AddApiVersioningAndApiExplorer(this IServiceCollection services)

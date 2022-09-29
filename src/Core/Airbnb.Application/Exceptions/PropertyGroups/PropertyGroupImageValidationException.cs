@@ -6,6 +6,10 @@ namespace Airbnb.Application.Exceptions.PropertyGroups
     {
         public HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
-        public string ErrorMessage => "Image size is too big";
+        public string ErrorMessage { get; set; }
+        public PropertyGroupImageValidationException()
+        {
+            ErrorMessage = "Image size is too big";
+        }
     }
 }

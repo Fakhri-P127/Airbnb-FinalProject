@@ -78,18 +78,25 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 property.StateId = existedState.Id;
             }
         }
+        //fluent validationda duzeltdiyivi yoxla
 
         private async Task CheckForStateExceptions(UpdatePropertyCommand request)
         {
-            Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null, false,
-                "Countries");
-            Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null,false,
-                "Cities");
+            //Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null, false,
+            //    "Countries");
+            //Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null, false,
+            //    "Cities");
+            Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null);
+            Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null);
             City city = await _unit.CityRepository.GetByIdAsync((Guid)request.CityId, null);
-            if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
-                throw new CountryDoesntBelongToSpecificiedRegionException(country.Name, region.Name);
-            if (country.Cities.FirstOrDefault(c => c.Id == request.CityId) is null)
+            if (country.RegionId != request.RegionId) 
+                throw new CountryDoesntBelongToSpecificiedRegionException(country.Name,region.Name);
+            if(city.CountryId != country.Id)
                 throw new CityDoesntBelongToSpecificiedCountryException(city.Name, country.Name);
+            //if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
+            //    throw new CountryDoesntBelongToSpecificiedRegionException(country.Name, region.Name);
+            //if (country.Cities.FirstOrDefault(c => c.Id == request.CityId) is null)
+            //    throw new CityDoesntBelongToSpecificiedCountryException(city.Name, country.Name);
         }
 
         private async Task CheckAddMainImage(UpdatePropertyCommand request, Property property)

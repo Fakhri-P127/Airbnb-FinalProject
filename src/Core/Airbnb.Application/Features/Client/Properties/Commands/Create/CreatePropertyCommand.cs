@@ -36,6 +36,6 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         public Guid PrivacyTypeId { get; set; }
         public Guid AirCoverId { get; set; }
         public Guid CancellationPolicyId { get; set; }
-      
+
     }
 }

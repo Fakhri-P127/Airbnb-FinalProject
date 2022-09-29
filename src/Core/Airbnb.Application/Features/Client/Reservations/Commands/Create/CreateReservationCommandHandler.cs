@@ -11,8 +11,8 @@ using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
-using System.Threading;
+using Microsoft.AspNetCore.Http;
+using System.Diagnostics;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 {
@@ -20,18 +20,23 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
-        private readonly CustomUserManager<AppUser> _userManager;
+        //private readonly CustomUserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _accessor;
 
-        public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper,CustomUserManager<AppUser> userManager)
+        public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper
+            ,IHttpContextAccessor accessor)
         {
             _unit = unit;
             _mapper = mapper;
-            _userManager = userManager;
+            //_userManager = userManager;
+            _accessor = accessor;
         }
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-            Property property = await CheckIfNotFoundThenReturnProperty(request,cancellationToken);
-
+            //Property property = await _unit.PropertyRepository
+            //    .GetByIdAsync(request.PropertyId, null, false, "Host");
+            Guid userId = _accessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
+            Property property = await CheckExceptionsThenReturnProperty(request,userId,cancellationToken);
             // host un verdiyi checkInTime i menimsedirik.
             request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
             request.CheckOutDate = request.CheckOutDate.Date + property.CheckOutTime;
@@ -41,14 +46,15 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             await CheckIfDateOccupied(request);
             Reservation reservation = _mapper.Map<Reservation>(request);
             SetReservationStatus(reservation);
-            ManuallySettingValuesToReservation(request, property, reservation);
+            ManuallySettingValuesToReservation(request, property, reservation, userId);
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
 
             await _unit.ReservationRepository.AddAsync(reservation);
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }
 
-        private static void ManuallySettingValuesToReservation(CreateReservationCommand request, Property property, Reservation reservation)
+        private static void ManuallySettingValuesToReservation(CreateReservationCommand request, 
+            Property property, Reservation reservation,Guid userId)
         {
             reservation.Property = property;
             if (request.PetCount != 0)
@@ -56,6 +62,8 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
                 if (!reservation.Property.IsPetAllowed) throw new Reservation_PetsAreNotAllowedException();
                 reservation.PetCount = request.PetCount;
             }
+            reservation.HostId = property.HostId;
+            reservation.AppUserId = userId;
         }
 
         private static void SetReservationStatus(Reservation reservation)
@@ -82,19 +90,24 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             return reservedDays;
         }
 
-        private async Task<Property> CheckIfNotFoundThenReturnProperty(CreateReservationCommand request,CancellationToken cancellationToken=default)
+        private async Task<Property> CheckExceptionsThenReturnProperty(CreateReservationCommand request,
+            Guid userId, CancellationToken cancellationToken = default)
         {
+            
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.PropertyId, null,false, "Host", "Host.AppUser");
-            if (property is null) throw new PropertyNotFoundException();
-            AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
-            if (user is null) throw new UserIdNotFoundException();
-            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
-
-            if (host is null) throw new HostNotFoundException(request.HostId);
-            if (host.AppUserId == user.Id) throw new Reservation_CantReserveYourOwnPropertyException();
-
+                .GetByIdAsync(request.PropertyId, null, true, "Host");
+            if (property.Host.AppUserId == userId) 
+                throw new Reservation_CantReserveYourOwnPropertyException();
+            
             return property;
+            //if (property is null) throw new PropertyNotFoundException();
+            //AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
+            //if (user is null) throw new UserIdNotFoundException();
+            //Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
+
+            //if (host is null) throw new HostNotFoundException(request.HostId);
+
+            //return new Property();
         }
 
         private async Task CheckIfDateOccupied(CreateReservationCommand request)

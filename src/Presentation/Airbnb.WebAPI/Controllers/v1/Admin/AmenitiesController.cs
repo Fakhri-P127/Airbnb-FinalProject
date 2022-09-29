@@ -1,4 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.Amenities;
+﻿using Airbnb.Application.Contracts.v1.Admin.Amenities.Parameters;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
 using Airbnb.Application.Features.Admin.Amenities.Commands.Create;

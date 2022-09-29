@@ -1,11 +1,5 @@
 ﻿using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses.NestedResponses;
 using Airbnb.Application.Contracts.v1.Base;
-using Airbnb.Domain.Entities.PropertyRelated;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses
 {
@@ -14,6 +8,6 @@ namespace Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses
         public string Image { get; set; }
         public string Name { get; set; }
         public int PropertyCount { get; set; }
-        public List<PropertyGroupTypeInPropertyGroup> PropertyGroupTypes { get; set; }
+        public List<PropertyTypeInPropertyGroup> PropertyTypes { get; set; }
     }
 }

@@ -13,12 +13,12 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Parameters
 
             //When(x => x.AppUserId.HasValue, () =>
             //{
-            //    RuleFor(x => x.AppUserId).Must(x => ValidateGuid(x.Value.ToString())).WithMessage("FUCKK");
+            //    RuleFor(x => x.AppUserId).Must(x => ValidateGuid(x.Value.ToString()));
             //});
         }
-        public static bool ValidateGuid(string value)
-        {
-            return Guid.TryParse(value, out var result);
-        }
+        //public static bool ValidateGuid(string value)
+        //{
+        //    return Guid.TryParse(value, out var result);
+        //}
     }
 }

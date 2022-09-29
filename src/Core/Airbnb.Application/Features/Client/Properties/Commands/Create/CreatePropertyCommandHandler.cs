@@ -35,7 +35,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         }
         public async Task<CreatePropertyResponse> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
-            Host host = await CheckExceptionsThenReturnHost(request);
+            //Host host = await CheckExceptionsThenReturnHost(request);
+            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
             Property property = _mapper.Map<Property>(request);
             await SetStateForProperty(request, property);
             await CheckAddMainImage(request, property);
@@ -73,33 +74,6 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             {
                 property.StateId = existedState.Id;
             }
-        }
-
-        private async Task<Host> CheckExceptionsThenReturnHost(CreatePropertyCommand request)
-        {
-            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
-            if (host is null) throw new HostNotFoundException(request.HostId);
-            AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.AirCoverId, null);
-            if (airCover is null) throw new AirCoverNotFoundException();
-            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.CancellationPolicyId, null);
-            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
-            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.PrivacyTypeId, null);
-            if (privacyType is null) throw new PrivacyTypeNotFoundException();
-            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.PropertyGroupId, null);
-            if (propertyGroup is null) throw new PropertyGroupNotFoundException();
-            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(request.PropertyTypeId, null);
-            if (propertyType is null) throw new PropertyTypeNotFoundException();
-            Region region = await _unit.RegionRepository.GetByIdAsync(request.RegionId, null);
-            if (region is null) throw new RegionNotFoundException();
-            Country country = await _unit.CountryRepository.GetByIdAsync(request.CountryId, null);
-            if (country is null) throw new CountryNotFoundException();
-            City city = await _unit.CityRepository.GetByIdAsync(request.CityId, null);
-            if (city is null) throw new CityNotFoundException();
-            if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
-                throw new CountryDoesntBelongToSpecificiedRegionException(country.Name,region.Name);
-            if (country.Cities.FirstOrDefault(c => c.Id == city.Id) is null)
-                throw new CityDoesntBelongToSpecificiedCountryException(city.Name,country.Name);
-            return host;
         }
         public async Task CheckAddBedImages(CreatePropertyCommand request, Property property)
         {
@@ -152,5 +126,34 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                 property.PropertyAmenities.Add(propertyAmenity);
             }
         }
+
+        #region old way of checking notfounds 
+        //private async Task<Host> CheckExceptionsThenReturnHost(CreatePropertyCommand request)
+        //{
+        //    //Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
+        //    //if (host is null) throw new HostNotFoundException(request.HostId);
+        //    //AirCover airCover = await _unit.AirCoverRepository.GetByIdAsync(request.AirCoverId, null);
+        //    //if (airCover is null) throw new AirCoverNotFoundException();
+        //    //CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository.GetByIdAsync(request.CancellationPolicyId, null);
+        //    //if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
+        //    //PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(request.PrivacyTypeId, null);
+        //    //if (privacyType is null) throw new PrivacyTypeNotFoundException();
+        //    //PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(request.PropertyGroupId, null);
+        //    //if (propertyGroup is null) throw new PropertyGroupNotFoundException();
+        //    //PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(request.PropertyTypeId, null);
+        //    //if (propertyType is null) throw new PropertyTypeNotFoundException();
+        //    //Region region = await _unit.RegionRepository.GetByIdAsync(request.RegionId, null);
+        //    //if (region is null) throw new RegionNotFoundException();
+        //    //Country country = await _unit.CountryRepository.GetByIdAsync(request.CountryId, null);
+        //    //if (country is null) throw new CountryNotFoundException();
+        //    //City city = await _unit.CityRepository.GetByIdAsync(request.CityId, null);
+        //    //if (city is null) throw new CityNotFoundException();
+        //    //if (region.Countries.FirstOrDefault(c => c.Id == country.Id) is null)
+        //    //    throw new CountryDoesntBelongToSpecificiedRegionException(country.Name,region.Name);
+        //    //if (country.Cities.FirstOrDefault(c => c.Id == city.Id) is null)
+        //    //    throw new CityDoesntBelongToSpecificiedCountryException(city.Name,country.Name);
+        //    return host;
+        //}
+        #endregion
     }
 }

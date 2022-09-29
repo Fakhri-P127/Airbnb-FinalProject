@@ -9,7 +9,7 @@ namespace Airbnb.Application.Exceptions.Cities
         public string ErrorMessage { get; set; }
         public CityDoesntBelongToSpecificiedCountryException(string cityName, string countryName)
         {
-            ErrorMessage = $"{cityName}(city) doesn't belong to {countryName}(country). Please choose your country or city correctly.";
+            ErrorMessage = $"{cityName}(city) doesn't belong to {countryName}(country).Please choose your country or city correctly.";
         }
     }
 }

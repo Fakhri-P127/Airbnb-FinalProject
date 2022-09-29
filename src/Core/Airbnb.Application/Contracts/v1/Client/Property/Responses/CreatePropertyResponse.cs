@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Contracts.v1.Base;
 using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses;
+using Airbnb.Application.Contracts.v1.Client.Property.Responses.NestedResponses.NestedStateResponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
+        public StateInPropertyResponse State { get; set; }
         public byte MinNightCount { get; set; }
         public byte MaxNightCount { get; set; }
         public byte MaxGuestCount { get; set; }
@@ -26,7 +25,8 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses
         public decimal Longitude { get; set; }
         public TimeSpan CheckInTime { get; set; }
         public TimeSpan CheckOutTime { get; set; }
-      
+        public bool IsPetAllowed { get; set; }
+
         //relations
         public HostInPropertyResponse Host { get; set; }
         public List<PropertyImagesInPropertyResponse> PropertyImages { get; set; }

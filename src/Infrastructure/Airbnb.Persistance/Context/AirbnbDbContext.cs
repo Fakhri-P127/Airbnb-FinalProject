@@ -29,8 +29,8 @@ namespace Airbnb.Persistance.Context
         #region Property related dbsets
         public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyGroup> PropertyGroups { get; set; }
-        public DbSet<PropertyType> PropertTypes { get; set; }
-        public DbSet<PropertyGroupType> PropertGroupTypes { get; set; }
+        public DbSet<PropertyType> PropertyTypes { get; set; }
+        //public DbSet<PropertyGroupType> PropertGroupTypes { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
         public DbSet<AirCover> AirCovers { get; set; }
         public DbSet<CancellationPolicy> CancellationPolicies { get; set; }
@@ -61,6 +61,8 @@ namespace Airbnb.Persistance.Context
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Reservation>().HasOne(x => x.Host).WithMany(x => x.Reservations)
                .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
+            //builder.Entity<Reservation>().HasOne(x => x.AppUser).WithMany(x => x.ReservationsYouMade)
+            //    .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
             #endregion
             #region property reviews
             builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)
@@ -77,6 +79,10 @@ namespace Airbnb.Persistance.Context
               .HasForeignKey(x => x.RegionId).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<State>().HasOne(x => x.Country).WithMany(x => x.States)
                .HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.NoAction);
+            #endregion
+            #region property types
+            builder.Entity<PropertyType>().HasOne(x => x.PropertyGroup).WithMany(x => x.PropertyTypes)
+              .HasForeignKey(x => x.PropertyGroupId).OnDelete(DeleteBehavior.NoAction);
             #endregion
         }
 

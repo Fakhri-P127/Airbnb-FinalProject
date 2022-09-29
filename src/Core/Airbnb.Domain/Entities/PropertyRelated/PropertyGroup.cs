@@ -12,12 +12,12 @@ namespace Airbnb.Domain.Entities.PropertyRelated
         public PropertyGroup()
         {
             Properties = new List<Property>();
-            PropertyGroupTypes = new List<PropertyGroupType>();
+            PropertyTypes = new List<PropertyType>();
         }
         public string Image { get; set; }
         public string Name { get; set; }
         public List<Property> Properties { get; set; }
-        public List<PropertyGroupType> PropertyGroupTypes { get; set; }
+        public List<PropertyType> PropertyTypes{ get; set; }
 
     }
 }

@@ -10,6 +10,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq.Expressions;
+using System.Diagnostics;
 
 namespace Airbnb.Application.Features.Client.User.Queries.GetAll
 {
@@ -31,10 +32,9 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
                _userManager.Users.Where(request.Expression) : _userManager.Users.AsQueryable();
             List<AppUser> users = await query?
                 .SetIncludes(AppUserHelper.AllUserIncludes()).AsSplitQuery().ToListAsync(cancellationToken);
-          
+
             List<UserResponse> responses = _mapper.Map<List<UserResponse>>(users);
             AddVerifications(responses,users);
-
             return responses;
         }
 

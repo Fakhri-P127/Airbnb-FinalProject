@@ -24,7 +24,6 @@ namespace Airbnb.Application.PiplineBehaviours
                 
                 if (errors.Any())
                     throw new ValidationException(errors);
-
             }
             return await next();
         }

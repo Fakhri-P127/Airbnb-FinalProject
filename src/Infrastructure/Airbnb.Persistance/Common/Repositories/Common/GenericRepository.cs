@@ -36,6 +36,14 @@ namespace Airbnb.Persistance.Common.Repositories.Common
             return tracked is false ? await query.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id)
                 : await query.FirstOrDefaultAsync(x => x.Id == id);
         }
+        public virtual T GetById(Guid id, Expression<Func<T, bool>> expression, bool tracked = false, params string[] includes)
+        {
+            IQueryable<T> query = expression is not null ?
+                 _dbSet.Where(expression) : _dbSet.AsQueryable();
+            query = SetIncludes(query, includes);
+            return tracked is false ?  query.AsNoTracking().FirstOrDefault(x => x.Id == id)
+                :  query.FirstOrDefault(x => x.Id == id);
+        }
         public virtual async Task<T> GetSingleAsync(Expression<Func<T, bool>> expression,bool tracked = false, params string[] includes)
         {
             IQueryable<T> query = expression is not null ?

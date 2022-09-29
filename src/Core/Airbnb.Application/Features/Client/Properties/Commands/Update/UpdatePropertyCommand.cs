@@ -9,7 +9,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         public string Title { get; set; }
         public string Description { get; set; }
         public int? Price { get; set; }
-        public Guid? HostId { get; set; }
+        //public Guid? HostId { get; set; }// bunu sil
         public Guid? RegionId { get; set; }
         public Guid? CountryId { get; set; }
         public Guid? CityId { get; set; }
@@ -23,7 +23,8 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         public int? BedCount { get; set; }
         public decimal? Latitude { get; set; }
         public decimal? Longitude { get; set; }
-
+        public TimeSpan? CheckInTime { get; set; }
+        public TimeSpan? CheckOutTime { get; set; }
         //relations
         public IFormFile MainPropertyImage { get; set; }
         public List<IFormFile> DetailPropertyImages { get; set; }

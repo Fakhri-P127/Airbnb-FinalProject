@@ -164,7 +164,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("AppUserLanguages");
+                    b.ToTable("AppUserLanguages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Gender", b =>
@@ -195,7 +195,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Genders");
+                    b.ToTable("Genders", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.GuestReview", b =>
@@ -242,7 +242,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("GuestReviews");
+                    b.ToTable("GuestReviews", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Host", b =>
@@ -273,7 +273,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Hosts");
+                    b.ToTable("Hosts", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Language", b =>
@@ -304,7 +304,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Languages");
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AirCover", b =>
@@ -361,7 +361,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AirCovers");
+                    b.ToTable("AirCovers", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Amenity", b =>
@@ -405,7 +405,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Amenities");
+                    b.ToTable("Amenities", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AmenityType", b =>
@@ -428,7 +428,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AmenityTypes");
+                    b.ToTable("AmenityTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.CancellationPolicy", b =>
@@ -472,7 +472,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CancellationPolicies");
+                    b.ToTable("CancellationPolicies", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PrivacyType", b =>
@@ -502,7 +502,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("PrivacyTypes");
+                    b.ToTable("PrivacyTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Property", b =>
@@ -619,7 +619,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Properties", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyAmenity", b =>
@@ -651,7 +651,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyAmenities");
+                    b.ToTable("PropertyAmenities", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", b =>
@@ -683,45 +683,10 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Image")
-                        .IsUnique();
-
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("PropertyGroups");
-                });
-
-            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyGroupType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsDisplayed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
-
-                    b.Property<DateTime>("ModifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PropertyGroupId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PropertyTypeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PropertyGroupId");
-
-                    b.HasIndex("PropertyTypeId");
-
-                    b.ToTable("PropertGroupTypes");
+                    b.ToTable("PropertyGroups", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyImage", b =>
@@ -759,7 +724,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyImages");
+                    b.ToTable("PropertyImages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyReview", b =>
@@ -823,7 +788,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("PropertyReviews");
+                    b.ToTable("PropertyReviews", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyType", b =>
@@ -857,19 +822,17 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("nvarchar(60)");
 
+                    b.Property<Guid>("PropertyGroupId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("Description")
-                        .IsUnique()
-                        .HasFilter("[Description] IS NOT NULL");
-
-                    b.HasIndex("Icon")
-                        .IsUnique();
 
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("PropertTypes");
+                    b.HasIndex("PropertyGroupId");
+
+                    b.ToTable("PropertyTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Reservation", b =>
@@ -937,7 +900,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", b =>
@@ -969,7 +932,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("City", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", b =>
@@ -1004,7 +967,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", b =>
@@ -1034,7 +997,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Region");
+                    b.ToTable("Region", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", b =>
@@ -1076,7 +1039,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("State");
+                    b.ToTable("State", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -1363,25 +1326,6 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("Property");
                 });
 
-            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyGroupType", b =>
-                {
-                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", "PropertyGroup")
-                        .WithMany("PropertyGroupTypes")
-                        .HasForeignKey("PropertyGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.PropertyType", "PropertyType")
-                        .WithMany("PropertyGroupTypes")
-                        .HasForeignKey("PropertyTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PropertyGroup");
-
-                    b.Navigation("PropertyType");
-                });
-
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyImage", b =>
                 {
                     b.HasOne("Airbnb.Domain.Entities.PropertyRelated.Property", "Property")
@@ -1418,6 +1362,17 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.Navigation("Host");
 
                     b.Navigation("Reservation");
+                });
+
+            modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyType", b =>
+                {
+                    b.HasOne("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", "PropertyGroup")
+                        .WithMany("PropertyTypes")
+                        .HasForeignKey("PropertyGroupId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PropertyGroup");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Reservation", b =>
@@ -1614,14 +1569,12 @@ namespace Airbnb.Persistance.Context.Migrations
                 {
                     b.Navigation("Properties");
 
-                    b.Navigation("PropertyGroupTypes");
+                    b.Navigation("PropertyTypes");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyType", b =>
                 {
                     b.Navigation("Properties");
-
-                    b.Navigation("PropertyGroupTypes");
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Reservation", b =>

@@ -16,7 +16,7 @@ namespace Airbnb.Application
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
 
-            services.AddFluentValidationAutoValidation(x => x.DisableDataAnnotationsValidation=true);
+            //services.AddFluentValidationAutoValidation(x => x.DisableDataAnnotationsValidation=true);
             services.AddValidatorsFromAssembly(assembly)
                 .AddMediatR(assembly)
                 .AddAutoMapper(assembly)

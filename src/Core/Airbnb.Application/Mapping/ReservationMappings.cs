@@ -6,11 +6,6 @@ using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Mapping
 {
@@ -30,11 +25,12 @@ namespace Airbnb.Application.Mapping
             CreateMap<GuestReview, GuestReviewInReservationResponse>();
 
             CreateMap<CreateReservationCommand, Reservation>()
-                .ForMember(dest=>dest.PetCount,opt=>opt.Ignore());
+                .ForMember(dest => dest.PetCount, opt => opt.Ignore())
+                .ForMember(dest=>dest.PropertyId,opt=>opt.Ignore());
 
             CreateMap<UpdateReservationCommand, Reservation>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
-                .ForMember(dest => dest.HostId, opt => opt.Ignore())
+                //.ForMember(dest => dest.HostId, opt => opt.Ignore())
                 .ForMember(dest => dest.PropertyId, opt => opt.Ignore())
                 .ForMember(dest=>dest.PetCount,opt=>opt.Ignore())
                 .ForMember(dest => dest.AdultCount, opt =>

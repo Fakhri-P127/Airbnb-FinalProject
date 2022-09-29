@@ -38,7 +38,7 @@ namespace Airbnb.Application.Features.Admin.Cities.Commands.Update
         {
             City city = await _unit.CityRepository.GetByIdAsync(Id, null,true);
             if (city is null) throw new CityNotFoundException();
-            if (await _unit.CountryRepository.GetByIdAsync(request.CountryId.TryParseIdToGuid(), null) is null)
+            if (await _unit.CountryRepository.GetByIdAsync(request.CountryId.TryParseNullableGuidIdToGuid(), null) is null)
                 throw new CountryNotFoundException();
             return city;
         }

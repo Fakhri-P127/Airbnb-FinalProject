@@ -25,7 +25,8 @@ namespace Airbnb.Application.Helpers
         {
             string[] includes = new[] { "PropertyImages"
                 , "PropertyAmenities", "PropertyAmenities.Amenity", "PropertyGroup", "PropertyType", "AirCover"
-                , "CancellationPolicy","State", "PrivacyType","Host","Reservations","Host.AppUser" };
+                , "CancellationPolicy","State","State.Region","State.Country","State.City",
+                "PrivacyType","Reservations","Host","Host.AppUser" };
 
             return includes;
         }

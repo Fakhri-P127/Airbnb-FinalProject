@@ -1,4 +1,4 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.Amenities;
+﻿using Airbnb.Application.Contracts.v1.Admin.Amenities.Parameters;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Domain.Entities.PropertyRelated;
 using MediatR;

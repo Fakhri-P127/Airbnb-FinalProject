@@ -72,8 +72,8 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Parameters
             });
             When(x => x.MaxCheckInDate.HasValue, () =>
             {
-                RuleFor(x => x.MinCheckOutDate)
-              .LessThanOrEqualTo(x => x.MaxCheckInDate.Value.Date.AddDays(1));
+              //  RuleFor(x => x.MinCheckOutDate)
+              //.LessThanOrEqualTo(x => x.MaxCheckInDate.Value.Date.AddDays(1));
 
                 RuleFor(x => x.MaxCheckOutDate)
                     .GreaterThanOrEqualTo(x => x.MaxCheckInDate.Value.Date.AddDays(1));
@@ -92,9 +92,9 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Parameters
 
 
         }
-        public static bool ValidateGuid(string value)
-        {
-            return Guid.TryParse(value, out var result);
-        }
+        //public static bool ValidateGuid(string value)
+        //{
+        //    return Guid.TryParse(value, out var result);
+        //}
     }
 }

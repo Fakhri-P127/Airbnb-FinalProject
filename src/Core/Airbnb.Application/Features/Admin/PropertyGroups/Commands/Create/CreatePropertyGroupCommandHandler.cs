@@ -37,14 +37,17 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create
         }
         private async Task ImageCheck(CreatePropertyGroupCommand request, PropertyGroup propertyGroup)
         {
-            if (request.Image is not null)
+            if (request.Image is null) throw new PropertyGroupImageValidationException()
             {
-                if (!request.Image.IsImageOkay(2))
-                    throw new PropertyGroupImageValidationException();
+                ErrorMessage = "Image can't be empty. Please insert a photo"
+            };
 
-                propertyGroup.Image = await request.Image
-                    .FileCreate(_env.WebRootPath, "assets/images/PropertyGroupImages");
-            }
+            if (!request.Image.IsImageOkay(2))
+                throw new PropertyGroupImageValidationException();
+
+            propertyGroup.Image = await request.Image
+                .FileCreate(_env.WebRootPath, "assets/images/PropertyGroupImages");
+
         }
     }
 }

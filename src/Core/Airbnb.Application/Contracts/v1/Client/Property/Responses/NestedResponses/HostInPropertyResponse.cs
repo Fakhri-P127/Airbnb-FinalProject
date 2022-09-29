@@ -3,7 +3,7 @@
     public class HostInPropertyResponse
     {
         public Guid Id { get; set; }
-        public bool IsSuperHost { get; set; }
+        public int Status { get; set; }
 
         public AppUserInHost AppUser { get; set; }
     }
