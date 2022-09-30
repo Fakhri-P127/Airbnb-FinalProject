@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Admin.Regions.Queries.GetAll
         public async Task<List<RegionResponse>> Handle(GetAllRegionsQuery request, CancellationToken cancellationToken)
         {
             List<Region> regions = await _unit.RegionRepository
-               .GetAllAsync(request.Expression,false,RegionHelper.AllRegionIncludes());
+               .GetAllAsync(request.Expression,request.Parameters,false,RegionHelper.AllRegionIncludes());
 
             List<RegionResponse> responses = _mapper.Map<List<RegionResponse>>(regions);
             if (responses is null) throw new Exception("Internal server error");

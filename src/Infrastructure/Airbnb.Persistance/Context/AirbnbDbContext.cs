@@ -1,13 +1,12 @@
-﻿using Airbnb.Domain.Entities.Base;
-using Airbnb.Domain.Entities.AppUserRelated;
+﻿using Airbnb.Domain.Entities.AppUserRelated;
+using Airbnb.Domain.Entities.Base;
 using Airbnb.Domain.Entities.PropertyRelated;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using Microsoft.AspNetCore.Identity;
-using Airbnb.Domain.Entities.AppUserRelated.CustomFrameworkClasses;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Reflection;
 
 namespace Airbnb.Persistance.Context
 {
@@ -25,6 +24,8 @@ namespace Airbnb.Persistance.Context
         public DbSet<AppUserLanguage> AppUserLanguages { get; set; }
         public DbSet<GuestReview> GuestReviews { get; set; }
         public DbSet<Host> Hosts { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         #endregion
         #region Property related dbsets
         public DbSet<Property> Properties { get; set; }

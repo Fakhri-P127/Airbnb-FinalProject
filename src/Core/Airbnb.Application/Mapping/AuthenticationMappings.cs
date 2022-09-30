@@ -26,7 +26,7 @@ namespace Airbnb.Application.Mapping
 
             //.ForMember(x=>x.DateOfBirth.Date,d=>d.MapFrom(r=>r.DateOfBirth));
 
-            CreateMap<AppUser, LoginResponse>();
+            //CreateMap<AppUser, LoginResponse>();
             CreateMap<AppUser, RegisterResponse>();
         }
     }

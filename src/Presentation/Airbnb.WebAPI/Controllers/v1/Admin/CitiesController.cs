@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.Cities.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.Cities.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.Cities.Responses;
 using Airbnb.Application.Features.Admin.Cities.Commands.Create;
 using Airbnb.Application.Features.Admin.Cities.Commands.Delete;
 using Airbnb.Application.Features.Admin.Cities.Commands.Update;
@@ -22,9 +24,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllCities()
+        public async Task<IActionResult> GetAllCities([FromQuery] CityParameters parameters)
         {
-            List<CityResponse> result = await _mediatr.Send(new GetAllCitiesQuery());
+            List<CityResponse> result = await _mediatr.Send(new GetAllCitiesQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

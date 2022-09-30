@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Create;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Delete;
 using Airbnb.Application.Features.Admin.AirCovers.Commands.Update;
@@ -22,9 +23,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllAirCovers()
+        public async Task<IActionResult> GetAllAirCovers([FromQuery]AirCoverParameters parameters)
         {
-            List<AirCoverResponse> result = await _mediatr.Send(new AirCoverGetAllQuery());
+            List<AirCoverResponse> result = await _mediatr.Send(new AirCoverGetAllQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

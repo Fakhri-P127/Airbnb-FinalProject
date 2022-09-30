@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Client.Host.Parameters;
+﻿using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Contracts.v1.Client.Host.Parameters;
 using Airbnb.Application.Contracts.v1.Client.Host.Responses;
 using Airbnb.Domain.Entities.AppUserRelated;
 using MediatR;

@@ -1,42 +1,42 @@
-﻿using Airbnb.Application.Common.Interfaces.Authentication;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Application.Common.CustomFrameworkImpl;
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
 {
-    public class LoginQueryHandler : IRequestHandler<LoginQuery, LoginResponse>
+    public class LoginQueryHandler : IRequestHandler<LoginQuery, AuthSuccessResponse>
     {
         private readonly CustomUserManager<AppUser> _userManager;
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly ITokenGeneratorService _tokenGenerator;
         private readonly SignInManager<AppUser> _signInManager;
-        private readonly IMapper _mapper;
 
-        public LoginQueryHandler(IMapper mapper,CustomUserManager<AppUser> userManager,
-            IJwtTokenGenerator jwtTokenGenerator,SignInManager<AppUser> signInManager)
+        public LoginQueryHandler(CustomUserManager<AppUser> userManager,
+            ITokenGeneratorService tokenGenerator, SignInManager<AppUser> signInManager)
         {
-           _userManager = userManager;
-            _jwtTokenGenerator = jwtTokenGenerator;
+            _userManager = userManager;
+            _tokenGenerator = tokenGenerator;
             _signInManager = signInManager;
-            _mapper = mapper;
         }
-        public async Task<LoginResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
+        public async Task<AuthSuccessResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();
-            //if (!user.EmailConfirmed) throw new User_EmailNotConfirmedException();
-
             SignInResult result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             await CheckIfSignInHappenedSuccessfully(user, result);
 
-            LoginResponse response = _mapper.Map<LoginResponse>(user);
-            if (response is null) throw new Exception("Internal server error");
-            response.Token = await _jwtTokenGenerator.GenerateTokenAsync(user);
-
+            //LoginResponse response = _mapper.Map<LoginResponse>(user);
+            //if (response is null) throw new Exception("Internal server error");
+            List<Claim> claims = await _tokenGenerator.CreateClaims(user);
+            AuthSuccessResponse response = new()
+            {
+                AccessToken = await _tokenGenerator.GenerateJwtAccessTokenAsync(claims),
+                RefreshToken = await _tokenGenerator.GenerateRefreshTokenAsync(claims,user.Id)
+            };
             return response;
         }
 

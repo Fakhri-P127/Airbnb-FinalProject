@@ -17,8 +17,8 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.UpdateHostStatus
         {
             // IsSuperHost default olaraq false oldugu uchun 5e qeder olanlari goturmurem,
             // ekstra boshuna data gelmesin
-            List<Host> hosts = await _unit.HostRepository.GetAllAsync(x => x.Reservations.Count > 5,true,
-                "Reservations");
+            List<Host> hosts = await _unit.HostRepository.GetAllAsync(x => x.Reservations.Count > 5,
+                null,true,"Reservations");
             if (hosts is null || !hosts.Any()) return await Task.FromResult(Unit.Value);
             hosts.ForEach(host =>
             {

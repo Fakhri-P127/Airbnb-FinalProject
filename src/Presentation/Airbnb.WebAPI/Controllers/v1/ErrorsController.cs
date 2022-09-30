@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Exceptions;
 using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Exceptions.AuthenticationExceptions.TokenExceptions;
 using Airbnb.Application.Filters.ActionFilters;
 using FluentValidation;
 using FluentValidation.Results;
@@ -31,6 +32,7 @@ namespace Airbnb.WebAPI.Controllers.v1
                         modelStateDictionary.AddModelError(error.ErrorCode, error.ErrorMessage);
                     }
                     return ValidationProblem(modelStateDictionary);
+
                 case UserValidationException createUserFailureException:
                     foreach (IdentityError error in createUserFailureException.ErrorMessages)
                     {
@@ -38,10 +40,19 @@ namespace Airbnb.WebAPI.Controllers.v1
                     }
                     return ValidationProblem(title:createUserFailureException.ErrorMessage,
                         modelStateDictionary:modelStateDictionary);
+
+                case IAuthTokenException tokenException:
+                    return Problem
+                        (title: tokenException.ErrorMessage,
+                        detail: tokenException.DetailErrorMessage,
+                        statusCode:(int)tokenException.StatusCode
+                        );
+
                 case IServiceException serviceException:
                     statusCode = serviceException.StatusCode;
                     errorMessage = serviceException.ErrorMessage;
                     break;
+
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
                     errorMessage = exception?.Message;

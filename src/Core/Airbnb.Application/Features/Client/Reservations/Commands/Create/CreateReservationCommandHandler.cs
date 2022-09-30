@@ -128,7 +128,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         private async Task CheckIfItContainsOccupiedDate(CreateReservationCommand request)
         {
             List<Reservation> containsOccupiedDate = await _unit.ReservationRepository.GetAllAsync(x =>
-            x.CheckInDate >= request.CheckInDate && x.CheckInDate <= request.CheckOutDate);
+            x.CheckInDate >= request.CheckInDate && x.CheckInDate <= request.CheckOutDate, null);
             if (containsOccupiedDate.Count != 0) throw new ReservationContainsOccupiedDateException();
         }
 
@@ -136,7 +136,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         {
             List<Reservation> occupiedCheckOutTime = await _unit.ReservationRepository
                             .GetAllAsync(x => x.CheckInDate <= request.CheckOutDate
-                            && x.CheckOutDate >= request.CheckOutDate);
+                            && x.CheckOutDate >= request.CheckOutDate, null);
             if (occupiedCheckOutTime.Count != 0)
                 throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
         }
@@ -146,7 +146,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         {
             List<Reservation> occupiedCheckInTime = await _unit.ReservationRepository
                 .GetAllAsync(x => x.CheckInDate <= request.CheckInDate
-                && x.CheckOutDate >= request.CheckInDate);
+                && x.CheckOutDate >= request.CheckInDate, null);
             if (occupiedCheckInTime.Count != 0)
                 throw new ReservationCheckInOccupiedException(request.CheckInDate);
         }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Airbnb.Application.Contracts.v1;
+using Airbnb.Application.Features.Client.Authentication.Commands.GenerateRefreshToken;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
@@ -9,16 +11,17 @@ namespace Airbnb.Application.Filters.ActionFilters
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             #region belede yazmaq olar
-            //bool result = context.ActionArguments.TryGetValue("command", out object command );
-            //if (result is true && command is SendConfirmationEmailCommand) return;
+            // bu endpointde login olmaq lazimdi deye return edirik.
+            //bool result = context.ActionArguments.TryGetValue("command", out object command);
+            //if (result is true && command is CreateRefreshTokenCommand) return;
             #endregion
-            // bu endpointde login olmaq lazimdi deye return edirik. deyilmish ಥ_ಥ
 
-            //if (context.HttpContext.Request.Path.Value.Contains("SendConfirmationEmailAgain")) return;
+            if (context.HttpContext.Request.Path.Value
+                .Contains(ApiRoutes.Authentications.GenerateRefreshToken,StringComparison.InvariantCultureIgnoreCase)) return;
 
 
             // eger login olubsa authenticated deki forgot password,reset password,register,login i ishelede bilmesin.
-            // Tek icaze olan sendconfirmationEmailAgain di ona da skipmyglobalActionFilter verecem 👍
+            // Tek icaze olan generateRefreshToken di 👍
             if (!context.HttpContext.User.Identity.IsAuthenticated) return;
             ProblemDetails problemDetails = new()
             {

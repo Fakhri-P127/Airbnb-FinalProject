@@ -9,7 +9,6 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
     public class PropertyGetAllQuery:IRequest<List<GetPropertyResponse>>
     {
         public PropertyParameters Parameters { get; set; }
-        
         public Expression<Func<Property, bool>> Expression { get; set; }
         public PropertyGetAllQuery(PropertyParameters parameters,Expression<Func<Property, bool>> expression = null)
         {

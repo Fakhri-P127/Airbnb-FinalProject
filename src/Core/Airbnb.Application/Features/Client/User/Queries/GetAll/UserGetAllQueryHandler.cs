@@ -31,7 +31,9 @@ namespace Airbnb.Application.Features.Client.User.Queries.GetAll
             IQueryable<AppUser> query = request.Expression is not null ?
                _userManager.Users.Where(request.Expression) : _userManager.Users.AsQueryable();
             List<AppUser> users = await query?
-                .SetIncludes(AppUserHelper.AllUserIncludes()).AsSplitQuery().ToListAsync(cancellationToken);
+                .SetIncludes(AppUserHelper.AllUserIncludes()).AsSplitQuery()
+                .Skip((request.Parameters.PageNumber-1)*request.Parameters.PageSize)
+                .Take(request.Parameters.PageSize).ToListAsync(cancellationToken);
 
             List<UserResponse> responses = _mapper.Map<List<UserResponse>>(users);
             AddVerifications(responses,users);

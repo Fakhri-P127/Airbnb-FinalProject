@@ -18,6 +18,7 @@ namespace Airbnb.Persistance.Common
         #region repositories
         public IHostRepository HostRepository { get => new HostRepository(_context) ?? throw new NotImplementedException(); }
         public IGenderRepository GenderRepository { get => new GenderRepository(_context) ?? throw new NotImplementedException(); }
+        public IRefreshTokenRepository RefreshTokenRepository { get => new RefreshTokenRepository(_context) ?? throw new NotImplementedException(); }
         public ILanguageRepository LanguageRepository { get => new LanguageRepository(_context) ?? throw new NotImplementedException(); }
         public IGuestReviewRepository GuestReviewRepository { get => new GuestReviewRepository(_context) ?? throw new NotImplementedException(); }
         public IPropertyRepository PropertyRepository { get => new PropertyRepository(_context) ?? throw new NotImplementedException(); }

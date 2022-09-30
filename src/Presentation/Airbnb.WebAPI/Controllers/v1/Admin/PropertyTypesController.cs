@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
 using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update;
@@ -22,9 +24,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllPropertyTypes()
+        public async Task<IActionResult> GetAllPropertyTypes([FromQuery] PropertyTypeParameters parameters)
         {
-            List<GetPropertyTypeResponse> result = await _mediatr.Send(new GetAllPropertyTypesQuery());
+            List<GetPropertyTypeResponse> result = await _mediatr.Send(new GetAllPropertyTypesQuery(parameters));
             var salam = result.GetType().GetProperties();
             return Ok(result);
         }

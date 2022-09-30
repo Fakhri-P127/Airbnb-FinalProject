@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Queries.GetAll
         {
             ExpressionStarter<Reservation> filters = FilterRequest(request);
             List<Reservation> reservations = await _unit.ReservationRepository
-                .GetAllAsync(filters, false, "PropertyReview", "GuestReview");
+                .GetAllAsync(filters,request.Parameters, false, "PropertyReview", "GuestReview");
             List<GetReservationResponse> responses = _mapper.Map<List<GetReservationResponse>>(reservations);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

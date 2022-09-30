@@ -23,7 +23,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         {
             _mediatr = mediatr;
         }
-
+        /// <summary>
+        /// Get all reservations. You can use the query parameters to filter the data you recieve.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllReservations([FromQuery]ReservationParameters parameters)
@@ -42,7 +46,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         //       && x.Status != (int)Enum_ReservationStatus.ReservationFinished));
         //    return Ok(result);
         //}
-
+        /// <summary>
+        /// Get reservation by given Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetReservationById([FromRoute] Guid id)
@@ -50,6 +58,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             var result = await _mediatr.Send(new GetReservationByIdQuery(id));
             return Ok(result);
         }
+        /// <summary>
+        /// Make a reservation
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Guest")]
         public async Task<IActionResult> MakeReservation(CreateReservationCommand command)
@@ -57,16 +70,25 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PostReservationResponse result = await _mediatr.Send(command);
             return CreatedAtAction(nameof(GetReservationById), new { id = result.Id }, result);
         }
+        /// <summary>
+        /// Update reservation's data. Empty values will be ignored
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Guest,Host")]
-
         public async Task<IActionResult> UpdateReservation(
             [FromBody]UpdateReservationCommand command)
         {
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        [HttpPatch("[action]/{id}")]
+        /// <summary>
+        /// with this endpoint you can extend the duration of your trip
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPatch("{id}")]
         [Authorize(Roles = "Guest,Host")]
         public async Task<IActionResult> ExtendReservationDuration(
             [FromBody]ExtendReservationDurationCommand command)
@@ -74,15 +96,22 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
+        /// <summary>
+        /// this endpoint is for background service to update the reservations status
+        /// </summary>
+        /// <returns></returns>
         [HttpPatch("[action]")]
         [AllowAnonymous]
-
-        public async Task<IActionResult> UpdateReservationStatus()
+        public async Task<IActionResult> UpdateReservationsStatus()
         {
             await _mediatr.Send(new UpdateReservationStatusCommand());
             return NoContent();
         }
-
+        /// <summary>
+        /// delete reservation by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Host,Moderator,Admin")]
         public async Task<IActionResult> DeleteReservation([FromRoute] Guid id)

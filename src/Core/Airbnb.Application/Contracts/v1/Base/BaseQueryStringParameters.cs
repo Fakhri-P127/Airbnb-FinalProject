@@ -1,6 +1,6 @@
 ﻿namespace Airbnb.Application.Contracts.v1.Base
 {
-    public abstract class BaseQueryStringParameters
+    public  class BaseQueryStringParameters
     {
         const int _maxPageSize = 50;
         public int PageNumber { get; set; } = 1;

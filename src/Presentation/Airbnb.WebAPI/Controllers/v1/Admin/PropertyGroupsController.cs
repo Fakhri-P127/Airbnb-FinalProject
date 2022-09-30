@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Create;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Delete;
 using Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update;
@@ -23,9 +25,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllPropertyGroups()
+        public async Task<IActionResult> GetAllPropertyGroups([FromQuery] PropertyGroupParameters parameters)
         {
-            List<GetPropertyGroupResponse> result = await _mediatr.Send(new GetAllPropertyGroupsQuery());
+            List<GetPropertyGroupResponse> result = await _mediatr.Send(new GetAllPropertyGroupsQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

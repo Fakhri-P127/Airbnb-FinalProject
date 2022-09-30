@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.Countries.Queries.GetAll
         public async Task<List<CountryResponse>> Handle(GetAllCountriesQuery request, CancellationToken cancellationToken)
         {
             List<Country> countries = await _unit.CountryRepository
-               .GetAllAsync(request.Expression,false, CountryHelper.AllCountryIncludes());
+               .GetAllAsync(request.Expression,request.Parameters,false, CountryHelper.AllCountryIncludes());
 
             List<CountryResponse> responses = _mapper.Map<List<CountryResponse>>(countries);
             if (responses is null) throw new Exception("Internal server error");

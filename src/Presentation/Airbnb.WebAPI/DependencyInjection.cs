@@ -1,5 +1,4 @@
 ﻿using Airbnb.Application.Middlewares;
-using Airbnb.Persistance.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
@@ -10,10 +9,13 @@ namespace Airbnb.WebAPI
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddSwaggerAndConfigureJwtService(this IServiceCollection services)
+        public static IServiceCollection AddWebApiDI(this IServiceCollection services)
         {
+            services.AddRouting(x => x.LowercaseUrls = true);
+
             services.AddSwaggerGen(opt =>
             {
+                opt.DescribeAllParametersInCamelCase();
                 //configure timespan for checkInTime and checkOutTime
                 opt.MapType<TimeSpan>(() => new OpenApiSchema
                 {
@@ -59,7 +61,6 @@ namespace Airbnb.WebAPI
                 opt.AssumeDefaultVersionWhenUnspecified = true;
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
                 opt.ApiVersionReader = new UrlSegmentApiVersionReader();
-
             });
             services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
             return services;

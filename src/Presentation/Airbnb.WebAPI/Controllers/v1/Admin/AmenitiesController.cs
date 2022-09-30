@@ -27,7 +27,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllAmenities([FromQuery] AmenityParameters parameters)
         {
-            List<GetAmenityResponse> result = await _mediatr.Send(new GetAllAmenityQuery(parameters,null));
+            List<GetAmenityResponse> result = await _mediatr.Send(new GetAllAmenityQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

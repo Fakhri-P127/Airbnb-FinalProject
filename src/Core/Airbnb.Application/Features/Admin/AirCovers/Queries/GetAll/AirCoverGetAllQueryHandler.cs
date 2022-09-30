@@ -19,7 +19,8 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Queries.GetAll
         }
         public async Task<List<AirCoverResponse>> Handle(AirCoverGetAllQuery request, CancellationToken cancellationToken)
         {
-            List<AirCover> airCovers = await _unit.AirCoverRepository.GetAllAsync(request.Expression);
+            List<AirCover> airCovers = await _unit.AirCoverRepository
+                .GetAllAsync(request.Expression,request.Parameters);
             List<AirCoverResponse> responses = _mapper.Map<List<AirCoverResponse>>(airCovers);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

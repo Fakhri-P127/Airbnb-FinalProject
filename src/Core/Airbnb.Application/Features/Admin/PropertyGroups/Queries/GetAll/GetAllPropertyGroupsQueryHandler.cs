@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetAll
         public async Task<List<GetPropertyGroupResponse>> Handle(GetAllPropertyGroupsQuery request, CancellationToken cancellationToken)
         {
             List<PropertyGroup> propertyGroups = await _unit.PropertyGroupRepository
-              .GetAllAsync(request.Expression,false, PropertyGroupHelper.AllPropertyGroupIncludes());
+              .GetAllAsync(request.Expression,request.Parameters,false, PropertyGroupHelper.AllPropertyGroupIncludes());
             List<GetPropertyGroupResponse> responses = _mapper.Map<List<GetPropertyGroupResponse>>(propertyGroups);
             if (responses is null) throw new Exception("Internal server error");
             return responses;

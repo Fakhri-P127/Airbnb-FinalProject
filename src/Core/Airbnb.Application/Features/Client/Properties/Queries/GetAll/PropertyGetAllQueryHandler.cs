@@ -36,7 +36,7 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
             //}
             ExpressionStarter<Property> filters = FilterRequest(request);
             List<Property> properties = await _unit.PropertyRepository
-                .GetAllAsync(filters, false, PropertyHelper.AllPropertyIncludes());
+                .GetAllAsync(filters,request.Parameters, false, PropertyHelper.AllPropertyIncludes());
 
             List<GetPropertyResponse> response = _mapper.Map<List<GetPropertyResponse>>(properties);
             if (response is null) throw new Exception("Internal server error");

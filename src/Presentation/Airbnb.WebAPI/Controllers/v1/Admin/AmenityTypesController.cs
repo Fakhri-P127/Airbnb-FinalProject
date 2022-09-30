@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Application.Features.Admin.AmenityTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.AmenityTypes.Commands.Delete;
 using Airbnb.Application.Features.Admin.AmenityTypes.Commands.Update;
@@ -21,9 +23,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllAmenityTypes()
+        public async Task<IActionResult> GetAllAmenityTypes([FromQuery] AmenityTypeParameters parameters)
         {
-            List<AmenityTypeResponse> result = await _mediatr.Send(new GetAllAmenityTypesQuery());
+            List<AmenityTypeResponse> result = await _mediatr.Send(new GetAllAmenityTypesQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

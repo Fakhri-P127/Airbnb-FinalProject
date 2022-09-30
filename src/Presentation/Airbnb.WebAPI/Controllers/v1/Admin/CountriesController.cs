@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.Countries.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.Countries.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.Countries.Responses;
 using Airbnb.Application.Features.Admin.Countries.Commands.Create;
 using Airbnb.Application.Features.Admin.Countries.Commands.Delete;
 using Airbnb.Application.Features.Admin.Countries.Commands.Update;
@@ -22,9 +24,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllCountries()
+        public async Task<IActionResult> GetAllCountries([FromQuery] CountryParameters parameters)
         {
-            List<CountryResponse> result = await _mediatr.Send(new GetAllCountriesQuery());
+            List<CountryResponse> result = await _mediatr.Send(new GetAllCountriesQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

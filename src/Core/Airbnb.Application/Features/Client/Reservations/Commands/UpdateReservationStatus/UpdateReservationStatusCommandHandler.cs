@@ -18,7 +18,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
         {
             List<Reservation> reservations = await _unit.ReservationRepository.GetAllAsync(x=>
              x.Status != (int)Enum_ReservationStatus.ReservationCancelled
-               && x.Status != (int)Enum_ReservationStatus.ReservationFinished,true);
+               && x.Status != (int)Enum_ReservationStatus.ReservationFinished,null,true);
             //Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null,true);
             if (reservations is null || !reservations.Any())
                 return await Task.FromResult(Unit.Value);

@@ -21,7 +21,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Create
 
         public async Task<PostPropertyTypeResponse> Handle(CreatePropertyTypeCommand request, CancellationToken cancellationToken)
         {
-            var existed = await _unit.PropertyTypeRepository.GetAllAsync(x => x.Name == request.Name);
+            var existed = await _unit.PropertyTypeRepository.GetAllAsync(x => x.Name == request.Name, null);
             if (existed.Any())
                 throw new DuplicatePropertyTypeNameValidationException();
             PropertyType propertyType = _mapper.Map<PropertyType>(request);

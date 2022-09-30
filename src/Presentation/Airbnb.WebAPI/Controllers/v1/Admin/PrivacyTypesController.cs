@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Delete;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update;
@@ -22,9 +24,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllPrivacyTypes()
+        public async Task<IActionResult> GetAllPrivacyTypes([FromQuery] PrivacyTypeParameters parameters)
         {
-            List<PrivacyTypeResponse> result = await _mediatr.Send(new GetAllPrivacyTypeQuery());
+            List<PrivacyTypeResponse> result = await _mediatr.Send(new GetAllPrivacyTypeQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

@@ -1,4 +1,7 @@
-﻿using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
+﻿using Airbnb.Application.Contracts.v1;
+using Airbnb.Application.Contracts.v1.Base;
+using Airbnb.Application.Contracts.v1.Client.GuestReviews.Parameters;
+using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
 using Airbnb.Application.Features.Client.GuestReviews.Commands.Create;
 using Airbnb.Application.Features.Client.GuestReviews.Commands.Delete;
 using Airbnb.Application.Features.Client.GuestReviews.Commands.Update;
@@ -23,25 +26,27 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllGuestReviews()
+        public async Task<IActionResult> GetAllGuestReviews([FromQuery] GuestReviewParameters parameters)
         {
-            List<GuestReviewResponse> result = await _mediatr.Send(new GetAllGuestReviewsQuery());
+            List<GuestReviewResponse> result = await _mediatr.Send(new GetAllGuestReviewsQuery(parameters));
             return Ok(result);
         }
-        [HttpGet("[action]/{hostId}")]
+        [HttpGet]
+        [Route($"/{ApiRoutes.Root}/{ApiRoutes.Version}/{ApiRoutes.Hosts.Name}/{{hostId}}/guestreviews")]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetGuestReviewsWrittenByHost([FromRoute]Guid hostId)
+        public async Task<IActionResult> GetGuestReviewsWrittenByHost([FromRoute]Guid hostId, [FromQuery]GuestReviewParameters parameters)
         {
             List<GuestReviewResponse> result = await _mediatr
-                .Send(new GetAllGuestReviewsQuery(x=>x.HostId == hostId));
+                .Send(new GetAllGuestReviewsQuery(parameters,x => x.HostId == hostId));
             return Ok(result);
         }
-        [HttpGet("[action]/{guestId}")]
+        [HttpGet]
+        [Route($"/{ApiRoutes.Root}/{ApiRoutes.Version}/{ApiRoutes.Users.Name}/{{guestId}}/guestreviews")]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetGuestReviewsOfUser(Guid guestId)
+        public async Task<IActionResult> GetGuestReviewsOfUser([FromRoute]Guid guestId, [FromQuery]GuestReviewParameters parameters)
         {
             List<GuestReviewResponse> result = await _mediatr
-                .Send(new GetAllGuestReviewsQuery(x => x.AppUserId == guestId));
+                .Send(new GetAllGuestReviewsQuery(parameters,x => x.AppUserId == guestId));
             return Ok(result);
         }
         [HttpGet("{id}")]

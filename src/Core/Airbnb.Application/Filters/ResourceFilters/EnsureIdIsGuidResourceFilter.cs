@@ -15,10 +15,10 @@ namespace Airbnb.Application.Filters.ResourceFilters
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
             if (context.Filters.Any(x => x.GetType() == typeof(SkipMyGlobalFilterAttribute))) return;
-            var value = context.RouteData.Values["id"];
+            bool value = context.RouteData.Values.TryGetValue("id",out var strId);
             //// route da id valuesi gelmeyende 
-            if (value is null) return;
-            bool result = Guid.TryParse(value.ToString(), out Guid Id);
+            if (value is false && strId is null) return;
+            bool result = Guid.TryParse(strId.ToString(), out Guid Id);
             
             if (!result)
             {

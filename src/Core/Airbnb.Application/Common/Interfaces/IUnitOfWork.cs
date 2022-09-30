@@ -15,6 +15,7 @@ namespace Airbnb.Application.Common.Interfaces
     {
         #region repositories
         IHostRepository HostRepository { get; }
+        IRefreshTokenRepository RefreshTokenRepository { get; }
         IGenderRepository GenderRepository { get; }
         ILanguageRepository LanguageRepository { get; }
         IGuestReviewRepository GuestReviewRepository { get; }

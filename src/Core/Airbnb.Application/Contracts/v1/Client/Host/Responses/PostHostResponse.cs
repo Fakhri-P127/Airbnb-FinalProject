@@ -7,7 +7,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Host.Responses
         // hansi usere aiddi
         public Guid AppUserId { get; set; }
         public string Status { get; set; }
-        public string Token { get; set; }
+        //public string AccessToken { get; set; }// bunu refresh tokenle yighisdirmaq olar ele!
 
     }
 }

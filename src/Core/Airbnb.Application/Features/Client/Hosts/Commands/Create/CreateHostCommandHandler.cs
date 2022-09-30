@@ -1,29 +1,28 @@
-﻿using Airbnb.Application.Common.Interfaces;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Common.Interfaces.Authentication;
 using Airbnb.Application.Contracts.v1.Client.Host.Responses;
 using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Exceptions.Hosts;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Application.Common.CustomFrameworkImpl;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Airbnb.Domain.Enums.Reservations;
-using Airbnb.Application.Exceptions.Hosts;
-using System.Security.Claims;
-using Airbnb.Application.Common.Interfaces.Authentication;
 
 namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
 {
     public class CreateHostCommandHandler : IRequestHandler<CreateHostCommand, PostHostResponse>
     {
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly ITokenGeneratorService _tokenGenerator;
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly CustomUserManager<AppUser> _userManager;
 
-        public CreateHostCommandHandler(IJwtTokenGenerator jwtTokenGenerator,IUnitOfWork unit, IMapper mapper, CustomUserManager<AppUser> userManager)
+        public CreateHostCommandHandler(ITokenGeneratorService tokenGenerator,IUnitOfWork unit,
+            IMapper mapper, CustomUserManager<AppUser> userManager)
         {
-            _jwtTokenGenerator = jwtTokenGenerator;
+            _tokenGenerator = tokenGenerator;
             _unit = unit;
             _mapper = mapper;
             _userManager = userManager;
@@ -38,11 +37,8 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
             Host host = _mapper.Map<Host>(request);
             await _unit.HostRepository.AddAsync(host);
             await _userManager.AddToRoleAsync(user, "Host");
-            string token = await _jwtTokenGenerator.GenerateTokenAsync(user);
-
-            //await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "Host"));
-            // update jwt token??
-            return await HostHelper.ReturnResponse(host,token, _unit, _mapper);
+            
+            return await HostHelper.ReturnResponse(host, _unit, _mapper);
         }
     }
 }

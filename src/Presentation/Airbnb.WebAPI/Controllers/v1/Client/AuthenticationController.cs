@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Features.Client.Authentication.Commands.ForgotPassword;
+﻿using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
+using Airbnb.Application.Features.Client.Authentication.Commands.ForgotPassword;
+using Airbnb.Application.Features.Client.Authentication.Commands.GenerateRefreshToken;
 using Airbnb.Application.Features.Client.Authentication.Commands.Register;
 using Airbnb.Application.Features.Client.Authentication.Commands.ResetPassword;
 using Airbnb.Application.Features.Client.Authentication.Commands.SendConfirmationEmail;
@@ -19,23 +21,23 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
     public class AuthenticationController : BaseController
     {
         private readonly ISender _mediatr;
+
         public AuthenticationController(ISender mediatr)
         {
             _mediatr = mediatr;
         }
-       
+
         [HttpPost]
         public async Task<IActionResult> Register([FromForm] RegisterCommand command)
         {
-            var result = await _mediatr.Send(command);
+            RegisterResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
 
         [HttpPost]
-        // object i string email,string password kimi gondersen swaggerde de ishleyecek.
-        public async Task<IActionResult> Login([FromBody]LoginQuery query)
+        public async Task<IActionResult> Login([FromBody] LoginQuery query)
         {
-            var result = await _mediatr.Send(query);
+            AuthSuccessResponse result = await _mediatr.Send(query);
             return Ok(result); ;
         }
         //[HttpPost]
@@ -44,6 +46,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         //    await _signInManager.SignOutAsync();
         //    return Ok();
         //}
+        [HttpPost]
+        public async Task<IActionResult> GenerateRefreshToken([FromBody] CreateRefreshTokenCommand command)
+        {
+            AuthSuccessResponse result = await _mediatr.Send(command);
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {
@@ -62,14 +70,14 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return NoContent();
         }
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail([FromQuery]ConfirmEmailQuery query)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailQuery query)
         {
             await _mediatr.Send(query);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> SendConfirmationEmail([FromQuery]SendConfirmationEmailCommand command)
+        public async Task<IActionResult> SendConfirmationEmail([FromQuery] SendConfirmationEmailCommand command)
         {
             await _mediatr.Send(command);
             return NoContent();

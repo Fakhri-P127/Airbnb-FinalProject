@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Reflection;
 using Airbnb.Application.Helpers;
+using Newtonsoft.Json;
+using Airbnb.Application.Contracts.v1.Base;
 
 namespace Airbnb.Application.Filters.ActionFilters
 {
@@ -26,7 +28,7 @@ namespace Airbnb.Application.Filters.ActionFilters
             }
 
             public void OnActionExecuted(ActionExecutedContext context)
-            {
+            {   
             }
 
             public void OnActionExecuting(ActionExecutingContext context)
@@ -44,7 +46,6 @@ namespace Airbnb.Application.Filters.ActionFilters
                 // bele bir user var ya yo o check olunur, yoxdusa notfoundexception() varsa da basqa if sherti
                 if (_userManager.Users.FirstOrDefault(x => x.Id == userId) is null)
                     throw new UserIdNotFoundException();
-                var sa = userId.ToString();
                 if (userId.ToString() == authenticatedUserId) return;
 
                 // eger login olunmush userin Id si ile gonderilen Id duz gelmirse onda short circuit edirik.
@@ -56,8 +57,6 @@ namespace Airbnb.Application.Filters.ActionFilters
                     Detail = "You can't change another users data."
                 };
                 context.Result = new ObjectResult(problemDetails);
-                //throw new Authentication_UserIdNotSameWithAuthenticatedUserId();
-
             }
         }
     }

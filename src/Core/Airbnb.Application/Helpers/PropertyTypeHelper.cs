@@ -17,6 +17,13 @@ namespace Airbnb.Application.Helpers
 
             return response;
         }
+        public static string[] AllPropertyTypeIncludes()
+        {
+            string[] includes = new[] {  "Properties","PropertyGroupTypes",
+                "PropertyGroupTypes.PropertyGroup", "PropertyGroupTypes.PropertyGroup.Properties"};
+            return includes;
+        }
+       
      
     }
 }

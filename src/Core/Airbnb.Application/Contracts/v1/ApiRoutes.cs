@@ -7,7 +7,18 @@
         public const string Scheme = "https";
         public const string Port = "7146";
         public static readonly string BaseUrl = $"{Scheme}://localhost:{Port}/{Root}/{Version}";
-
+        
+        public static class Authentications
+        {
+            public const string Name = "authentication";
+            public const string Register = "register";
+            public const string Login = "login";
+            public const string GenerateRefreshToken = "generateRefreshToken";
+            public const string ForgotPassword = "forgotPassword";
+            public const string ResetPassword = "resetPassword";
+            public const string ConfirmEmail = "confirmEmail";
+            public const string SendConfirmationEmail = "sendConfirmationEmail";
+        }
         public static class Reservations
         {
             public const string Name = "reservations";

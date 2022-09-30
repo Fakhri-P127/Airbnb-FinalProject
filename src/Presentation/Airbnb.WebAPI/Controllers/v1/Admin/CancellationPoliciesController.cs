@@ -1,4 +1,6 @@
-﻿using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
+﻿using Airbnb.Application.Contracts.v1.Admin.AirCovers.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Parameters;
+using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
 using Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Create;
 using Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Delete;
 using Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Update;
@@ -22,9 +24,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Admin
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllCancellationPolicies()
+        public async Task<IActionResult> GetAllCancellationPolicies([FromQuery] CancellationPolicyParameters parameters)
         {
-            List<CancellationPolicyResponse> result = await _mediatr.Send(new GetAllCancellationPolicyQuery());
+            List<CancellationPolicyResponse> result = await _mediatr.Send(new GetAllCancellationPolicyQuery(parameters));
             return Ok(result);
         }
         [HttpGet("{id}")]

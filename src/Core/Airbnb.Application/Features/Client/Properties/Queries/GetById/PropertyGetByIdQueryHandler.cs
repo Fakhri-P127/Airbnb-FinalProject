@@ -22,7 +22,6 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetById
         {
             Property property = await _unit.PropertyRepository.GetByIdAsync(request.Id, request.Expression,false,
                  PropertyHelper.AllPropertyIncludes());
-
             if (property is null) throw new PropertyNotFoundException();
             GetPropertyResponse response = _mapper.Map<GetPropertyResponse>(property);
             return response;

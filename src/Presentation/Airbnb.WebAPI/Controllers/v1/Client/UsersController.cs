@@ -1,4 +1,5 @@
-﻿using Airbnb.Application.Contracts.v1.Client.User.Responses;
+﻿using Airbnb.Application.Contracts.v1.Client.User.Parameters;
+using Airbnb.Application.Contracts.v1.Client.User.Responses;
 using Airbnb.Application.Features.Client.User.Commands.Delete;
 using Airbnb.Application.Features.Client.User.Commands.Update;
 using Airbnb.Application.Features.Client.User.Queries.GetAll;
@@ -22,22 +23,23 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
 
         [HttpGet]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetAllUsers()
+        public async Task<IActionResult> GetAllUsers([FromQuery] UserParameters parameters)
         {
-            List<UserResponse> result = await _mediatr.Send(new UserGetAllQuery());
+            List<UserResponse> result = await _mediatr.Send(new UserGetAllQuery(parameters));
             return Ok(result);
         }
-        [HttpGet("usersWithoutProfilePicture")]// bunu filterlemek lazimdi, bele sehvdi
-        [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetUsersWithoutProfilePicture()
-        {
-            var query = new UserGetAllQuery
-            {
-                Expression = x => x.ProfilPicture == null
-            };
-            List<UserResponse> result = await _mediatr.Send(query);
-            return Ok(result);
-        }
+        //[HttpGet("usersWithoutProfilePicture")]// bunu filterlemek lazimdi, bele sehvdi
+        //[ResponseCache(Duration = 30)]
+        //public async Task<IActionResult> GetUsersWithoutProfilePicture([FromQuery] UserParameters)
+        //{
+        //    var query = new UserGetAllQuery
+        //    {
+
+        //        Expression = x => x.ProfilPicture == null
+        //    };
+        //    List<UserResponse> result = await _mediatr.Send(query);
+        //    return Ok(result);
+        //}
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetUserById([FromRoute] Guid id)
@@ -46,7 +48,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         [HttpPut("{id}")]
-        [Authorize(Roles ="Guest")]
+        [Authorize(Roles = "Guest")]
         public async Task<IActionResult> UpdateUser([FromForm] UpdateUserCommand command)
         {
             UserResponse result = await _mediatr.Send(command);

@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
+using Airbnb.Application.Contracts.v1.Base;
 using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
@@ -8,7 +9,7 @@ using MediatR;
 
 namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create
 {
-    public class CreatePrivacyTypeCommandHandler:IRequestHandler<CreatePrivacyTypeCommand,PrivacyTypeResponse>
+    public class CreatePrivacyTypeCommandHandler : IRequestHandler<CreatePrivacyTypeCommand, PrivacyTypeResponse>
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create
 
         public async Task<PrivacyTypeResponse> Handle(CreatePrivacyTypeCommand request, CancellationToken cancellationToken)
         {
-            var existed = await _unit.PrivacyTypeRepository.GetAllAsync(x => x.Name == request.Name);
+            var existed = await _unit.PrivacyTypeRepository.GetAllAsync(x => x.Name == request.Name, null);
             if (existed.Any())
                 throw new DuplicatePrivacyTypeNameValidationException();
             PrivacyType privacyType = new()

@@ -52,7 +52,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
         {
             List<Reservation> containsOccupiedDate = await _unit.ReservationRepository.GetAllAsync(x =>
                         x.CheckInDate >= reservation.CheckInDate && x.CheckInDate <= request.CheckOutDate
-                        && x.Id != reservation.Id);
+                        && x.Id != reservation.Id, null);
             if (containsOccupiedDate.Count != 0) throw new ReservationContainsOccupiedDateException();
         }
 
@@ -60,7 +60,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.ExtendReserva
         {
             List<Reservation> occupiedCheckOutTime = await _unit.ReservationRepository
                 .GetAllAsync(x => x.CheckInDate <= request.CheckOutDate
-                && x.CheckOutDate >= request.CheckOutDate && x.Id != reservation.Id);
+                && x.CheckOutDate >= request.CheckOutDate && x.Id != reservation.Id, null);
             if (occupiedCheckOutTime.Count != 0)
                 throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
         }
