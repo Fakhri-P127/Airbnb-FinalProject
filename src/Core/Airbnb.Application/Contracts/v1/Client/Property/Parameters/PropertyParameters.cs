@@ -10,6 +10,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Parameters
         {
             Amenities = new();
         }
+        public override int PageSize { get; set; } = 4;
         public string Title { get; set; }
         public int? MinPrice { get; set; }
         public int? MaxPrice { get; set; }

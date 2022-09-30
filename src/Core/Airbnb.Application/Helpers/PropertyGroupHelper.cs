@@ -26,8 +26,8 @@ namespace Airbnb.Application.Helpers
       
         public static string[] AllPropertyGroupIncludes()
         {
-            string[] includes = new[] {  "Properties", "PropertyGroupTypes",
-              "PropertyGroupTypes.PropertyType", "PropertyGroupTypes.PropertyType.Properties" };
+            string[] includes = new[] {  "Properties", "PropertyTypes",
+              "PropertyTypes.Properties"};
             return includes;
         }
         

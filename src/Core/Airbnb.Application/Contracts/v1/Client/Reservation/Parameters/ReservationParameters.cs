@@ -4,6 +4,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Parameters
 {
     public class ReservationParameters : BaseQueryStringParameters
     {
+        public override int PageSize { get; set; } = 4;
         public DateTime? MinCheckInDate { get; set; }
         public DateTime? MaxCheckInDate { get; set; } 
         public DateTime? MinCheckOutDate { get; set; }

@@ -36,6 +36,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             //RuleFor(x => x.PropertyAmenities).NotEmpty();
             RuleForEach(x => x.PropertyAmenities).NotEmpty();
 
+
             RuleFor(x => x.CheckInTime).GreaterThanOrEqualTo(new TimeSpan(0, 0, 0))
                .LessThanOrEqualTo(new TimeSpan(23, 59, 59));
 

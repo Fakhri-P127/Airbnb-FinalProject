@@ -82,7 +82,6 @@ namespace Airbnb.Persistance
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<IEmailSender, EmailSender>();
-
             services.AddAndConfigureEmailService(configuration);
             return services;
         }

@@ -58,6 +58,17 @@
             public const string UpdatePropertyReview = "updatePropertyReview";
             public const string DeletePropertyReview = "deletePropertyReview";
         }
+        public static class GuestReviews
+        {
+            public const string Name = "guestReviews";
+            public const string GetAll = "getAllGuestReviews";
+            public const string GetById = "getGuestReviewById";
+            public const string GetGuestReviewsWrittenByHost = "getGuestReviewsWrittenByHost";
+            public const string GetGuestReviewsOfUser = "getGuestReviewsOfUser";
+            public const string WriteGuestReview = "writeGuestReview";
+            public const string UpdateGuestReview = "updateGuestReview";
+            public const string DeleteGuestReview = "deleteGuestReview";
+        }
         public static class Properties
         {
             public const string Name = "properties";

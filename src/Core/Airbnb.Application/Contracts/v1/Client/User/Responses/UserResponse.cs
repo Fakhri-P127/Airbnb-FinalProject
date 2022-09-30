@@ -23,10 +23,12 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Responses
         public HostInUserResponse Host { get; set; }
         public List<string> Verifications { get; set; }
         public List<AppUserLanguageInUserResponse> AppUserLanguages { get; set; }
-        public List<ReservationInUserResponse> ReservationsYouMade { get; set; }
-        public List<PropertyReviewsInUserResponse> ReviewsByYou { get; set; }
-        public List<GuestReviewInUserResponse> ReviewsAboutYou { get; set; }
-
+        //public List<ReservationInUserResponse> ReservationsYouMade { get; set; }
+        public string ReservationYouMadeUrl { get; set; }
+        //public List<PropertyReviewsInUserResponse> ReviewsByYou { get; set; }
+        public string ReviewsByYouUrl { get; set; }
+        //public List<GuestReviewInUserResponse> ReviewsAboutYou { get; set; }
+        public string ReviewsAboutYouUrl { get; set; }
 
     }
 }

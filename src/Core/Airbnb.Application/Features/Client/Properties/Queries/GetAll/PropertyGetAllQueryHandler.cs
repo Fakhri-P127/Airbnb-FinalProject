@@ -28,12 +28,12 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
 
         public async Task<List<GetPropertyResponse>> Handle(PropertyGetAllQuery request, CancellationToken cancellationToken)
         {
-            //if (_accessor.HttpContext.GetRouteValue("hostId") != null)
-            //{
-            //    Guid hostId = BaseHelper.GetHostIdFromRoute(_accessor);
-            //    if (await _unit.HostRepository.GetByIdAsync(hostId, null) is null)
-            //        throw new HostNotFoundException(hostId);
-            //}
+            if (_accessor.HttpContext.GetRouteValue("hostId") != null)
+            {
+                Guid hostId = BaseHelper.GetHostIdFromRoute(_accessor);
+                if (await _unit.HostRepository.GetByIdAsync(hostId, null) is null)
+                    throw new HostNotFoundException(hostId);
+            }
             ExpressionStarter<Property> filters = FilterRequest(request);
             List<Property> properties = await _unit.PropertyRepository
                 .GetAllAsync(filters,request.Parameters, false, PropertyHelper.AllPropertyIncludes());

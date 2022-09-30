@@ -17,7 +17,12 @@ namespace Airbnb.Application.Mapping
     {
         public PropertyMappings()
         {
-            CreateMap<Property, GetPropertyResponse>();
+            CreateMap<Property, GetPropertyResponse>()
+                .ForMember(dest=>dest.ReservationsUrl,opt=> {
+                    opt.PreCondition(x => x.Reservations is not null && x.Reservations.Any());
+                    opt
+                    .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.Reservations.Name}?propertyId={src.Id}");
+                });
             CreateMap<Property, CreatePropertyResponse>();
             CreateMap<PropertyImage, PropertyImagesInPropertyResponse>();
             CreateMap<PropertyAmenity, PropertyAmenitiesInPropertyResponse>();

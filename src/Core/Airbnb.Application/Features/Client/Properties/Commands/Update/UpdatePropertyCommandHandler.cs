@@ -166,7 +166,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         {
             if (request.PropertyAmenities != null && request.PropertyAmenities.Count != 0)
             {
-                foreach (Guid amenityId in request.PropertyAmenities)
+                foreach (Guid amenityId in request.PropertyAmenities.Distinct())
                 {
                     // Amenity amenity = _unit.AmenityRepoGetById edib add etmek olar
                     PropertyAmenity propertyAmenity = new()

@@ -23,7 +23,7 @@ namespace Airbnb.Persistance.Common.Repositories.Common
                 _dbSet.Where(expression) : _dbSet.AsQueryable();
             query = tracked is false ?
                  query.AsNoTrackingWithIdentityResolution() : query;//AsSplitQuery elemek olar
-            query = SetIncludes(query, includes);
+            query = SetIncludes(query, includes).OrderByDescending(x=>x.CreatedAt);
 
             return parameters is not null ? await query.Skip((parameters.PageNumber - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToListAsync() : await query.ToListAsync();

@@ -32,7 +32,8 @@ namespace Airbnb.Application.Contracts.v1.Client.Property.Responses
         public AirCoverInPropertyResponse AirCover { get; set; }
         public CancellationPolicyInPropertyResponse CancellationPolicy { get; set; }
         //public List<PropertyReviewInReservationPropertyResponse> Reviews { get; set; }
-        public List<ReservationInPropertyResponse> Reservations { get; set; }
+        public string ReservationsUrl { get; set; }
+        //public List<ReservationInPropertyResponse> Reservations { get; set; }
         //public List<string> Reservations { get; set; }
     }
 }

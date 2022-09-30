@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "31d7gIA3JCZ56e207irmTNdI/cdH3Ie/eU1BqwgaTWk=",
+  "Hash": "vaPxDLRy3KBgVwWbccOTodnX6sMg8hwFxQbUFs1CdZA=",
   "Source": "Airbnb.WebAPI",
   "BasePath": "_content/Airbnb.WebAPI",
   "Mode": "Default",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\01415f36-8238-4881-9a2b-f4ee0bbec77c.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\03c21bd2-5f68-4fd3-96cf-c9709b267f82.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/03c21bd2-5f68-4fd3-96cf-c9709b267f82.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\03c21bd2-5f68-4fd3-96cf-c9709b267f82.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\03fa38c4-da95-49ef-8532-b6fdd5f2492f.jpg",
@@ -372,6 +389,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\2508459a-fcaf-45c0-a36a-bca116f8dde5.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\250f7e60-700f-4cba-a272-3476746c4db4.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/250f7e60-700f-4cba-a272-3476746c4db4.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\250f7e60-700f-4cba-a272-3476746c4db4.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\251addbd-509c-4946-b422-2c4ef48530a8.jpg",
@@ -680,6 +714,40 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\3c8db198-9a2c-48d5-b003-2b1f8631fd60.jpg"
     },
     {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\3e777f72-a45f-4eb2-86d3-d74e636a8abb.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/3e777f72-a45f-4eb2-86d3-d74e636a8abb.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\3e777f72-a45f-4eb2-86d3-d74e636a8abb.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\3e9f139c-9751-4cb8-9d3b-b2437ef0794e.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/3e9f139c-9751-4cb8-9d3b-b2437ef0794e.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\3e9f139c-9751-4cb8-9d3b-b2437ef0794e.jpg"
+    },
+    {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\428bfdda-5ed9-4b02-819b-916ee095a50e.jpg",
       "SourceId": "Airbnb.WebAPI",
       "SourceType": "Discovered",
@@ -816,6 +884,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\54595aaa-bc48-4fd2-b34a-477e8abc987d.jpg"
     },
     {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\55464bbc-4ea0-491b-8db6-d4a918d17470.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/55464bbc-4ea0-491b-8db6-d4a918d17470.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\55464bbc-4ea0-491b-8db6-d4a918d17470.jpg"
+    },
+    {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\5593b2ac-be52-4450-b4f9-7a504b44d869.jpg",
       "SourceId": "Airbnb.WebAPI",
       "SourceType": "Discovered",
@@ -916,6 +1001,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\5961260f-a7a9-4282-bb2d-d01171c9ee40.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\5d8cd27a-00dc-4b3e-bf65-675e2c93440f.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/5d8cd27a-00dc-4b3e-bf65-675e2c93440f.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\5d8cd27a-00dc-4b3e-bf65-675e2c93440f.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\60281d67-4131-4c31-8267-6ee75bf5a99c.jpg",
@@ -1122,6 +1224,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\74d43ff0-2025-44f7-b9af-340f92e0e224.jpg"
     },
     {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\7682cd50-c86f-44c0-94b9-24c9d72f3bf2.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/7682cd50-c86f-44c0-94b9-24c9d72f3bf2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\7682cd50-c86f-44c0-94b9-24c9d72f3bf2.jpg"
+    },
+    {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\7766b5dd-ab77-43b4-87ea-07db3d9c4d33.jpg",
       "SourceId": "Airbnb.WebAPI",
       "SourceType": "Discovered",
@@ -1222,6 +1341,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\7c061a8c-cc0b-48fe-9c1f-c3df9cd541d5.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\7c452562-31e5-447d-8c3f-9c013bfd7557.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/7c452562-31e5-447d-8c3f-9c013bfd7557.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\7c452562-31e5-447d-8c3f-9c013bfd7557.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\7cd0d39f-cd06-4741-b1c1-8656a3845964.jpg",
@@ -1494,6 +1630,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\96939db5-bffb-4d2a-8a27-43ed57f27846.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\978feb0a-853a-4333-86d3-d909b0412e76.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/978feb0a-853a-4333-86d3-d909b0412e76.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\978feb0a-853a-4333-86d3-d909b0412e76.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\980f812e-140f-477e-931e-6d8780a8fb9c.jpg",
@@ -1955,6 +2108,23 @@
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\ced88cbd-b700-4e83-94ff-5191fa1cb68a.jpg"
     },
     {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\cf3cb6b9-f992-4f00-9baf-a324064dd54f.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/cf3cb6b9-f992-4f00-9baf-a324064dd54f.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\cf3cb6b9-f992-4f00-9baf-a324064dd54f.jpg"
+    },
+    {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\d1270964-2af0-4f33-ac1e-24af71003625.jpg",
       "SourceId": "Airbnb.WebAPI",
       "SourceType": "Discovered",
@@ -1970,6 +2140,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\d1270964-2af0-4f33-ac1e-24af71003625.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\d2b24f4e-c9a0-4d12-ba5c-baf59bb76c2b.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/d2b24f4e-c9a0-4d12-ba5c-baf59bb76c2b.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\d2b24f4e-c9a0-4d12-ba5c-baf59bb76c2b.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\daeeb500-1554-4911-8eb3-8e4cf381329a.jpg",
@@ -2004,6 +2191,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\dd37226c-9602-4d78-bc55-e8fa2199d1ff.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\ddbc75dc-2445-4782-872a-1b25a492c479.jpg",
+      "SourceId": "Airbnb.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\",
+      "BasePath": "_content/Airbnb.WebAPI",
+      "RelativePath": "assets/images/PropertyImages/ddbc75dc-2445-4782-872a-1b25a492c479.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\assets\\images\\PropertyImages\\ddbc75dc-2445-4782-872a-1b25a492c479.jpg"
     },
     {
       "Identity": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\src\\Presentation\\Airbnb.WebAPI\\wwwroot\\assets\\images\\PropertyImages\\dde2f5f7-3de7-46c7-bdd4-a739797d2230.jpg",

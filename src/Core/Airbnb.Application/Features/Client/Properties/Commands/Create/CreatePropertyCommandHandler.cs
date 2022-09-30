@@ -115,7 +115,9 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 
         private static void AddPropertyAmenities(CreatePropertyCommand request, Property property)
         {
-            foreach (Guid amenityId in request.PropertyAmenities)
+            //request.PropertyAmenities = .ToList();
+
+            foreach (Guid amenityId in request.PropertyAmenities.Distinct())
             {
                 // Amenity amenity = _unit.AmenityRepoGetById edib add etmek olar. Bunu ele 
                 PropertyAmenity propertyAmenity = new()
