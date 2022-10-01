@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.StatusUpdaterService
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.WebApi.Tests", "tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests.csproj", "{B2B4EFCF-574B-4760-AADE-1DBA48F09BC8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Airbnb.Application.Tests", "tests\Airbnb.Application.Tests\Airbnb.Application.Tests\Airbnb.Application.Tests.csproj", "{45C57AE6-6E16-4E78-8BEE-7BA832E8036F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{B2B4EFCF-574B-4760-AADE-1DBA48F09BC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2B4EFCF-574B-4760-AADE-1DBA48F09BC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2B4EFCF-574B-4760-AADE-1DBA48F09BC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45C57AE6-6E16-4E78-8BEE-7BA832E8036F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45C57AE6-6E16-4E78-8BEE-7BA832E8036F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45C57AE6-6E16-4E78-8BEE-7BA832E8036F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45C57AE6-6E16-4E78-8BEE-7BA832E8036F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,6 +78,7 @@ Global
 		{094229AB-8CEE-44D2-9F14-E299D865FB05} = {8595179E-6533-4D89-9530-2F91F93C815E}
 		{9E98A650-32CC-448D-A4B0-426E61D770AA} = {094229AB-8CEE-44D2-9F14-E299D865FB05}
 		{B2B4EFCF-574B-4760-AADE-1DBA48F09BC8} = {1203A828-F9D5-4780-B1D1-535D19830845}
+		{45C57AE6-6E16-4E78-8BEE-7BA832E8036F} = {1203A828-F9D5-4780-B1D1-535D19830845}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {928CB276-D3EC-4C93-98C9-8FE094E71F01}
