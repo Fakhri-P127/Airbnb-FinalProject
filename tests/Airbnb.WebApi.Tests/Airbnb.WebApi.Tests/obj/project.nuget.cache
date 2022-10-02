@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "UlMpbs8thSN6w7ctahS9uZB/qKCXAJx6+h9WGhH6T4Ab8IlcsAIWocNmnctQsJ5lil1GVV29HStSjPKVjSE59g==",
+  "dgSpecHash": "i4rfOgKu7rVxe8Oa8afmePrygSM/4uD83QqRuwJE479nyCAcYCeuL9DlluA/O5L/oNa5Lw9oMWyJeAfYdwxeIg==",
   "success": true,
   "projectFilePath": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\tests\\Airbnb.WebApi.Tests\\Airbnb.WebApi.Tests\\Airbnb.WebApi.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\efend\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\efend\\.nuget\\packages\\bogus\\34.0.2\\bogus.34.0.2.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\fluentassertions\\6.7.0\\fluentassertions.6.7.0.nupkg.sha512",
