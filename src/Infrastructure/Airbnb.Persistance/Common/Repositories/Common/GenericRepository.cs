@@ -16,6 +16,16 @@ namespace Airbnb.Persistance.Common.Repositories.Common
             _context = context;
             _dbSet = _context.Set<T>();
         }
+        /// <summary>
+        /// AsNoTracking her dataya gore ayri instance yaradir, buna gore relation i chox olan ve list kimi gelen
+        /// datalarda asNoTrackingWithIdentityResults ishletdim ki, foreign key instance lari eyni olan datalarin
+        /// eyni 1 instance i olsun.
+        /// </summary>
+        /// <param name="expression">Filters and searching predicate</param>
+        /// <param name="parameters">pagination</param>
+        /// <param name="tracked">This is for changing the state of entity, either track or don't track</param>
+        /// <param name="includes">Includes for the entity</param>
+        /// <returns></returns>
         public virtual async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> expression,
             BaseQueryStringParameters parameters, bool tracked = false, params string[] includes)
         {

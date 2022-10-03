@@ -23,7 +23,7 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
         public CreatePrivacyTypeCommandHandlerTests()
         {
             //_privacyTypes = new Faker<PrivacyType>()
-            //   .RuleFor(x => x.Id, Guid.NewGuid)
+            //   .RuleFor(x => x.Id, d=>d.Random.Guid())
             //   .RuleFor(x => x.Name, x => x.Lorem.Letter(5))
             //   .RuleFor(x => x.CreatedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
             //   .RuleFor(x => x.ModifiedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))

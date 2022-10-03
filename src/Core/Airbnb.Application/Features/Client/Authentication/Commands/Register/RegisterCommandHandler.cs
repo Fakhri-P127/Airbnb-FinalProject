@@ -14,6 +14,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
 {
+    /// <summary>
+    /// Mesaji telefona da gondermek olardi amma emaile gondermeyi tercih etdim. Ilk defe oyrenmek uchun 
+    /// daha mentiqli geldi. Amma telefon uchunde Twilio dan istifade ederek SMS gondermek olardi.
+    /// </summary>
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
     {
         private readonly CustomUserManager<AppUser> _userManager;
@@ -38,7 +42,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         {
             await CheckAppUserErrors(request);
             AppUser user = _mapper.Map<AppUser>(request);
-            user.PhoneNumberConfirmed = true; // nomresiz achmaq olmasin.
+            user.PhoneNumberConfirmed = true; // login olmaq uchun nomre verification true olmalidi demishik.
             await ImageCheck(request, user);
             IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
             await CheckIfResultIsSuccessful(user, createdUserResult, "creating User.");

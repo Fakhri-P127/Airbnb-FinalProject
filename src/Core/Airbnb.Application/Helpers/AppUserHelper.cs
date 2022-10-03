@@ -1,9 +1,6 @@
-﻿using Airbnb.Application.Common.CustomFrameworkImpl;
-using Airbnb.Application.Exceptions.AppUser;
-using Airbnb.Application.Exceptions.Common;
-using Airbnb.Domain.Entities.AppUserRelated;
-using MediatR;
+﻿using Airbnb.Domain.Entities.AppUserRelated;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace Airbnb.Application.Helpers
@@ -12,7 +9,7 @@ namespace Airbnb.Application.Helpers
     {
         #region extension methods
         public static string GetUserIdFromClaim(this ClaimsPrincipal User) 
-            => User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+            => User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
         
         public static async Task<AppUser> GetUserByIdAsync(this IQueryable<AppUser> users,Guid id,
             CancellationToken cancellationToken=default, params string[] includes)

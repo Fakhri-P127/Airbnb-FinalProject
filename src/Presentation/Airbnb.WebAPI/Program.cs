@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseExceptionHandler("/error");
-await app.SeedDatabase();
+//await app.SeedDatabase();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,15 +1,8 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Application.Exceptions.Reservations;
-using Airbnb.Application.Features.Client.Reservations.Commands.Create;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
-using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Helpers
 {

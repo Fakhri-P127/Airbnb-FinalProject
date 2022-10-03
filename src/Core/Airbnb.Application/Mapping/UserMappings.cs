@@ -12,23 +12,29 @@ namespace Airbnb.Application.Mapping
     {
         public UserMappings()
         {
+            // Null olub olmadigini yigishdirdim chunki bele Include etmeden istifade ede bilirik.
+            // hamiya o url gonderilecek amma ichinde reservationin olub olmadigi sorgu gonderende bilinecek
+            // mence reservation i join etmekdense bele daha yaxshidi.
             CreateMap<AppUser, UserResponse>()
-                 .ForMember(dest => dest.ReservationYouMadeUrl, opt => {
+                 .ForMember(dest => dest.ReservationYouMadeUrl, opt =>
+                 {
                      //opt.PreCondition(x => x.ReservationsYouMade is not null 
                      //&& x.ReservationsYouMade.Any());
                      opt
                      .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.Reservations.Name}?appUserId={src.Id}");
                  })
-                  .ForMember(dest => dest.ReviewsByYouUrl, opt => {
+                  .ForMember(dest => dest.ReviewsByYouUrl, opt =>
+                  {
                       //opt.PreCondition(x => x.ReviewsByYou is not null && x.ReviewsByYou.Any());
                       opt
                       .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.PropertyReviews.Name}?appUserId={src.Id}");
                   })
-                   .ForMember(dest => dest.ReviewsAboutYouUrl, opt => {
+                   .ForMember(dest => dest.ReviewsAboutYouUrl, opt =>
+                   {
                        //opt.PreCondition(x => x.ReviewsAboutYou is not null && x.ReviewsAboutYou.Any());
                        opt
                        .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.GuestReviews.Name}?appUserId={src.Id}");
-                   }); 
+                   });
 
             CreateMap<UpdateUserCommand, AppUser>()
                 .ForMember(x => x.ProfilPicture, d => d.Ignore())
@@ -44,7 +50,7 @@ namespace Airbnb.Application.Mapping
             CreateMap<GuestReview, GuestReviewInUserResponse>();
             CreateMap<Language, LanguageInAppUserLanguage>();
             CreateMap<PropertyReview, PropertyReviewsInUserResponse>();
-            
+
 
         }
     }

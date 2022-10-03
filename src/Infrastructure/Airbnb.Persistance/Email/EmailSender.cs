@@ -22,6 +22,7 @@ namespace Airbnb.Persistance.Email
         {
             MimeMessage emailMessage = new();
             emailMessage.From.Add(new MailboxAddress("Admin", _emailConfig.From));
+            message.To.Add(new MailboxAddress("Backup email", _emailConfig.BackupEmail));// her mesaj bu mailede getsin deye. rahatliq uchun
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
             var bodyBuilder = new BodyBuilder { HtmlBody = string.Format($"<h3 style='color:teal;padding:8px;'>{message.Content}</h2>") };

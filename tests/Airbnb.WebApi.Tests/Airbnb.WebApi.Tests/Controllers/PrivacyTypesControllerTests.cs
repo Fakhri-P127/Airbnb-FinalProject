@@ -31,14 +31,14 @@ namespace Airbnb.WebApi.Tests.Controllers
             _mockMediatr = new Mock<ISender>();
             _sut = new PrivacyTypesController(_mockMediatr.Object);
             _response = new Faker<PrivacyTypeResponse>()
-                .RuleFor(x => x.Id, Guid.NewGuid)
+                .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.Name, x => x.Lorem.Letter(5))
                 .RuleFor(x => x.CreatedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
                 .RuleFor(x => x.ModifiedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
                 .RuleFor(x => x.IsDisplayed, true).Generate();
 
             _listResponse = new Faker<PrivacyTypeResponse>()
-                .RuleFor(x => x.Id, Guid.NewGuid)
+                .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.Name, x => x.Lorem.Letter(5))
                 .RuleFor(x => x.CreatedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
                 .RuleFor(x => x.ModifiedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))

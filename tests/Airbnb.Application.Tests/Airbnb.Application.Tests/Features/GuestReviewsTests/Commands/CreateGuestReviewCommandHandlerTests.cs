@@ -28,12 +28,11 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
         public CreateGuestReviewCommandHandlerTests()
         {
             _mockUnit = new Mock<IUnitOfWork>();
-            var mapperConfig = new MapperConfiguration(config =>
-          config.AddProfile<GuestReviewMappings>());
+            var mapperConfig = new MapperConfiguration(config =>config.AddProfile<GuestReviewMappings>());
             _mapper = mapperConfig.CreateMapper();
             _handler = new CreateGuestReviewCommandHandler(_mockUnit.Object, _mapper);
             _users = new Faker<AppUser>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
              .RuleFor(x => x.Firstname, d => d.Person.FirstName)
              .RuleFor(x => x.Lastname, d => d.Person.LastName)
              .RuleFor(x => x.UserName, d => d.Person.UserName)
@@ -41,12 +40,12 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
              .RuleFor(x => x.DateOfBirth, d => d.Date.Between(DateTime.Now.AddYears(-100), DateTime.Now.AddYears(-18)))
              .Generate(2);
             _hosts = new Faker<Host>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.Status, d => d.Random.Number(1, 3))
                 .RuleFor(x => x.AppUserId, _users.First().Id)
                 .Generate();
             _reservations = new Faker<Reservation>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.HostId, _hosts.Id)
                 .RuleFor(x => x.AppUserId, _users.First().Id)
                 .RuleFor(x => x.Status, d => d.Random.Number(1, 6))

@@ -1,9 +1,4 @@
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\CoverletSourceRootsMapping
-C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.csproj.AssemblyReference.cache
-C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.AssemblyInfoInputs.cache
-C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.AssemblyInfo.cs
-C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.csproj.CoreCompileInputs.cache
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\testhost.dll
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.WebAPI.deps.json
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.WebAPI.runtimeconfig.json
@@ -168,6 +163,11 @@ C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebA
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.Application.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.Domain.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.Persistance.pdb
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.csproj.AssemblyReference.cache
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.AssemblyInfoInputs.cache
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.AssemblyInfo.cs
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.csproj.CoreCompileInputs.cache
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.csproj.CopyComplete
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.dll
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\refint\Airbnb.WebApi.Tests.dll

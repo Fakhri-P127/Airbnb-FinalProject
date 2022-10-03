@@ -20,10 +20,10 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockUnit;
         private readonly UpdateGuestReviewCommandHandler _handler;
-        private List<GuestReview> _guestReviews;
-        private List<Reservation> _reservations;
-        private Host _hosts;
-        private List<AppUser> _users;
+        private readonly List<GuestReview> _guestReviews;
+        private readonly List<Reservation> _reservations;
+        private readonly Host _hosts;
+        private readonly List<AppUser> _users;
         public UpdateGuestReviewCommandHandlerTests()
         {
             _mockAccessor = new Mock<IHttpContextAccessor>();
@@ -34,12 +34,12 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             _mapper = mapperConfig.CreateMapper();
             _handler = new UpdateGuestReviewCommandHandler(_mockUnit.Object, _mapper, _mockAccessor.Object);
             _guestReviews = new Faker<GuestReview>()
-                .RuleFor(x => x.Id, Guid.NewGuid())
+                .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.Text, f => f.Lorem.Word())
                 .RuleFor(x => x.GuestScore, f => f.Random.Float(1, 5))
                 .Generate(8);
             _users = new Faker<AppUser>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
              .RuleFor(x => x.Firstname, d => d.Person.FirstName)
              .RuleFor(x => x.Lastname, d => d.Person.LastName)
              .RuleFor(x => x.UserName, d => d.Person.UserName)
@@ -47,12 +47,12 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
              .RuleFor(x => x.DateOfBirth, d => d.Date.Between(DateTime.Now.AddYears(-100), DateTime.Now.AddYears(-18)))
              .Generate(2);
             _hosts = new Faker<Host>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.Status, d => d.Random.Number(1, 3))
                 .RuleFor(x => x.AppUserId, _users.First().Id)
                 .Generate();
             _reservations = new Faker<Reservation>()
-             .RuleFor(x => x.Id, Guid.NewGuid())
+             .RuleFor(x => x.Id, d => d.Random.Guid())
                 .RuleFor(x => x.HostId, _hosts.Id)
                 .RuleFor(x => x.AppUserId, _users.First().Id)
                 .RuleFor(x => x.Status, d => d.Random.Number(1, 6))

@@ -34,10 +34,13 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
                     Lastname = "Efendiyev",
                     UserName = "fexri2000",
                     DateOfBirth = new DateTime(2000,05,15),
-                    Email = "fakhriAfandiyev@gmail.com",
+                    Email = "seedEmail1@gmail.com",
                     IsDisplayed=true,
                     CreatedAt= DateTime.Now,
-                    ModifiedAt = DateTime.Now
+                    ModifiedAt = DateTime.Now,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    PhoneNumber = "+994503661012"
                 },
                  new AppUser()
                  {
@@ -46,10 +49,13 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
                      Lastname = "Efendiyev",
                      UserName = "eli1999",
                      DateOfBirth = new DateTime(1999, 01, 26),
-                     Email = "eli1999@gmail.com",
+                     Email = "seedEmail2@gmail.com",
                      IsDisplayed = true,
                      CreatedAt = DateTime.Now,
-                     ModifiedAt = DateTime.Now
+                     ModifiedAt = DateTime.Now,
+                     EmailConfirmed=true,
+                     PhoneNumberConfirmed=true,
+                     PhoneNumber="+994503660012"
                  }
                 );
         }

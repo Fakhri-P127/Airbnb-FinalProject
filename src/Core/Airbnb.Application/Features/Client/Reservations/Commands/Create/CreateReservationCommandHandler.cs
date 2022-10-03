@@ -1,11 +1,7 @@
 ﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Common.Interfaces.Email;
-using Airbnb.Application.Contracts.v1.Admin.EmailRelated.Responses;
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
-using Airbnb.Application.Exceptions.AppUser;
-using Airbnb.Application.Exceptions.Hosts;
-using Airbnb.Application.Exceptions.Properties;
 using Airbnb.Application.Exceptions.Reservations;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
@@ -14,7 +10,6 @@ using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using System.Diagnostics;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 {
@@ -142,20 +137,21 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 
         private async Task CheckIfCheckOutIsOccupied(CreateReservationCommand request)
         {
-            List<Reservation> occupiedCheckOutTime = await _unit.ReservationRepository
-                            .GetAllAsync(x => x.CheckInDate <= request.CheckOutDate
-                            && x.CheckOutDate >= request.CheckOutDate, null);
-            if (occupiedCheckOutTime.Count != 0)
+            Reservation occupiedCheckOutTime = await _unit.ReservationRepository
+                            .GetSingleAsync(x => x.CheckInDate <= request.CheckOutDate
+                            && x.CheckOutDate >= request.CheckOutDate,false);
+            //if (occupiedCheckOutTime.Count != 0)
+            if(occupiedCheckOutTime is not null)
                 throw new ReservationCheckOutOccupiedException(request.CheckOutDate);
         }
 
 
         private async Task CheckIfCheckInIsOccupied(CreateReservationCommand request)
         {
-            List<Reservation> occupiedCheckInTime = await _unit.ReservationRepository
-                .GetAllAsync(x => x.CheckInDate <= request.CheckInDate
-                && x.CheckOutDate >= request.CheckInDate, null);
-            if (occupiedCheckInTime.Count != 0)
+            Reservation occupiedCheckInTime = await _unit.ReservationRepository
+                .GetSingleAsync(x => x.CheckInDate <= request.CheckInDate
+                && x.CheckOutDate >= request.CheckInDate,false);
+            if (occupiedCheckInTime is not null)
                 throw new ReservationCheckInOccupiedException(request.CheckInDate);
         }
     }

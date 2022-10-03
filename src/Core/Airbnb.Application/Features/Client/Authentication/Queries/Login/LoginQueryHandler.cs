@@ -25,9 +25,11 @@ namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
         }
         public async Task<AuthSuccessResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber, cancellationToken);
+            AppUser user = await _userManager.Users
+                .FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber, cancellationToken);
             //AppUser user = await _userManager.Users.FindByEmailAsync(request.Email);
-            if (user is null) throw new UserNotFoundValidationException();
+            if (user is null)   throw new UserNotFoundValidationException() 
+                {ErrorMessage = "Phone number or password is incorrect." };
             SignInResult result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             await CheckIfSignInHappenedSuccessfully(user, result);
 
@@ -52,7 +54,8 @@ namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
                     throw new User_PhoneNumberNotConfirmedException();
             }
             if (result.IsLockedOut) throw new User_IsLockedOutException();
-            if (!result.Succeeded) throw new UserNotFoundValidationException();
+            if (!result.Succeeded)  throw new UserNotFoundValidationException() 
+                { ErrorMessage = "Phone number or password is incorrect." };
         }
     }
 }
