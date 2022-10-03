@@ -24,8 +24,8 @@ namespace Airbnb.Persistance.Email
             emailMessage.From.Add(new MailboxAddress("Admin", _emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format($"<h3 style='color:yellow;padding:8px;'>{message.Content}</h2>") };
-            //IfExistsSetAttachments(message, bodyBuilder);
+            var bodyBuilder = new BodyBuilder { HtmlBody = string.Format($"<h3 style='color:teal;padding:8px;'>{message.Content}</h2>") };
+            IfExistsSetAttachments(message, bodyBuilder);
             emailMessage.Body = bodyBuilder.ToMessageBody();
             return emailMessage;
         }

@@ -18,9 +18,9 @@ namespace Airbnb.StatusUpdaterService
             while (!stoppingToken.IsCancellationRequested)
             {
                 await PatchStatus(ApiRoutes.Reservations.Name, ApiRoutes.Reservations.UpdateReservationStatus);
-                await PatchStatus(ApiRoutes.Hosts.Name,ApiRoutes.Hosts.UpdateHostStatus);
 
-                // bele olmalidi eslinde
+                await PatchStatus(ApiRoutes.Hosts.Name,ApiRoutes.Hosts.UpdateHostStatus);
+                // bele olmalidi eslinde, axsham her gece 1 defe update etsin statuslari. 
                 //targetTime = targetTime.AddDays(1);
                 targetTime = targetTime.AddMinutes(1);
                 int delayedTime = (int)targetTime.Subtract(DateTime.Now).TotalMilliseconds;
@@ -54,49 +54,3 @@ namespace Airbnb.StatusUpdaterService
         }
     }
 }
-
-
-#region bad code
-//HttpResponseMessage result = await _client
-//    .GetAsync("https://localhost:7146/api/v1/reservations/getavailablereservations",
-//    stoppingToken);
-//if (result.IsSuccessStatusCode)
-//{
-//    List<PostReservationResponse> reservations = JsonConvert
-//        .DeserializeObject<List<PostReservationResponse>>(await result.Content.ReadAsStringAsync(stoppingToken));
-//    await PatchReservationStatus(result, reservations);
-//}
-//else
-//{
-//    _logger.LogError("Something went wrong. Status code: {StatusCode}", result.StatusCode);
-//}
-//private async Task PatchReservationStatus(HttpResponseMessage result, List<PostReservationResponse> reservations)
-//{
-//    reservations.ForEach(async x =>
-//    {
-//        HttpResponseMessage patchResult = await _client
-//       .PatchAsync($"https://localhost:7146/api/v1/reservations/updatereservationstatus/{x.Id}",
-//       result.Content);
-//        // filestream qoshub bu yazilari text e de yazmaq olar
-//        if (patchResult.IsSuccessStatusCode)   
-//            _logger.LogInformation("{Id} Reservation status has been updated. Date: {targetTime}",
-//            x.Id, DateTime.Now);
-//        else 
-//            _logger.LogError("Something went wrong. Status code: {StatusCode}", patchResult.StatusCode);
-
-//    });
-//    await Task.CompletedTask;
-//}
-
-//private async Task PatchHostStatus()
-//{
-//    HttpResponseMessage patchResult = await _client
-//        .PatchAsync("https://localhost:7146/api/v1/hosts/UpdateHostStatus", null);
-//    if (patchResult.IsSuccessStatusCode)
-//        _logger.LogInformation($"All of the hosts status has been updated. Date: {DateTime.Now}");
-//    else
-//        _logger.LogError("Something went wrong. Status code: {StatusCode}", patchResult.StatusCode);
-
-//    await Task.CompletedTask;
-//}
-#endregion

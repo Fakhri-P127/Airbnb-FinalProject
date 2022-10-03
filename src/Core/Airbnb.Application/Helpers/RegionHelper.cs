@@ -15,7 +15,7 @@ namespace Airbnb.Application.Helpers
             region = await _unit.RegionRepository.GetByIdAsync(region.Id, null,false,
                 AllRegionIncludes());
             RegionResponse response = _mapper.Map<RegionResponse>(region);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
 

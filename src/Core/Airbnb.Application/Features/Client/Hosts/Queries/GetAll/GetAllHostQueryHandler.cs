@@ -25,7 +25,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Queries.GetAll
                 HostHelper.AllHostIncludes());
 
             List<GetHostResponse> responses = _mapper.Map<List<GetHostResponse>>(hosts);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
 
         }

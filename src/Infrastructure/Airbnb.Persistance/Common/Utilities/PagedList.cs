@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Airbnb.Infrastructure.Common.Utilities
 {
+    /// <summary>
+    /// Bunu kodumda ishletmeye vaxtim chatmadi((. Yazandan sonra chatdi ki, her yerde bir bir deyishmeliyem ve ona vaxtim chatmayacaq.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PagedList<T> : List<T>,IPagedList<T> where T : BaseEntity
     {
         public int CurrentPage { get; private set; }
@@ -23,7 +27,7 @@ namespace Airbnb.Infrastructure.Common.Utilities
         public async static Task<IPagedList<T>> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize)
         {
             int count = await source.CountAsync();
-            List<T> items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            List<T> items = await source.OrderByDescending(x=>x.CreatedAt).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PagedList<T>(items, count, pageNumber, pageSize);
         }
     }

@@ -23,7 +23,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById
                 .GetByIdAsync(request.Id, request.Expression,false, "Properties");
             if (privacyType is null) throw new PrivacyTypeNotFoundException();
             PrivacyTypeResponse response = _mapper.Map<PrivacyTypeResponse>(privacyType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

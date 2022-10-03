@@ -13,7 +13,7 @@ namespace Airbnb.Application.Helpers
                 AllHostIncludes());
             PostHostResponse response = _mapper.Map<PostHostResponse>(host);
             //response.Token = token;
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
 

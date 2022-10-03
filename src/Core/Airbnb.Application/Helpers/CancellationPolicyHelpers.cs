@@ -13,7 +13,7 @@ namespace Airbnb.Application.Helpers
             cancellationPolicy = await _unit.CancellationPolicyRepository
                 .GetByIdAsync(cancellationPolicy.Id, null, false, "Properties");
             CancellationPolicyResponse response = _mapper.Map<CancellationPolicyResponse>(cancellationPolicy);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
        

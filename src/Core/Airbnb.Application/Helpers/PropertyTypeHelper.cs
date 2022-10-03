@@ -13,7 +13,7 @@ namespace Airbnb.Application.Helpers
         {
             propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(propertyType.Id, null);
             PostPropertyTypeResponse response = _mapper.Map<PostPropertyTypeResponse>(propertyType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

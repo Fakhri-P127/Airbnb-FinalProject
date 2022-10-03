@@ -39,7 +39,7 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
                 .GetAllAsync(filters,request.Parameters, false, PropertyHelper.AllPropertyIncludes());
 
             List<GetPropertyResponse> response = _mapper.Map<List<GetPropertyResponse>>(properties);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
         private static ExpressionStarter<Property> FilterRequest(PropertyGetAllQuery request)

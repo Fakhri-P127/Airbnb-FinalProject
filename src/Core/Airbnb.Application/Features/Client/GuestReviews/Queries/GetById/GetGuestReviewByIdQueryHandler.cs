@@ -29,7 +29,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetById
                 .GetByIdAsync(request.Id, request.Expression,false, GuestReviewHelper.AllGuestReviewIncludes());
             if (guestReview is null) throw new GuestReviewNotFoundException(request.Id);
             GuestReviewResponse response = _mapper.Map<GuestReviewResponse>(guestReview);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }

@@ -20,7 +20,7 @@ namespace Airbnb.Application.Helpers
             propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(propertyGroup.Id, null,false,
                 AllPropertyGroupIncludes());
             PostPropertyGroupResponse response = _mapper.Map<PostPropertyGroupResponse>(propertyGroup);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
       

@@ -20,7 +20,7 @@ namespace Airbnb.Application.Helpers
             privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(privacyType.Id, null,false,
                 "Properties");
             PrivacyTypeResponse response = _mapper.Map<PrivacyTypeResponse>(privacyType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
        

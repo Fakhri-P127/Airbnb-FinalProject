@@ -31,7 +31,7 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Queries.GetById
                 .GetByIdAsync(request.Id, request.Expression,false,PropertyGroupHelper.AllPropertyGroupIncludes());
             if (propertyGroup is null) throw new PropertyGroupNotFoundException();
             GetPropertyGroupResponse response = _mapper.Map<GetPropertyGroupResponse>(propertyGroup);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

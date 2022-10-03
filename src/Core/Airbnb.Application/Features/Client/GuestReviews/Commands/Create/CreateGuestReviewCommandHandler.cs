@@ -16,13 +16,12 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
-        private readonly CustomUserManager<AppUser> _userManager;
+       
 
-        public CreateGuestReviewCommandHandler(IUnitOfWork unit,IMapper mapper,CustomUserManager<AppUser> userManager)
+        public CreateGuestReviewCommandHandler(IUnitOfWork unit,IMapper mapper)
         {
             _unit = unit;
             _mapper = mapper;
-            _userManager = userManager;
         }
         public async Task<GuestReviewResponse> Handle(CreateGuestReviewCommand request, CancellationToken cancellationToken)
         {

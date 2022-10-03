@@ -1,18 +1,19 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById;
 using Airbnb.Application.Mapping;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
-using Bogus;
 using FluentAssertions;
 using Moq;
 using System.Linq.Expressions;
 
 namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Queries
 {
+    /// <summary>
+    /// Get by id lerin hamisi eynidi deye bir bu bes eder mence. Vaxt chatsa belke yene yazdim idk
+    /// </summary>
     public class GetPrivacyTypeByIdQueryHandlerTests
     {
         public readonly IMapper _mapper;
@@ -56,7 +57,7 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Queries
         [InlineData(_existingId2)]
         public async Task Handle_WhenGivingExistingIdInDatabase_ReturnsGivenData(Guid id)
         {
-            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetByIdAsync(id,
+            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<Expression<Func<PrivacyType, bool>>>(), false, "Properties"))
                 .ReturnsAsync(_privacyTypes.FirstOrDefault(x => x.Id == id));
 
@@ -69,7 +70,7 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Queries
         public async Task Handle_WhenGivingIdThatDoesNotExistInDatabase_ThrowsNotFoundException()
         {
             _ = Guid.TryParse(_nonExistingId, out Guid Id);
-            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetByIdAsync(Id,
+            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<Expression<Func<PrivacyType, bool>>>(), false, "Properties"))
                 .ReturnsAsync(_privacyTypes.FirstOrDefault(x=>x.Id == Id));
 

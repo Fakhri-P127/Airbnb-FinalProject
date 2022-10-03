@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetAll
                 .GetAllAsync(request.Expression,request.Parameters,false,"Properties");
             
             List<PrivacyTypeResponse> responses = _mapper.Map<List<PrivacyTypeResponse>>(privacyTypes);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
     }

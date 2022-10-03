@@ -17,7 +17,7 @@ namespace Airbnb.Application.Helpers
             property = await _unit.PropertyRepository.GetByIdAsync(property.Id, null,false,
                 AllPropertyIncludes());
             CreatePropertyResponse response = _mapper.Map<CreatePropertyResponse>(property);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
 
@@ -26,7 +26,7 @@ namespace Airbnb.Application.Helpers
             string[] includes = new[] { "PropertyImages"
                 , "PropertyAmenities", "PropertyAmenities.Amenity", "PropertyGroup", "PropertyType", "AirCover"
                 , "CancellationPolicy","State","State.Region","State.Country","State.City",
-                "PrivacyType","Reservations","Host","Host.AppUser" };
+                "PrivacyType",/*"Reservations",*/"Host","Host.AppUser" };
 
             return includes;
         }

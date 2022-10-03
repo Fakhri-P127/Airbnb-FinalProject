@@ -33,6 +33,7 @@ namespace Airbnb.Application.Filters.ActionFilters
 
             public void OnActionExecuting(ActionExecutingContext context)
             {
+                
                 // dynamic type la runtime da deyeri menimseyir ve ona gore ishledirem.
                 // bilirem dynamic in ishletmemeyimiz daha yaxshidi amma bu sitasiya uchun yaxshi oldugunu dushundum.
                 // stream den istifade ederekde yazmaq olar amma

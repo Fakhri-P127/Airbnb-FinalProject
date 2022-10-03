@@ -1,26 +1,23 @@
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Parameters;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
-using Airbnb.Application.Exceptions.Cities;
-using Airbnb.Application.Exceptions.Countries;
-using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Delete;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetAll;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById;
-using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.WebAPI.Controllers.v1.Admin;
 using Bogus;
 using FluentAssertions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Linq.Expressions;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Times = Moq.Times;
 
 namespace Airbnb.WebApi.Tests.Controllers
 {
+    /// <summary>
+    /// Controller lerin hamisi eynidi deye bir dene bunu yazdim.
+    /// </summary>
     public class PrivacyTypesControllerTests
     {
         private readonly PrivacyTypesController _sut;
@@ -46,16 +43,6 @@ namespace Airbnb.WebApi.Tests.Controllers
                 .RuleFor(x => x.CreatedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
                 .RuleFor(x => x.ModifiedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
                 .RuleFor(x => x.IsDisplayed, true).GenerateBetween(1,10);
-            //_response = new PrivacyTypeResponse
-            //{
-            //    Id = Guid.Parse("f1e865bb-b75c-4300-899c-1cf007373119"),
-            //    Name = "Salam",
-            //    PropertyCount = 0,
-            //    CreatedAt = DateTime.Now,
-            //    ModifiedAt = DateTime.Now,
-            //    IsDisplayed = true
-            //};
-            //_query = new GetByIdPrivacyTypeQuery(Guid.NewGuid());
         }
         [Fact]
         public async Task GetAllPrivacyTypes_IfNotEmpty_ReturnsListOfPrivacyTypeResponse()
@@ -68,7 +55,6 @@ namespace Airbnb.WebApi.Tests.Controllers
             IActionResult result = await _sut.GetAllPrivacyTypes(It.IsAny<PrivacyTypeParameters>());
 
             // assert
-            //result.Should().BeOfType<OkObjectResult>();
             List<PrivacyTypeResponse> response = result.Should().BeOfType<OkObjectResult>().Subject.Value as List<PrivacyTypeResponse>;
             response.Count.Should().BeGreaterThan(0);
             _mockMediatr.Verify(x => x.Send(It.IsAny<GetAllPrivacyTypeQuery>(), It.IsAny<CancellationToken>()), Times.Once);

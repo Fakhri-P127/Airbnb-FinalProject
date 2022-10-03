@@ -13,7 +13,7 @@ namespace Airbnb.Application.Helpers
             country = await _unit.CountryRepository.GetByIdAsync(country.Id, null,false,
                 AllCountryIncludes());
             CountryResponse response = _mapper.Map<CountryResponse>(country);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
 

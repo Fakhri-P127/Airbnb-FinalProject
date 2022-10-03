@@ -1,11 +1,6 @@
 ﻿using Airbnb.Domain.Entities.PropertyRelated;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
 {
@@ -19,7 +14,31 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
             builder.Property(x => x.Name).HasMaxLength(60).IsRequired();
 
             builder.HasIndex(x => x.Name).IsUnique();
-    
+
+            builder.HasData(
+                new PropertyGroup()
+                {
+                    Id = Guid.Parse("9138421c-0e9f-4d23-85dd-f2fdf3a4854c"),
+                    IsDisplayed = true,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now,
+                    Name = "Apartment",
+                    Image = "54874e8e-2699-4ff7-adab-875f528dee59.jpg",
+                    Properties = new(),
+                    PropertyTypes = new()
+                },
+                  new PropertyGroup()
+                  {
+                      Id = Guid.NewGuid(),
+                      IsDisplayed = true,
+                      CreatedAt = DateTime.Now,
+                      ModifiedAt = DateTime.Now,
+                      Name = "House",
+                      Image = "520f85dc-c9a8-45c6-b2fc-179150d10285.jpg",
+                      Properties = new(),
+                      PropertyTypes = new()
+                  }
+                );
         }
     }
 }

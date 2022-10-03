@@ -1,5 +1,7 @@
 ﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Common.Interfaces.Email;
+using Airbnb.Application.Contracts.v1.Admin.EmailRelated.Responses;
 using Airbnb.Application.Contracts.v1.Client.Reservation.Responses;
 using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Application.Exceptions.Hosts;
@@ -20,16 +22,18 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
     {
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
-        //private readonly CustomUserManager<AppUser> _userManager;
         private readonly IHttpContextAccessor _accessor;
+        private readonly IEmailSender _emailSender;
+        private readonly CustomUserManager<AppUser> _userManager;
 
         public CreateReservationCommandHandler(IUnitOfWork unit, IMapper mapper
-            ,IHttpContextAccessor accessor)
+            ,IHttpContextAccessor accessor,IEmailSender emailSender,CustomUserManager<AppUser> userManager)
         {
             _unit = unit;
             _mapper = mapper;
-            //_userManager = userManager;
             _accessor = accessor;
+            _emailSender = emailSender;
+            _userManager = userManager;
         }
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
@@ -50,6 +54,10 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
 
             await _unit.ReservationRepository.AddAsync(reservation);
+            #region send email to the user about successfuly reserving the property
+            AppUser user = await _userManager.FindByIdAsync(userId.ToString());
+            await EmailSenderHelpers.SendPropertyReservedEmail(user, reservation, _emailSender);
+            #endregion
             return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }
 
@@ -95,7 +103,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         {
             
             Property property = await _unit.PropertyRepository
-                .GetByIdAsync(request.PropertyId, null, true, "Host");
+                .GetByIdAsync(request.PropertyId, null, true, "Host","PropertyImages");
             if (property.Host.AppUserId == userId) 
                 throw new Reservation_CantReserveYourOwnPropertyException();
             

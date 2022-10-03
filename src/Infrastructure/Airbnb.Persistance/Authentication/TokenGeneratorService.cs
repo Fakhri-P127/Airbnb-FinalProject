@@ -1,6 +1,5 @@
 ﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.Common.Interfaces.Authentication;
-using Airbnb.Application.Exceptions.AuthenticationExceptions.TokenExceptions;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Persistance.Context;
 using Microsoft.IdentityModel.Tokens;
@@ -51,7 +50,7 @@ namespace Airbnb.Persistance.Authentication
             };
             await _context.RefreshTokens.AddAsync(newRefreshToken);
             await _context.SaveChangesAsync();
-            return newRefreshToken.Id.ToString();
+            return newRefreshToken.Id.ToString();// tokenin ozunu primary key olaraq Id etmishem.
         }
         public async Task<List<Claim>> CreateClaims(AppUser user)
         {
@@ -69,79 +68,5 @@ namespace Airbnb.Persistance.Authentication
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
             return claims;
         }
-        //public bool IsValidJwtToken(string jwtToken)
-        //{
-        //    string[] jwtSplitted = jwtToken.Split("\\.");
-        //    if (jwtSplitted.Length != 3) throw new Authentication_AccessTokenException("Jwt format is wrong. Jwt tokens must have three segments (JWS) or five segments (JWE)");
-        //    try
-        //    {
-        //        //var jsonFirstPart = Encoding.(jwtSplitted[0]);
-                
-        //    }
-            
-        //    return true;
-        //}
-        //public async Task<string> GenerateAnotherRefreshTokenAsync(string token, string refreshToken)
-        //{
-        //    ClaimsPrincipal claimPrincipal = GetPrincipalFromExpiredToken(token);
-        //    if (claimPrincipal == null) throw new Authentication_PrincipalException();
-
-        //    long expiryDateUnix = long.Parse(claimPrincipal.Claims.FirstOrDefault(x => x.Type
-        //    == JwtRegisteredClaimNames.Exp).Value);
-
-        //    DateTime expiryDateUtc = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)
-        //        .AddSeconds(expiryDateUnix);
-        //    if (expiryDateUtc > DateTime.UtcNow)
-        //        throw new Authentication_AccessTokenException("Access token hasn't expired yet");
-
-        //    RefreshToken storedRefreshToken = await _context.RefreshTokens
-        //    .FirstOrDefaultAsync(x => x.Id.ToString() == refreshToken);
-
-        //    CheckRefreshTokenExceptions(claimPrincipal, storedRefreshToken);
-        //    // her sheyi deyishmirik deye ehtiyac yoxdu modified olmasina
-        //    _context.Entry(storedRefreshToken).State = EntityState.Unchanged;
-        //    storedRefreshToken.HasBeenUsed = true;//yoxla gor bu isheleyecek, savechange bashqa metoddadi
-
-        //    AppUser user = await _userManager.GetUserAsync(claimPrincipal);
-        //    // id si tokenin ozudu
-        //    return await GenerateRefreshTokenAsync(user);
-        //}
-
-
-        //public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-        //{
-        //    JwtSecurityTokenHandler tokenHandler = new();
-        //    _tokenValidationParameters.ValidateLifetime = false;
-        //    ClaimsPrincipal principal = tokenHandler.ValidateToken(token, _tokenValidationParameters
-        //        , out SecurityToken validatedToken);
-        //    //_tokenValidationParameters.ValidateLifetime = true;
-        //    if (!IsJwtWithValidSecurityAlghoritm(validatedToken)) return null;
-
-        //    return principal;
-        //}
-        //public bool IsJwtWithValidSecurityAlghoritm(SecurityToken validatedToken)
-        //{
-        //    return (validatedToken is JwtSecurityToken jwtSecurityToken) &&
-        //        jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256
-        //        , StringComparison.InvariantCultureIgnoreCase);
-        //}
-
-        //private static void CheckRefreshTokenExceptions(ClaimsPrincipal claimPrincipal, RefreshToken storedRefreshToken)
-        //{
-        //    if (storedRefreshToken is null)
-        //        throw new Authentication_RefreshTokenException("This refresh token does not exist");
-        //    if (DateTime.UtcNow > storedRefreshToken.ExpiryDate)
-        //        throw new Authentication_RefreshTokenException("This refresh token has expired");
-        //    if (storedRefreshToken.IsRevoked)
-        //        throw new Authentication_RefreshTokenException("This refresh token has been revoked");
-        //    if (storedRefreshToken.HasBeenUsed)
-        //        throw new Authentication_RefreshTokenException("This refresh token has been used");
-
-        //    string jti = claimPrincipal.Claims
-        //        .FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Jti).Value;
-        //    if (storedRefreshToken.JwtId != jti)
-        //        throw new Authentication_RefreshTokenException("This refresh token does not match this Jwt");
-        //}
-
     }
 }

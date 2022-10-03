@@ -27,7 +27,7 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Create
             await _unit.AirCoverRepository.AddAsync(airCover);
             airCover= await _unit.AirCoverRepository.GetByIdAsync(airCover.Id, null);
             AirCoverResponse response = _mapper.Map<AirCoverResponse>(airCover);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }

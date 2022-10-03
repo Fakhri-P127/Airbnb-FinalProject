@@ -30,7 +30,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetById
                .GetByIdAsync(request.Id, request.Expression);
             if (propertyType is null) throw new PropertyTypeNotFoundException();
             GetPropertyTypeResponse response = _mapper.Map<GetPropertyTypeResponse>(propertyType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

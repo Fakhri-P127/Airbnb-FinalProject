@@ -29,7 +29,7 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Queries.GetById
                 .GetByIdAsync(request.Id, request.Expression);
             if (amenityType is null) throw new AmenityTypeNotFoundException();
             AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

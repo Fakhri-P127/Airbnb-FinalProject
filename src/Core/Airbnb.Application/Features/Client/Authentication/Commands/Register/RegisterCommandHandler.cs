@@ -24,8 +24,8 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         private readonly IHttpContextAccessor _accessor;
 
         public RegisterCommandHandler(CustomUserManager<AppUser> userManager, IMapper mapper,
-            IWebHostEnvironment env,LinkGenerator generator,IEmailSender emailSender
-            ,IHttpContextAccessor accessor)
+            IWebHostEnvironment env, LinkGenerator generator, IEmailSender emailSender
+            , IHttpContextAccessor accessor)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -38,24 +38,28 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         {
             await CheckAppUserErrors(request);
             AppUser user = _mapper.Map<AppUser>(request);
-            if (request.PhoneNumber is not null) user.PhoneNumberConfirmed = true;
+            user.PhoneNumberConfirmed = true; // nomresiz achmaq olmasin.
             await ImageCheck(request, user);
             IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
             await CheckIfResultIsSuccessful(user, createdUserResult, "creating User.");
-            //FormFileCollection files = new()
-            //{
-            //    request.ProfilPicture
-            //};
-            await AuthenticationHelper.SendConfirmationEmail(user,null,_userManager,_generator,_accessor,_emailSender);
+
+            await SendConfirmationEmailToUser(request, user);
             IdentityResult roleResult = await _userManager.AddToRoleAsync(user, "Guest");
             await CheckIfResultIsSuccessful(user, roleResult, "adding Role to User.");
             // register deki tokeni silmek olar
 
             RegisterResponse response = _mapper.Map<RegisterResponse>(user);
-            if (response is null) throw new Exception("Internal server error");
-            if (user.EmailConfirmed) response.Verifications.Add("Email verified");
-            if (user.PhoneNumberConfirmed) response.Verifications.Add("Phone number verified");
+            //if (response is null) throw new Exception("Internal server error");
+
+            response.Verifications.Add("Phone number verified");
             return response;
+        }
+
+        private async Task SendConfirmationEmailToUser(RegisterCommand request, AppUser user)
+        {
+            FormFileCollection files = new();
+            if (request.ProfilPicture is not null) files.Add(request.ProfilPicture);
+            await EmailSenderHelpers.SendConfirmationEmail(user, files, _userManager, _generator, _accessor, _emailSender);
         }
 
         private async Task CheckIfResultIsSuccessful(AppUser user, IdentityResult result,
@@ -78,12 +82,11 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         {
             //AppUser user = await _userManager.FindByEmailAsync(request.Email);
             //if (user is not null) throw new DuplicateEmailValidationException();
-            if (request.PhoneNumber is not null)
-            {
-                AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
-                if (user is not null)
-                    throw new DuplicatePhoneNumberException();
-            }
+
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber);
+            if (user is not null)
+                throw new DuplicatePhoneNumberException();
+
         }
 
         private async Task ImageCheck(RegisterCommand request, AppUser user)

@@ -33,23 +33,22 @@ namespace Airbnb.WebAPI
                 });
 
                 opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                 {
-            new OpenApiSecurityScheme
-                    {
-                Reference= new OpenApiReference
-                      {
-                    Id="Bearer",
-                    Type=ReferenceType.SecurityScheme
-                         }
-                  },
-            new List<string>()
-                      }
-              });
+                {
+                     {
+                        new OpenApiSecurityScheme
+                         {
+                            Reference= new OpenApiReference
+                            {
+                                Id="Bearer",
+                                Type=ReferenceType.SecurityScheme
+                            }
+                         },
+                        new List<string>()
+                     }
+                });
             })
                 .AddApiVersioningAndApiExplorer()
                 .AddHttpClient()
-                // singletion olanda gerek serveri saxlayib tezden giresen(ya da tezden login).
             .AddSingleton<IAuthorizationMiddlewareResultHandler, MyAuthorizationMiddlewareResultHandler>();
             return services;
         }
@@ -61,8 +60,8 @@ namespace Airbnb.WebAPI
                 opt.AssumeDefaultVersionWhenUnspecified = true;
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
                 opt.ApiVersionReader = new UrlSegmentApiVersionReader();
-            });
-            services.AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
+            })
+            .AddVersionedApiExplorer(opt => opt.GroupNameFormat = "'v'VVV");
             return services;
         }
 

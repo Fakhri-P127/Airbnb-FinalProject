@@ -17,9 +17,12 @@ namespace Airbnb.Application.Mapping
     {
         public PropertyMappings()
         {
+            // Null olub olmadigini yigishdirdim chunki bele Include etmeden istifade ede bilirik.
+            // hamiya o url gonderilecek amma ichinde reservationin olub olmadigi sorgu gonderende bilinecek
+            // mence reservation i join etmekdense bele daha yaxshidi.
             CreateMap<Property, GetPropertyResponse>()
                 .ForMember(dest=>dest.ReservationsUrl,opt=> {
-                    opt.PreCondition(x => x.Reservations is not null && x.Reservations.Any());
+                    //opt.PreCondition(x => x.Reservations is not null && x.Reservations.Any());
                     opt
                     .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.Reservations.Name}?propertyId={src.Id}");
                 });

@@ -1,10 +1,8 @@
 ﻿using Airbnb.Application.Common.CustomFrameworkImpl;
 using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.GuestReviews.Responses;
-using Airbnb.Application.Features.Client.PropertyReviews.Queries.GetAll;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using LinqKit;
 using MediatR;
@@ -26,13 +24,16 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Queries.GetAll
         }
         public async Task<List<GuestReviewResponse>> Handle(GetAllGuestReviewsQuery request, CancellationToken cancellationToken)
         {
+            // bu guest/host a gore datalari chixaran controller uchundu. Eslinde buna day ehtiyac yoxdu chunki filterleme ile
+            // bunu edirem amma bu expression i yazmaga kalan vaxtim getmishdi deye saxladim :D
             if (request.Expression != null)
                 await BaseHelper.GetIdFromExpression((BinaryExpression)request.Expression.Body, _unit,_userManager);
+
             ExpressionStarter<GuestReview> filters = FilterRequest(request);
             List<GuestReview> guestReviews = await _unit.GuestReviewRepository
-              .GetAllAsync(request.Expression,request.Parameters,false, GuestReviewHelper.AllGuestReviewIncludes());
+              .GetAllAsync(filters,request.Parameters,false, GuestReviewHelper.AllGuestReviewIncludes());
             List<GuestReviewResponse> responses = _mapper.Map<List<GuestReviewResponse>>(guestReviews);
-            if (responses is null) throw new Exception("Internal server error");
+            ////if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
         private static ExpressionStarter<GuestReview> FilterRequest(GetAllGuestReviewsQuery request)

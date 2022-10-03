@@ -27,7 +27,7 @@
             public const string MakeReservation = "makeReservation";
             public const string UpdateReservation = "updateReservation";
             public const string ExtendReservationDuration = "extendReservationDuration";
-            public const string UpdateReservationStatus = "updateReservationStatus";
+            public const string UpdateReservationStatus = "updateReservationsStatus";
             public const string DeleteReservation = "deleteReservation";
         }
         public static class Hosts

@@ -1,24 +1,15 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Parameters;
-using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Delete;
-using Airbnb.Application.Mapping;
 using Airbnb.Domain.Entities.PropertyRelated;
-using AutoMapper;
 using FluentAssertions;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
 {
+    /// <summary>
+    /// Delete eynidi deye bir bunda yazdim. Propertyde ferqlidi ona da yazmaq olar.
+    /// </summary>
     public class DeletePrivacyTypeCommandHandlerTests
     {
         private readonly Mock<IUnitOfWork> _mockUnit;

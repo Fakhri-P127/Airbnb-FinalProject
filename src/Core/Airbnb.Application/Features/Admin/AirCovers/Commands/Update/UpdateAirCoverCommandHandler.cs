@@ -33,7 +33,7 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
             await _unit.SaveChangesAsync();
             airCover = await _unit.AirCoverRepository.GetByIdAsync(airCover.Id, null);
             AirCoverResponse response = _mapper.Map<AirCoverResponse>(airCover);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

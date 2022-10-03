@@ -3,13 +3,11 @@ using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Parameters;
 using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create;
-using Airbnb.Application.Features.Admin.PrivacyTypes.Queries.GetById;
 using Airbnb.Application.Mapping;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using FluentAssertions;
 using Moq;
-using System.Linq.Expressions;
 
 namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
 {

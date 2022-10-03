@@ -28,7 +28,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetAll
                 .GetAllAsync(FilterRequest(request),request.Parameters, false, "AmenityType",
                 "PropertyAmenities");
             List<GetAmenityResponse> responses = _mapper.Map<List<GetAmenityResponse>>(amenities);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
 

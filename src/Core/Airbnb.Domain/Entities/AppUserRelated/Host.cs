@@ -17,7 +17,7 @@ namespace Airbnb.Domain.Entities.AppUserRelated
         public List<GuestReview> ReviewsByYou { get; set; }
         public List<PropertyReview> ReviewsAboutYourProperty { get; set; }
         public List<Reservation> Reservations { get; set; }
-        public Guid AppUserId { get; set; }
+        public Guid AppUserId { get; set; }// one to one lari shadow property ile yaz
         public AppUser AppUser { get; set; }
     }
 }

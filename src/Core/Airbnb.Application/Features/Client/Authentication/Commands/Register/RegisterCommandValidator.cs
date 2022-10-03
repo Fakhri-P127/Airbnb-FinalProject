@@ -15,7 +15,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             RuleFor(x => x.Password).NotEmpty().Length(8,30);
             RuleFor(x => x.DateOfBirth).NotEmpty().GreaterThanOrEqualTo(_minDateTime)
                 .LessThanOrEqualTo(_maxDateTime);
-            RuleFor(x => x.PhoneNumber)
+            RuleFor(x => x.PhoneNumber).NotEmpty()
                 .Matches("^\\(?(\\+994)?\\)?[\\s\\-]?0?(50|51|55|70|77|12)[\\s\\-]?\\d{3}[\\s\\-]?\\d{2}[\\s\\-]?\\d{2}[\\s\\-]?$")
                 .WithMessage("{PropertyName} {PropertyValue} is not in the correct format. We only accept Azerbaijan numbers");
         }

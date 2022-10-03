@@ -20,7 +20,7 @@ namespace Airbnb.Application.Helpers
             propertyReview = await _unit.PropertyReviewRepository.GetByIdAsync(propertyReview.Id, null,false,
                 AllPropertyReviewIncludes());
             PropertyReviewResponse response = _mapper.Map<PropertyReviewResponse>(propertyReview);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
         public static string[] AllPropertyReviewIncludes()

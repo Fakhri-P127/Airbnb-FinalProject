@@ -32,7 +32,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetAll
             List<PropertyReview> propertyReviews = await _unit.PropertyReviewRepository
                 .GetAllAsync(filters, request.Parameters, false, PropertyReviewHelper.AllPropertyReviewIncludes());
             List<PropertyReviewResponse> responses = _mapper.Map<List<PropertyReviewResponse>>(propertyReviews);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
 

@@ -14,18 +14,18 @@ namespace Airbnb.Application.Mapping
         {
             CreateMap<AppUser, UserResponse>()
                  .ForMember(dest => dest.ReservationYouMadeUrl, opt => {
-                     opt.PreCondition(x => x.ReservationsYouMade is not null 
-                     && x.ReservationsYouMade.Any());
+                     //opt.PreCondition(x => x.ReservationsYouMade is not null 
+                     //&& x.ReservationsYouMade.Any());
                      opt
                      .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.Reservations.Name}?appUserId={src.Id}");
                  })
                   .ForMember(dest => dest.ReviewsByYouUrl, opt => {
-                      opt.PreCondition(x => x.ReviewsByYou is not null && x.ReviewsByYou.Any());
+                      //opt.PreCondition(x => x.ReviewsByYou is not null && x.ReviewsByYou.Any());
                       opt
                       .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.PropertyReviews.Name}?appUserId={src.Id}");
                   })
                    .ForMember(dest => dest.ReviewsAboutYouUrl, opt => {
-                       opt.PreCondition(x => x.ReviewsAboutYou is not null && x.ReviewsAboutYou.Any());
+                       //opt.PreCondition(x => x.ReviewsAboutYou is not null && x.ReviewsAboutYou.Any());
                        opt
                        .MapFrom(src => $"{ApiRoutes.BaseUrl}/{ApiRoutes.GuestReviews.Name}?appUserId={src.Id}");
                    }); 

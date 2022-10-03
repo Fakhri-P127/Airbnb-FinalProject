@@ -1,16 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.AirCovers.Responses;
 using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Application.Exceptions.Amenities;
-using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetById
 {
@@ -30,7 +23,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Queries.GetById
                 "AmenityType", "PropertyAmenities");
             if (amenity is null) throw new AmenityNotFoundException();
             GetAmenityResponse response = _mapper.Map<GetAmenityResponse>(amenity);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }

@@ -5,6 +5,7 @@ using Airbnb.Application.Exceptions.AppUser;
 using Airbnb.Domain.Entities.AppUserRelated;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
@@ -24,13 +25,14 @@ namespace Airbnb.Application.Features.Client.Authentication.Queries.Login
         }
         public async Task<AuthSuccessResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
-            AppUser user = await _userManager.FindByEmailAsync(request.Email);
+            AppUser user = await _userManager.Users.FirstOrDefaultAsync(x => x.PhoneNumber == request.PhoneNumber, cancellationToken);
+            //AppUser user = await _userManager.Users.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();
             SignInResult result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             await CheckIfSignInHappenedSuccessfully(user, result);
 
             //LoginResponse response = _mapper.Map<LoginResponse>(user);
-            //if (response is null) throw new Exception("Internal server error");
+            ////if (response is null) throw new Exception("Internal server error");
             List<Claim> claims = await _tokenGenerator.CreateClaims(user);
             AuthSuccessResponse response = new()
             {

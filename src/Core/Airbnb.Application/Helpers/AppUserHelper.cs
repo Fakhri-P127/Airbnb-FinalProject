@@ -33,8 +33,8 @@ namespace Airbnb.Application.Helpers
         #endregion
         public static string[] AllUserIncludes()
         {
-            string[] includes = new[] { "Gender","Host", "AppUserLanguages", "ReviewsByYou"
-                , "ReviewsAboutYou", "ReservationsYouMade" };
+            string[] includes = new[] { "Gender","Host", "AppUserLanguages"/*, "ReviewsByYou"
+                , "ReviewsAboutYou", "ReservationsYouMade" */};
             return includes;
         }
      

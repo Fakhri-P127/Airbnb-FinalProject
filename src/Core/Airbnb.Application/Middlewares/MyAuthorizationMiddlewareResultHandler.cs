@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Diagnostics.Contracts;
 using System.Net;
 
 namespace Airbnb.Application.Middlewares
@@ -18,6 +19,8 @@ namespace Airbnb.Application.Middlewares
         public async Task HandleAsync(RequestDelegate next, HttpContext context,
             AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
         {
+            //if (SkipAuthorization(actionContext)) return;
+            
             if (authorizeResult.Challenged)
             {
                 await CreateAuthorizationIsChallangedResponse(context);
@@ -87,5 +90,12 @@ namespace Airbnb.Application.Middlewares
                 }
             }
         }
+        //private static bool SkipAuthorization(HttpActionContext actionContext)
+        //{
+        //    Contract.Assert(actionContext != null);
+
+        //    return actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
+        //               || actionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any();
+        //}
     }
 }

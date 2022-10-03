@@ -14,7 +14,7 @@ namespace Airbnb.Application.Helpers
             city = await _unit.CityRepository.GetByIdAsync(city.Id, null,false,
                 AllCityIncludes());
             CityResponse response = _mapper.Map<CityResponse>(city);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
 

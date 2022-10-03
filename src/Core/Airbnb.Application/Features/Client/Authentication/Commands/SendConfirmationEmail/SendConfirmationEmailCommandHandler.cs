@@ -29,7 +29,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.SendConfirm
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();
             if (user.EmailConfirmed is true) throw new User_EmailAlreadyConfirmedException();
-            await AuthenticationHelper.SendConfirmationEmail(user, null, _userManager, _generator, _accessor, _emailSender);
+            await EmailSenderHelpers.SendConfirmationEmail(user, null, _userManager, _generator, _accessor, _emailSender);
             return await Task.FromResult(Unit.Value);
         }
     }

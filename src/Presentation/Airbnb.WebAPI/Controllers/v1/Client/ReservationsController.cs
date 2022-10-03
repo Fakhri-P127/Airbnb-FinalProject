@@ -7,7 +7,6 @@ using Airbnb.Application.Features.Client.Reservations.Commands.Update;
 using Airbnb.Application.Features.Client.Reservations.Commands.UpdateReservationStatus;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetAll;
 using Airbnb.Application.Features.Client.Reservations.Queries.GetById;
-using Airbnb.Domain.Enums.Reservations;
 using Airbnb.WebAPI.Controllers.v1.Base;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -84,6 +83,17 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return Ok(result);
         }
         /// <summary>
+        /// this endpoint is for background service to update the reservations status
+        /// </summary>
+        /// <returns></returns>
+        [HttpPatch("[action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateReservationsStatus()
+        {
+            await _mediatr.Send(new UpdateReservationStatusCommand());
+            return NoContent();
+        }
+        /// <summary>
         /// with this endpoint you can extend the duration of your trip
         /// </summary>
         /// <param name="command"></param>
@@ -96,17 +106,7 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PostReservationResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-        /// <summary>
-        /// this endpoint is for background service to update the reservations status
-        /// </summary>
-        /// <returns></returns>
-        [HttpPatch("[action]")]
-        [AllowAnonymous]
-        public async Task<IActionResult> UpdateReservationsStatus()
-        {
-            await _mediatr.Send(new UpdateReservationStatusCommand());
-            return NoContent();
-        }
+      
         /// <summary>
         /// delete reservation by Id
         /// </summary>

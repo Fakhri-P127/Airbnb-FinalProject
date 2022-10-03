@@ -19,7 +19,7 @@ namespace Airbnb.Application.Helpers
         {
             reservation = await _unit.ReservationRepository.GetByIdAsync(reservation.Id, null);
             PostReservationResponse response = _mapper.Map<PostReservationResponse>(reservation);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
         public static void CheckOutDateValidationChecker(Property property, int reservedDays)

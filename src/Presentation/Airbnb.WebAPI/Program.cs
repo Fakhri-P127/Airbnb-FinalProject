@@ -2,6 +2,7 @@ using Airbnb.Application;
 using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.Application.Filters.ResourceFilters;
 using Airbnb.Persistance;
+using Airbnb.Persistance.Context.Configurations;
 using Airbnb.WebAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,8 +30,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseExceptionHandler("/error");
+await app.SeedDatabase();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();

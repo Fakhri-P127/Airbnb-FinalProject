@@ -23,7 +23,7 @@ public class GetReservationByIdQueryHandler : IRequestHandler<GetReservationById
         if (reservation is null) throw new ReservationNotFoundException(request.Id);
 
         GetReservationResponse responses = _mapper.Map<GetReservationResponse>(reservation);
-        if (responses is null) throw new Exception("Internal server error");
+        //if (!responses.Any()) throw new Exception("Internal server error");
         return responses;
     }
 }

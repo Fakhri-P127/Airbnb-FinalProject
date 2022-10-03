@@ -31,7 +31,7 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetAll
                 false,PropertyTypeHelper.AllPropertyTypeIncludes());
 
             List<GetPropertyTypeResponse> responses = _mapper.Map<List<GetPropertyTypeResponse>>(propertyTypes);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
     }

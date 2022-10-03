@@ -30,7 +30,7 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Queries.GetById
                 .GetByIdAsync(request.Id, request.Expression,false, "Properties");
             if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
             CancellationPolicyResponse response = _mapper.Map<CancellationPolicyResponse>(cancellationPolicy);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

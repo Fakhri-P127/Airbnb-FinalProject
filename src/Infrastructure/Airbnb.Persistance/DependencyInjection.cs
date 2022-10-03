@@ -41,6 +41,7 @@ namespace Airbnb.Persistance
                 opt.Lockout.AllowedForNewUsers = true;
                 
                 opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedPhoneNumber = true;
 
                 opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
             }).AddEntityFrameworkStores<AirbnbDbContext>()

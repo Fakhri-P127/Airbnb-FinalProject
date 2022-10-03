@@ -1,5 +1,8 @@
-﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Exceptions.Reservations;
+﻿using Airbnb.Application.Common.CustomFrameworkImpl;
+using Airbnb.Application.Common.Interfaces;
+using Airbnb.Application.Common.Interfaces.Email;
+using Airbnb.Application.Helpers;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Enums.Reservations;
 using MediatR;
@@ -9,10 +12,15 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
     public class UpdateReservationStatusCommandHandler : IRequestHandler<UpdateReservationStatusCommand>
     {
         private readonly IUnitOfWork _unit;
+        private readonly IEmailSender _emailSender;
+        private readonly CustomUserManager<AppUser> _userManager;
 
-        public UpdateReservationStatusCommandHandler(IUnitOfWork unit)
+        public UpdateReservationStatusCommandHandler(IUnitOfWork unit,IEmailSender emailSender,
+            CustomUserManager<AppUser> userManager)
         {
             _unit = unit;
+            _emailSender = emailSender;
+            _userManager = userManager;
         }
         public async Task<Unit> Handle(UpdateReservationStatusCommand request, CancellationToken cancellationToken)
         {
@@ -22,18 +30,19 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
             //Reservation reservation = await _unit.ReservationRepository.GetByIdAsync(request.Id, null,true);
             if (reservations is null || !reservations.Any())
                 return await Task.FromResult(Unit.Value);
-            reservations.ForEach(reservation =>
+            reservations.ForEach( reservation =>
             {
                 //CheckStatusExceptions(reservation);
                 _unit.ReservationRepository.Update(reservation, false);
-                SetReservationStatus(reservation);
+                 SetReservationStatus(reservation,_emailSender,_userManager);
             });
            
             await _unit.SaveChangesAsync();
             return await Task.FromResult(Unit.Value);
         }
 
-        private static void SetReservationStatus(Reservation reservation)
+        private static void SetReservationStatus(Reservation reservation,IEmailSender _emailSender,
+            CustomUserManager<AppUser> _userManager)
         {
             int reservedDays = reservation.CheckOutDate.Subtract(reservation.CheckInDate).Days;
             int daysLeftTillCheckIn = reservation.CheckInDate.Subtract(DateTime.Now).Days;
@@ -41,7 +50,10 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
             TimeSpan hoursLeftTillCheckIn = reservation.CheckInDate.Subtract(DateTime.Now);
 
             if (DateTime.Now > reservation.CheckOutDate)
+            {
                 reservation.Status = (int)Enum_ReservationStatus.ReservationFinished;
+                SendReservationFinishedEmail(reservation, _emailSender, _userManager).GetAwaiter().GetResult();
+            }
             else if (daysLeftTillCheckIn >= 2)
                 reservation.Status = (int)Enum_ReservationStatus.Upcoming;
             else if (daysLeftTillCheckIn == 1 && reservation.Status != (int)Enum_ReservationStatus.ArrivingSoon)
@@ -66,18 +78,29 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.UpdateReserva
             else if (daysLeftTillCheckOut >= 2 && reservedDays >= daysLeftTillCheckOut)
                 reservation.Status = (int)Enum_ReservationStatus.CurrentlyHosting;
             else if (daysLeftTillCheckOut < 0)
+            {
                 reservation.Status = (int)Enum_ReservationStatus.ReservationFinished;
+                SendReservationFinishedEmail(reservation, _emailSender, _userManager).GetAwaiter().GetResult();
+            }
             else
                 // bura dushe bilmez amma yoxlamaq uchun yazmisham
                 reservation.Status = 19;
+           
 }
 
-        private static void CheckStatusExceptions(Reservation reservation)
+        private static async Task SendReservationFinishedEmail(Reservation reservation, IEmailSender _emailSender, CustomUserManager<AppUser> _userManager)
         {
-            if (reservation.Status == (int)Enum_ReservationStatus.ReservationCancelled)
-                throw new Reservation_ActionToCancelledReservationException();
-            if (reservation.Status == (int)Enum_ReservationStatus.ReservationFinished)
-                throw new Reservation_StatusAlreadyFinishedException();
+            AppUser user = await _userManager.FindByIdAsync(reservation.AppUserId.ToString());
+            await EmailSenderHelpers.SendReservedFinishedEmail(user, reservation, _emailSender);
         }
+
+        // buna ehtiyac yoxdu
+        //private static void CheckStatusExceptions(Reservation reservation)
+        //{
+        //    if (reservation.Status == (int)Enum_ReservationStatus.ReservationCancelled)
+        //        throw new Reservation_ActionToCancelledReservationException();
+        //    if (reservation.Status == (int)Enum_ReservationStatus.ReservationFinished)
+        //        throw new Reservation_StatusAlreadyFinishedException();
+        //}
     }
 }

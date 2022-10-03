@@ -27,7 +27,7 @@ namespace Airbnb.Application.Features.Admin.Cities.Queries.GetById
                .GetByIdAsync(request.Id, request.Expression,false, CityHelper.AllCityIncludes());
             if (city is null) throw new CityNotFoundException();
             CityResponse response = _mapper.Map<CityResponse>(city);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }

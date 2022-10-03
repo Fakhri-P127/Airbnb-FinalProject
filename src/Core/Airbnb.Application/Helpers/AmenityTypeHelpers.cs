@@ -13,7 +13,7 @@ namespace Airbnb.Application.Helpers
         {
             amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(amenityType.Id, null,false, "Amenities");
             AmenityTypeResponse response = _mapper.Map<AmenityTypeResponse>(amenityType);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
 
             return response;
         }

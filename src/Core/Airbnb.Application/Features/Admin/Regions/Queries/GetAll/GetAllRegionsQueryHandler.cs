@@ -24,7 +24,7 @@ namespace Airbnb.Application.Features.Admin.Regions.Queries.GetAll
                .GetAllAsync(request.Expression,request.Parameters,false,RegionHelper.AllRegionIncludes());
 
             List<RegionResponse> responses = _mapper.Map<List<RegionResponse>>(regions);
-            if (responses is null) throw new Exception("Internal server error");
+            //if (!responses.Any()) throw new Exception("Internal server error");
             return responses;
         }
     }

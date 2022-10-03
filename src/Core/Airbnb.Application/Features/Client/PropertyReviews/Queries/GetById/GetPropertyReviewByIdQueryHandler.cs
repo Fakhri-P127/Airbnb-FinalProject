@@ -24,7 +24,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Queries.GetById
                 .GetByIdAsync(request.Id,request.Expression,false, PropertyReviewHelper.AllPropertyReviewIncludes());
             if (propertyReview is null) throw new PropertyReview_NotFoundException(request.Id);
             PropertyReviewResponse response = _mapper.Map<PropertyReviewResponse>(propertyReview);
-            if (response is null) throw new Exception("Internal server error");
+            //if (response is null) throw new Exception("Internal server error");
             return response;
         }
     }
