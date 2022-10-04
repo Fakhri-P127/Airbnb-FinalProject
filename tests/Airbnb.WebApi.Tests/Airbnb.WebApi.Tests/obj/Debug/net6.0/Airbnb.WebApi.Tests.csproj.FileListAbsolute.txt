@@ -174,3 +174,4 @@ C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebA
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\Airbnb.WebApi.Tests.genruntimeconfig.cache
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\obj\Debug\net6.0\ref\Airbnb.WebApi.Tests.dll
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.WebApi.Tests\Airbnb.WebApi.Tests\bin\Debug\net6.0\Airbnb.WebAPI.xml

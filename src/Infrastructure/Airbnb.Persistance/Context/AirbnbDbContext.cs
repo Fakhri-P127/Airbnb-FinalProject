@@ -31,7 +31,6 @@ namespace Airbnb.Persistance.Context
         public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyGroup> PropertyGroups { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
-        //public DbSet<PropertyGroupType> PropertGroupTypes { get; set; }
         public DbSet<PropertyImage> PropertyImages { get; set; }
         public DbSet<AirCover> AirCovers { get; set; }
         public DbSet<CancellationPolicy> CancellationPolicies { get; set; }
@@ -98,18 +97,9 @@ namespace Airbnb.Persistance.Context
             var entries = ChangeTracker.Entries().Where(e => (e.Entity is BaseEntity || e.Entity is AppUser)
             && (e.State == EntityState.Added
             || e.State == EntityState.Modified));
-            //if (entries.FirstOrDefault().Entity is BaseEntity)
-            //{
+           
             if (entries.Any(x => x.Entity is BaseEntity)) UpdateDateTimesForBaseEntity(entries);
             if (entries.Any(x => x.Entity is AppUser)) UpdateDateTimesForAppUser(entries);
-
-            //}
-            //else if (entries.FirstOrDefault().Entity is AppUser)
-            //{
-            //UpdateDateTimesForAppUser(entries);
-            //UpdateDateTimesForBasEntity(entries);
-            //}
-
         }
 
         private static void UpdateDateTimesForBaseEntity(IEnumerable<EntityEntry> entries)

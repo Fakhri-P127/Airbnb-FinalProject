@@ -6,6 +6,12 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
 {
     public class GenderConfiguration : IEntityTypeConfiguration<Gender>
     {
+        private readonly AirbnbDbContext _context;
+
+        public GenderConfiguration(AirbnbDbContext context)
+        {
+            _context = context;
+        }
         public void Configure(EntityTypeBuilder<Gender> builder)
         {
             builder.Property(x => x.IsDisplayed).HasDefaultValue(true).IsRequired();
@@ -13,15 +19,17 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
 
             builder.HasIndex(x => x.Name).IsUnique();
 
-            builder.HasData(
+            if (!_context.Genders.Any())
+            {
+                builder.HasData(
                 new Gender()
                 {
                     Id = Guid.NewGuid(),
-                    Name= "Male",
-                    IsDisplayed=true,
-                    CreatedAt=DateTime.Now,
-                    ModifiedAt=DateTime.Now,
-                    AppUsers= new()
+                    Name = "Male",
+                    IsDisplayed = true,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now,
+                    AppUsers = new()
                 },
                 new Gender()
                 {
@@ -42,6 +50,9 @@ namespace Airbnb.Persistance.Context.Configurations.AppUserRelated
                     AppUsers = new()
                 }
                 );
+
+            }
+            
         }
     }
 }

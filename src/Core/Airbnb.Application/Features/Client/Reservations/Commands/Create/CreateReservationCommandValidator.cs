@@ -36,7 +36,7 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             {
                 bool propertyExists = await _unit.PropertyRepository.GetByIdAsync(id, null) is not null;
                 return propertyExists;
-            }).WithMessage("Property with this Id doesn't exist");
+            }).WithMessage("Property with this Id doesn't exist").WithErrorCode("404");
         
             //RuleFor(x => x.AppUserId).NotEmpty();//action filterde yoxlanilir
             //RuleFor(x => x.HostId).NotEmpty();

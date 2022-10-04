@@ -14,6 +14,7 @@ namespace Airbnb.Domain.Entities.AppUserRelated
             AppUserLanguages = new();
         }
         public string Name { get; set; }
+        public string LanguageCode { get; set; }
         public List<AppUserLanguage> AppUserLanguages { get; set; }
 
     }

@@ -5,6 +5,9 @@ using System.Net;
 
 namespace Airbnb.Application.Filters.ResourceFilters
 {
+    /// <summary>
+    /// Bunun action filter olmasi daha mentiqlidi amma resource filteride yoxlayim deye bunu bele yazdim.
+    /// </summary>
     public class EnsureIdIsGuidResourceFilter : IResourceFilter
     {
         public void OnResourceExecuted(ResourceExecutedContext context)

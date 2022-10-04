@@ -8,9 +8,9 @@ namespace Airbnb.Persistance.Context.Configurations
     {
         public static async Task<WebApplication> SeedDatabase(this WebApplication webApp)
         {
-            using(var scope = webApp.Services.CreateAsyncScope())
+            using (var scope = webApp.Services.CreateAsyncScope())
             {
-                using(var appContext = scope.ServiceProvider.GetRequiredService<AirbnbDbContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<AirbnbDbContext>())
                 {
                     try
                     {

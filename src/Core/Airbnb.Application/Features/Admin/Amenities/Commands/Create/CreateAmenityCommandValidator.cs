@@ -26,7 +26,7 @@ namespace Airbnb.Application.Features.Admin.Amenities.Commands.Create
                     AmenityType existed = await _unit.AmenityTypeRepository.GetByIdAsync(x,null);
                     if (existed is null) return false;
                     return true;
-                }).WithMessage("Amenity type with this Id doesn't exist.");
+                }).WithMessage("Amenity type with this Id doesn't exist.").WithErrorCode("404");
         }
     }
 }

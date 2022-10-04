@@ -5,7 +5,6 @@ using Airbnb.Application.Contracts.v1.Client.Authentication.Responses;
 using Airbnb.Application.Exceptions.AuthenticationExceptions.TokenExceptions;
 using Airbnb.Domain.Entities.AppUserRelated;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

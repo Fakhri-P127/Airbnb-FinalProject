@@ -45,7 +45,7 @@ namespace Airbnb.Application.Middlewares
                 Instance = "https://www.rfc-editor.org/rfc/rfc7235#section-3.1",
                 Title = "An error occured while processing your request",
                 Status = statusCode,
-                Detail = "You need to be authorized to use this feature. Please login to use it."
+                Detail = "You need to be authenticated to use this feature. Please login to use it."
             };
             //json settingi deyishmesen onda yuxarida yarat metodla ikisinede gonder
             string resultStr = JsonConvert.SerializeObject(problemDetails,new JsonSerializerSettings
@@ -56,6 +56,7 @@ namespace Airbnb.Application.Middlewares
             //await context.Response.WriteAsJsonAsync(problemDetails);
         }
 
+        // Burda tehlukesizliye gore forbidden in yerine not found da gondermek olar .
         private static async Task CreateAuthorizationIsForbiddenResponse(HttpContext context,PolicyAuthorizationResult authorizationResult)
         {
             context.Response.ContentType = "application/problem+json";

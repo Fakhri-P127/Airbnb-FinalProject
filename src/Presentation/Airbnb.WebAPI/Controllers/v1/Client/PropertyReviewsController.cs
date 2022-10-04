@@ -22,6 +22,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         {
             _mediatr = mediatr;
         }
+        /// <summary>
+        /// Gets all the Property reviews
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         [HttpGet]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllPropertyReviews([FromQuery] PropertyReviewParameters parameters)
@@ -29,41 +34,67 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<PropertyReviewResponse> result = await _mediatr.Send(new GetAllPropertyReviewsQuery(parameters));
             return Ok(result);
         }
+        /// <summary>
+        /// Gets a property review by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetPropertyReviewById([FromRoute]Guid id)
+        public async Task<IActionResult> GetPropertyReviewById([FromRoute] Guid id)
         {
             PropertyReviewResponse result = await _mediatr.Send(new GetPropertyReviewByIdQuery(id));
             return Ok(result);
         }
+        /// <summary>
+        /// Gets property reviews of a specific guest
+        /// </summary>
+        /// <param name="guestId"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route($"/{ApiRoutes.Root}/{ApiRoutes.Version}/{ApiRoutes.Users.Name}/{{guestId}}/propertyreviews")]
-
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetPropertyReviewsWrittenByGuest([FromRoute] Guid guestId, [FromQuery] PropertyReviewParameters parameters)
         {
             List<PropertyReviewResponse> result = await _mediatr
-                .Send(new GetAllPropertyReviewsQuery(parameters,x => x.AppUserId == guestId));
+                .Send(new GetAllPropertyReviewsQuery(parameters, x => x.AppUserId == guestId));
             return Ok(result);
         }
+        /// <summary>
+        ///  Gets property reviews of a specific host
+        /// </summary>
+        /// <param name="hostId"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Route($"/{ApiRoutes.Root}/{ApiRoutes.Version}/{ApiRoutes.Hosts.Name}/{{hostId}}/propertyreviews")]
 
         [ResponseCache(Duration = 30)]
-        public async Task<IActionResult> GetPropertyReviewsOfAHost([FromRoute]Guid hostId, [FromQuery] PropertyReviewParameters parameters)
+        public async Task<IActionResult> GetPropertyReviewsOfAHost([FromRoute] Guid hostId, [FromQuery] PropertyReviewParameters parameters)
         {
             List<PropertyReviewResponse> result = await _mediatr
                 .Send(new GetAllPropertyReviewsQuery(parameters, x => x.HostId == hostId));
             return Ok(result);
         }
+        /// <summary>
+        /// Creates a property review for reservation
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles ="Guest")]
+        [Authorize(Roles = "Guest")]
         public async Task<IActionResult> WritePropertyReview([FromBody] CreatePropertyReviewCommand command)
         {
             PropertyReviewResponse result = await _mediatr.Send(command);
-            return CreatedAtAction(nameof(GetPropertyReviewById),new { id = result.Id },result);
+            return CreatedAtAction(nameof(GetPropertyReviewById), new { id = result.Id }, result);
         }
+        /// <summary>
+        /// Updates the property review
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Guest")]
         public async Task<IActionResult> UpdatePropertyReview([FromBody] UpdatePropertyReviewCommand command)
@@ -71,7 +102,11 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             PropertyReviewResponse result = await _mediatr.Send(command);
             return Ok(result);
         }
-     
+        /// <summary>
+        /// Deletes the property review
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Guest,Host,Moderator,Admin")]
         public async Task<IActionResult> DeletePropertyReview([FromRoute] Guid id)

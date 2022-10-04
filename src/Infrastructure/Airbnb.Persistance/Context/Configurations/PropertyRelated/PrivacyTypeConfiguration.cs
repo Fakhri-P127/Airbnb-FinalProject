@@ -6,6 +6,12 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
 {
     public class PrivacyTypeConfiguration : IEntityTypeConfiguration<PrivacyType>
     {
+        private readonly AirbnbDbContext _context;
+
+        public PrivacyTypeConfiguration(AirbnbDbContext context)
+        {
+            _context = context;
+        }
         public void Configure(EntityTypeBuilder<PrivacyType> builder)
         {
             builder.Property(x => x.Name).HasMaxLength(40).IsRequired();
@@ -13,35 +19,38 @@ namespace Airbnb.Persistance.Context.Configurations.PropertyRelated
 
             builder.HasIndex(x => x.Name).IsUnique();
 
-            builder.HasData(
-                new PrivacyType()
-                {
-                    Id = Guid.NewGuid(),
-                    Name = "Full apartment",
-                    CreatedAt = DateTime.Now,
-                    ModifiedAt = DateTime.Now,
-                    IsDisplayed = true,
-                    Properties = new()
-                },
-                  new PrivacyType()
-                  {
-                      Id = Guid.NewGuid(),
-                      Name = "Shared house",
-                      CreatedAt = DateTime.Now,
-                      ModifiedAt = DateTime.Now,
-                      IsDisplayed = true,
-                      Properties = new()
-                  },
-                    new PrivacyType()
-                    {
-                        Id = Guid.NewGuid(),
-                        Name = "Private room",
-                        CreatedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now,
-                        IsDisplayed = true,
-                        Properties = new()
-                    }
-                );
+            if (!_context.PrivacyTypes.Any())
+            {
+                builder.HasData(
+               new PrivacyType()
+               {
+                   Id = Guid.NewGuid(),
+                   Name = "Full apartment",
+                   CreatedAt = DateTime.Now,
+                   ModifiedAt = DateTime.Now,
+                   IsDisplayed = true,
+                   Properties = new()
+               },
+                 new PrivacyType()
+                 {
+                     Id = Guid.NewGuid(),
+                     Name = "Shared house",
+                     CreatedAt = DateTime.Now,
+                     ModifiedAt = DateTime.Now,
+                     IsDisplayed = true,
+                     Properties = new()
+                 },
+                   new PrivacyType()
+                   {
+                       Id = Guid.NewGuid(),
+                       Name = "Private room",
+                       CreatedAt = DateTime.Now,
+                       ModifiedAt = DateTime.Now,
+                       IsDisplayed = true,
+                       Properties = new()
+                   }
+               );
+            }
         }
     }
 }

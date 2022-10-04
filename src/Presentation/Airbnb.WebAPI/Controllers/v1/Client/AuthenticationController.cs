@@ -47,17 +47,17 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         //    await _signInManager.SignOutAsync();
         //    return Ok();
         //}
+
+        /// <summary>
+        /// Creates a new JWT Access token and a Refresh Token 
+        /// </summary>
+        /// <param name="command">Command for creating a new refresh token</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> GenerateRefreshToken([FromBody] CreateRefreshTokenCommand command)
         {
             AuthSuccessResponse result = await _mediatr.Send(command);
             return Ok(result);
-        }
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> RevokeRefreshToken([FromRoute] Guid id)
-        {
-            await _mediatr.Send(new RevokeRefreshTokenCommand(id));
-            return NoContent();
         }
         [HttpPost]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)

@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Airbnb.WebAPI.Controllers.v1.Client
 {
-    //[SkipMyGlobalResourceFilter]
     public class UsersController : BaseController
     {
         private readonly ISender _mediatr;
@@ -21,6 +20,13 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             _mediatr = mediatr;
         }
 
+        /// <summary>
+        /// Gets all the users. You can filter it to find the data you want. 
+        /// Languages codes that are avaliable: [en,az,ru,tr,jpn]. 
+        /// Writing anything other than these will be automatically ignored.
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>List of users</returns>
         [HttpGet]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetAllUsers([FromQuery] UserParameters parameters)
@@ -28,18 +34,6 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             List<UserResponse> result = await _mediatr.Send(new UserGetAllQuery(parameters));
             return Ok(result);
         }
-        //[HttpGet("usersWithoutProfilePicture")]// bunu filterlemek lazimdi, bele sehvdi
-        //[ResponseCache(Duration = 30)]
-        //public async Task<IActionResult> GetUsersWithoutProfilePicture([FromQuery] UserParameters)
-        //{
-        //    var query = new UserGetAllQuery
-        //    {
-
-        //        Expression = x => x.ProfilPicture == null
-        //    };
-        //    List<UserResponse> result = await _mediatr.Send(query);
-        //    return Ok(result);
-        //}
         [HttpGet("{id}")]
         [ResponseCache(Duration = 30)]
         public async Task<IActionResult> GetUserById([FromRoute] Guid id)

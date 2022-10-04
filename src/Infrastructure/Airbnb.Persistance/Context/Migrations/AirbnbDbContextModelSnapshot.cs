@@ -29,8 +29,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("About")
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -43,11 +42,9 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DateOfBirth")
-                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -55,23 +52,16 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Firstname")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("GenderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("IsDisplayed")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Lastname")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -94,15 +84,13 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilPicture")
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -111,13 +99,11 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Work")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -132,46 +118,6 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "ccdb459a-a92c-4ec9-bae3-96421b4380e6",
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(4067),
-                            DateOfBirth = new DateTime(2000, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "seedEmail1@gmail.com",
-                            EmailConfirmed = true,
-                            Firstname = "Fexri",
-                            IsDisplayed = true,
-                            Lastname = "Efendiyev",
-                            LockoutEnabled = false,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(4079),
-                            PhoneNumber = "+994503661012",
-                            PhoneNumberConfirmed = true,
-                            TwoFactorEnabled = false,
-                            UserName = "fexri2000"
-                        },
-                        new
-                        {
-                            Id = new Guid("a3214b8b-4250-4112-b460-6dd4f4c3b469"),
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b36301df-3a39-45cd-95a3-38e824523303",
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(4147),
-                            DateOfBirth = new DateTime(1999, 1, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "seedEmail2@gmail.com",
-                            EmailConfirmed = true,
-                            Firstname = "Eli",
-                            IsDisplayed = true,
-                            Lastname = "Efendiyev",
-                            LockoutEnabled = false,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(4150),
-                            PhoneNumber = "+994503660012",
-                            PhoneNumberConfirmed = true,
-                            TwoFactorEnabled = false,
-                            UserName = "eli1999"
-                        });
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.AppUserLanguage", b =>
@@ -187,10 +133,7 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsDisplayed")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("LanguageId")
                         .HasColumnType("uniqueidentifier");
@@ -204,54 +147,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("LanguageId");
 
-                    b.ToTable("AppUserLanguages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("89099bd7-cd47-4cfd-bc30-f2a0097ae921"),
-                            AppUserId = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7286),
-                            IsDisplayed = true,
-                            LanguageId = new Guid("e5505dc9-69a2-4d83-a062-6581810a3d17"),
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7292)
-                        },
-                        new
-                        {
-                            Id = new Guid("80392dfc-c4c8-409f-a88a-545f55399e2c"),
-                            AppUserId = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7311),
-                            IsDisplayed = true,
-                            LanguageId = new Guid("26eba03e-5f06-49a1-9b83-bea1ec1e4d76"),
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7313)
-                        },
-                        new
-                        {
-                            Id = new Guid("f3d622ae-4c62-4514-a962-d713828b3fb5"),
-                            AppUserId = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7324),
-                            IsDisplayed = true,
-                            LanguageId = new Guid("9e83464f-5b90-47f7-bf7e-674413c26c5c"),
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7325)
-                        },
-                        new
-                        {
-                            Id = new Guid("71787a79-2e2b-47c3-b0b3-4576b38b78d0"),
-                            AppUserId = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7333),
-                            IsDisplayed = true,
-                            LanguageId = new Guid("066ecfc5-af54-41f4-82e4-5239d9c4109c"),
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7335)
-                        },
-                        new
-                        {
-                            Id = new Guid("20090680-1876-4bec-9d5d-ea8e17a43cb5"),
-                            AppUserId = new Guid("f7375a39-5d8b-4a87-be3e-f337b17351f8"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7360),
-                            IsDisplayed = true,
-                            LanguageId = new Guid("6b4d5ca6-d36a-4392-82fa-cdf349e9273c"),
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 766, DateTimeKind.Local).AddTicks(7361)
-                        });
+                    b.ToTable("AppUserLanguages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Gender", b =>
@@ -264,51 +160,17 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsDisplayed")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Genders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("cdb3b42e-1a68-4132-aed8-53027b085827"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1441),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1449),
-                            Name = "Male"
-                        },
-                        new
-                        {
-                            Id = new Guid("3b61c0e6-3dc1-4b93-bf94-f611c963981e"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1464),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1465),
-                            Name = "Female"
-                        },
-                        new
-                        {
-                            Id = new Guid("9c67d510-ce5c-431f-a0fc-0b484b7d677e"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1469),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 767, DateTimeKind.Local).AddTicks(1470),
-                            Name = "Other"
-                        });
+                    b.ToTable("Genders", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.GuestReview", b =>
@@ -355,7 +217,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("GuestReviews");
+                    b.ToTable("GuestReviews", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Host", b =>
@@ -386,7 +248,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Hosts");
+                    b.ToTable("Hosts", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.Language", b =>
@@ -399,67 +261,20 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsDisplayed")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Languages");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("e5505dc9-69a2-4d83-a062-6581810a3d17"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(519),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(523),
-                            Name = "Azerbaijani"
-                        },
-                        new
-                        {
-                            Id = new Guid("9e83464f-5b90-47f7-bf7e-674413c26c5c"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(532),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(534),
-                            Name = "English"
-                        },
-                        new
-                        {
-                            Id = new Guid("26eba03e-5f06-49a1-9b83-bea1ec1e4d76"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(542),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(544),
-                            Name = "Japanese"
-                        },
-                        new
-                        {
-                            Id = new Guid("6b4d5ca6-d36a-4392-82fa-cdf349e9273c"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(552),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(555),
-                            Name = "Russian"
-                        },
-                        new
-                        {
-                            Id = new Guid("066ecfc5-af54-41f4-82e4-5239d9c4109c"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(564),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 768, DateTimeKind.Local).AddTicks(583),
-                            Name = "Turkish"
-                        });
+                    b.ToTable("Languages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.AppUserRelated.RefreshToken", b =>
@@ -500,7 +315,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AirCover", b =>
@@ -557,7 +372,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AirCovers");
+                    b.ToTable("AirCovers", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Amenity", b =>
@@ -601,7 +416,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Amenities");
+                    b.ToTable("Amenities", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.AmenityType", b =>
@@ -624,7 +439,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AmenityTypes");
+                    b.ToTable("AmenityTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.CancellationPolicy", b =>
@@ -668,7 +483,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("CancellationPolicies");
+                    b.ToTable("CancellationPolicies", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PrivacyType", b =>
@@ -681,50 +496,17 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool?>("IsDisplayed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("PrivacyTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f1a4b55b-4c6e-49af-8752-0522d6d1ad2f"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(743),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(752),
-                            Name = "Full apartment"
-                        },
-                        new
-                        {
-                            Id = new Guid("808a7deb-a315-4e10-8452-559dcb535134"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(766),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(768),
-                            Name = "Shared house"
-                        },
-                        new
-                        {
-                            Id = new Guid("c181ea90-47be-4652-a657-66ba2894b667"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(776),
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 770, DateTimeKind.Local).AddTicks(777),
-                            Name = "Private room"
-                        });
+                    b.ToTable("PrivacyTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Property", b =>
@@ -841,7 +623,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Properties");
+                    b.ToTable("Properties", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyAmenity", b =>
@@ -873,7 +655,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyAmenities");
+                    b.ToTable("PropertyAmenities", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyGroup", b =>
@@ -886,49 +668,20 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Image")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDisplayed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("PropertyGroups");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9138421c-0e9f-4d23-85dd-f2fdf3a4854c"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 771, DateTimeKind.Local).AddTicks(9732),
-                            Image = "54874e8e-2699-4ff7-adab-875f528dee59.jpg",
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 771, DateTimeKind.Local).AddTicks(9744),
-                            Name = "Apartment"
-                        },
-                        new
-                        {
-                            Id = new Guid("ece14410-0615-4ba8-b192-fd4cc7a29148"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 771, DateTimeKind.Local).AddTicks(9785),
-                            Image = "520f85dc-c9a8-45c6-b2fc-179150d10285.jpg",
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 771, DateTimeKind.Local).AddTicks(9786),
-                            Name = "House"
-                        });
+                    b.ToTable("PropertyGroups", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyImage", b =>
@@ -966,7 +719,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("PropertyImages");
+                    b.ToTable("PropertyImages", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyReview", b =>
@@ -1030,7 +783,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("PropertyReviews");
+                    b.ToTable("PropertyReviews", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.PropertyType", b =>
@@ -1043,62 +796,28 @@ namespace Airbnb.Persistance.Context.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Icon")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsDisplayed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(true);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PropertyGroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Name")
-                        .IsUnique();
-
                     b.HasIndex("PropertyGroupId");
 
-                    b.ToTable("PropertyTypes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("f29126e0-157e-42f1-bb33-6a1177d8b23d"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 773, DateTimeKind.Local).AddTicks(883),
-                            Description = "A place within a multi-unit building or complex owned by the residents.",
-                            Icon = "<i class=\"fa-solid fa-apartment\"></i>",
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 773, DateTimeKind.Local).AddTicks(891),
-                            Name = "Condo",
-                            PropertyGroupId = new Guid("9138421c-0e9f-4d23-85dd-f2fdf3a4854c")
-                        },
-                        new
-                        {
-                            Id = new Guid("1b56bf3a-8ee5-468f-be33-3beb1e01713e"),
-                            CreatedAt = new DateTime(2022, 10, 3, 14, 32, 14, 773, DateTimeKind.Local).AddTicks(915),
-                            Description = "A furnished rental property that includes a kitchen and bathroom and may offer some guest services, like a reception desk.",
-                            Icon = "<i class='fa-solid fa-apartment'></i>",
-                            IsDisplayed = true,
-                            ModifiedAt = new DateTime(2022, 10, 3, 14, 32, 14, 773, DateTimeKind.Local).AddTicks(919),
-                            Name = "Vacation House",
-                            PropertyGroupId = new Guid("9138421c-0e9f-4d23-85dd-f2fdf3a4854c")
-                        });
+                    b.ToTable("PropertyTypes", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.Reservation", b =>
@@ -1166,7 +885,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("PropertyId");
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.City", b =>
@@ -1198,7 +917,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("City");
+                    b.ToTable("City", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Country", b =>
@@ -1233,7 +952,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("Country");
+                    b.ToTable("Country", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.Region", b =>
@@ -1263,7 +982,7 @@ namespace Airbnb.Persistance.Context.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Region");
+                    b.ToTable("Region", (string)null);
                 });
 
             modelBuilder.Entity("Airbnb.Domain.Entities.PropertyRelated.StateRelated.State", b =>
@@ -1305,7 +1024,7 @@ namespace Airbnb.Persistance.Context.Migrations
 
                     b.HasIndex("RegionId");
 
-                    b.ToTable("State");
+                    b.ToTable("State", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>

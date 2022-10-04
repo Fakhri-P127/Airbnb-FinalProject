@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Airbnb.WebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.GetAllProperties(Airbnb.Application.Contracts.v1.Client.Property.Parameters.PropertyParameters)">
+            <summary>
+            Gets all the Properties
+            </summary>
+            <param name="parameters"></param>
+            <response code="200">Gets all the properties</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.GetAllPendingPropertiesOfHost(System.Guid)">
+            <summary>
+            Gets all the pending properties.
+            </summary>
+            <param name="hostId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.GetPropertById(System.Guid)">
+            <summary>
+            Gets property by Id
+            </summary>
+            <param name="id">Id of the property</param>
+            <response code="200">Gets the property</response>
+            <response code="404">Property not found</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.CreateProperty(Airbnb.Application.Features.Client.Properties.Commands.Create.CreatePropertyCommand)">
+            <summary>
+            Creates Property
+            </summary>
+            <param name="command"></param>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.UpdateProperty(Airbnb.Application.Features.Client.Properties.Commands.Update.UpdatePropertyCommand)">
+            <summary>
+            Updates the property
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.UpdatePropertyPendingStatus(System.Guid)">
+            <summary>
+            This endpoint is for the background service to update the statuses daily
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.DeleteProperty(System.Guid)">
+            <summary>
+            Deletes the property
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.GetAllPropertyReviews(Airbnb.Application.Contracts.v1.Client.PropertyReviews.Parameters.PropertyReviewParameters)">
+            <summary>
+            Gets all the Property reviews
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.GetPropertyReviewById(System.Guid)">
+            <summary>
+            Gets a property review by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.GetPropertyReviewsWrittenByGuest(System.Guid,Airbnb.Application.Contracts.v1.Client.PropertyReviews.Parameters.PropertyReviewParameters)">
+            <summary>
+            Gets property reviews of a specific guest
+            </summary>
+            <param name="guestId"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.GetPropertyReviewsOfAHost(System.Guid,Airbnb.Application.Contracts.v1.Client.PropertyReviews.Parameters.PropertyReviewParameters)">
+            <summary>
+             Gets property reviews of a specific host
+            </summary>
+            <param name="hostId"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.WritePropertyReview(Airbnb.Application.Features.Client.PropertyReviews.Commands.Create.CreatePropertyReviewCommand)">
+            <summary>
+            Creates a property review for reservation
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.UpdatePropertyReview(Airbnb.Application.Features.Client.PropertyReviews.Commands.Update.UpdatePropertyReviewCommand)">
+            <summary>
+            Updates the property review
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.DeletePropertyReview(System.Guid)">
+            <summary>
+            Deletes the property review
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.RefreshTokensController.GetAllRefreshTokens(Airbnb.Application.Contracts.v1.Admin.RefreshTokens.Parameters.RefreshTokenParameters)">
+            <summary>
+            Gets all the refresh tokens
+            </summary>
+            <param name="parameters"></param>
+            <response code="200">Gets all the refresh tokens</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.RefreshTokensController.GetRefreshTokenById(System.Guid)">
+            <summary>
+            Gets the refresh token by given Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.RefreshTokensController.GenerateRefreshToken(Airbnb.Application.Features.Client.Authentication.Commands.GenerateRefreshToken.CreateRefreshTokenCommand)">
+            <summary>
+            Creates a new JWT Access token and a Refresh Token 
+            </summary>
+            <param name="command">Command for creating a new refresh token</param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.RefreshTokensController.RevokeRefreshToken(System.Guid)">
+            <summary>
+            Revokes a refresh token
+            </summary>
+            <param name="id">Id of the refresh token</param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.GetAllReservations(Airbnb.Application.Contracts.v1.Client.Reservation.Parameters.ReservationParameters)">
+            <summary>
+            Get all reservations. You can use the query parameters to filter the data you recieve.
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.GetReservationById(System.Guid)">
+            <summary>
+            Get reservation by given Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.MakeReservation(Airbnb.Application.Features.Client.Reservations.Commands.Create.CreateReservationCommand)">
+            <summary>
+            Make a reservation
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.UpdateReservation(Airbnb.Application.Features.Client.Reservations.Commands.Update.UpdateReservationCommand)">
+            <summary>
+            Update reservation's data. Empty values will be ignored
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.UpdateReservationsStatus">
+            <summary>
+            this endpoint is for background service to update the reservations status
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.ExtendReservationDuration(Airbnb.Application.Features.Client.Reservations.Commands.ExtendReservationDuration.ExtendReservationDurationCommand)">
+            <summary>
+            with this endpoint you can extend the duration of your trip
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.DeleteReservation(System.Guid)">
+            <summary>
+            delete reservation by Id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

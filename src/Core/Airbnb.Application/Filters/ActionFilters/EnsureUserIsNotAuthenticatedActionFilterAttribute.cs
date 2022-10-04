@@ -10,15 +10,15 @@ namespace Airbnb.Application.Filters.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
+
+            if (context.HttpContext.Request.Path.Value
+                .Contains(ApiRoutes.Authentications.GenerateRefreshToken,StringComparison.InvariantCultureIgnoreCase)) return;
+
             #region belede yazmaq olar
             // bu endpointde login olmaq lazimdi deye return edirik.
             //bool result = context.ActionArguments.TryGetValue("command", out object command);
             //if (result is true && command is CreateRefreshTokenCommand) return;
             #endregion
-
-            if (context.HttpContext.Request.Path.Value
-                .Contains(ApiRoutes.Authentications.GenerateRefreshToken,StringComparison.InvariantCultureIgnoreCase)) return;
-
 
             // eger login olubsa authenticated deki forgot password,reset password,register,login i ishelede bilmesin.
             // Tek icaze olan generateRefreshToken di 👍

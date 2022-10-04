@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace Airbnb.WebAPI
 {
@@ -15,13 +16,7 @@ namespace Airbnb.WebAPI
 
             services.AddSwaggerGen(opt =>
             {
-                opt.DescribeAllParametersInCamelCase();
-                //configure timespan for checkInTime and checkOutTime
-                opt.MapType<TimeSpan>(() => new OpenApiSchema
-                {
-                    Type = "string",
-                    Example = new OpenApiString(string.Empty)
-                });
+                opt.SwaggerDoc("v1",new OpenApiInfo { Title = "Airbnb API", Version = "v1" });
                 opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Scheme = "Bearer",
@@ -45,6 +40,17 @@ namespace Airbnb.WebAPI
                          },
                         new List<string>()
                      }
+                });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                opt.IncludeXmlComments(xmlPath);
+                opt.DescribeAllParametersInCamelCase();
+
+                //configure timespan for checkInTime and checkOutTime
+                opt.MapType<TimeSpan>(() => new OpenApiSchema
+                {
+                    Type = "string",
+                    Example = new OpenApiString(string.Empty)
                 });
             })
                 .AddApiVersioningAndApiExplorer()

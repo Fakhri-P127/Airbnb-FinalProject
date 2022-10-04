@@ -47,7 +47,7 @@ namespace Airbnb.StatusUpdaterService
         }
         public override Task StopAsync(CancellationToken cancellationToken)
         {
-            // httpClient ishlemesin deye dispose edirik,yoxsa achilmish client baglanmir.
+            // httpClient gunde 1 defe ishleyir ve bosh boshuna achiq qalmasin deye dispose edirik.
             _client.Dispose();
             _logger.LogInformation("Status updater service stopped");
             return base.StopAsync(cancellationToken);

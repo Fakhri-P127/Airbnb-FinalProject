@@ -48,7 +48,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 {
                     bool exists = await _unit.AirCoverRepository.GetByIdAsync((Guid)id, null) is not null;
                     return exists;
-                }).WithMessage("Aircover with this Id doesn't exist");
+                }).WithMessage("Aircover with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.CancellationPolicyId.HasValue, () =>
@@ -58,7 +58,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 {
                     bool exists = await _unit.CancellationPolicyRepository.GetByIdAsync((Guid)id, null) is not null;
                     return exists;
-                }).WithMessage("Cancellation policy with this Id doesn't exist");
+                }).WithMessage("Cancellation policy with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.PrivacyTypeId.HasValue, () =>
@@ -67,7 +67,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 {
                     bool exists = await _unit.PrivacyTypeRepository.GetByIdAsync((Guid)id, null) is not null;
                     return exists;
-                }).WithMessage("Privacy type with this Id doesn't exist");
+                }).WithMessage("Privacy type with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.PropertyGroupId.HasValue, () =>
@@ -76,7 +76,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 {
                     bool exists = await _unit.PropertyGroupRepository.GetByIdAsync((Guid)id, null) is not null;
                     return exists;
-                }).WithMessage("Property group with this Id doesn't exist");
+                }).WithMessage("Property group with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.PropertyTypeId.HasValue, () =>
@@ -85,7 +85,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                 {
                     bool exists = await _unit.PropertyTypeRepository.GetByIdAsync((Guid)id, null) is not null;
                     return exists;
-                }).WithMessage("Property type with this Id doesn't exist");
+                }).WithMessage("Property type with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.RegionId.HasValue, () =>
@@ -97,7 +97,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                     if (exists is null) return false;
                     //_region = exists;
                     return true;
-                }).WithMessage("Region with this Id doesn't exist");
+                }).WithMessage("Region with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.CountryId.HasValue, () =>
@@ -109,7 +109,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                     if (exists is null) return false;
                     //_country = exists;
                     return true;
-                }).WithMessage("Country with this Id doesn't exist");
+                }).WithMessage("Country with this Id doesn't exist").WithErrorCode("404");
             });
 
             When(x => x.CityId.HasValue, () =>
@@ -120,7 +120,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
                     if (exists is null) return false;
                     //_city = exists;
                     return true;
-                }).WithMessage("City with this Id doesn't exist");
+                }).WithMessage("City with this Id doesn't exist").WithErrorCode("404");
             });
 
             //if (_region is not null && _country is not null)

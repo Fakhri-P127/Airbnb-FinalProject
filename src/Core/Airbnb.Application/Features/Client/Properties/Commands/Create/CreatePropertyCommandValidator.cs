@@ -49,37 +49,37 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
             {
                 bool exists = await _unit.AirCoverRepository.GetByIdAsync(id, null) is not null;
                 return exists;
-            }).WithMessage("Aircover with this Id doesn't exist");
+            }).WithMessage("Aircover with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.HostId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
                 bool exists = await _unit.HostRepository.GetByIdAsync(id, null) is not null;
                 return exists;
-            }).WithMessage("Host with this Id doesn't exist");
+            }).WithMessage("Host with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.CancellationPolicyId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
                 bool exists = await _unit.CancellationPolicyRepository.GetByIdAsync(id, null) is not null;
                 return exists;
-            }).WithMessage("Cancellation policy with this Id doesn't exist");
+            }).WithMessage("Cancellation policy with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.PrivacyTypeId).NotEmpty().MustAsync(async (id, cancellationToken) =>
            {
                bool exists = await _unit.PrivacyTypeRepository.GetByIdAsync(id, null) is not null;
                return exists;
-           }).WithMessage("Privacy type with this Id doesn't exist");
+           }).WithMessage("Privacy type with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.PropertyGroupId).NotEmpty().MustAsync(async (id, cancellationToken) =>
            {
                bool exists = await _unit.PropertyGroupRepository.GetByIdAsync(id, null) is not null;
                return exists;
-           }).WithMessage("Property group with this Id doesn't exist");
+           }).WithMessage("Property group with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.PropertyTypeId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
                 bool exists = await _unit.PropertyTypeRepository.GetByIdAsync(id, null) is not null;
                 return exists;
-            }).WithMessage("Property type with this Id doesn't exist");
+            }).WithMessage("Property type with this Id doesn't exist").WithErrorCode("404");
 
 
             RuleFor(x => x.RegionId).NotEmpty().MustAsync(async (id, cancellationToken) =>
@@ -89,7 +89,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                 if (exists is null) return false;
                 _region = exists;
                 return true;
-            }).WithMessage("Region with this Id doesn't exist");
+            }).WithMessage("Region with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.CountryId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
@@ -98,7 +98,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                 if (exists is null) return false;
                 _country = exists;
                 return true;
-            }).WithMessage("Country with this Id doesn't exist");
+            }).WithMessage("Country with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.CityId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
@@ -106,7 +106,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                 if (exists is null) return false;
                 _city = exists;
                 return true;
-            }).WithMessage("City with this Id doesn't exist");
+            }).WithMessage("City with this Id doesn't exist").WithErrorCode("404");
 
 
             if (_region is not null && _country is not null)
