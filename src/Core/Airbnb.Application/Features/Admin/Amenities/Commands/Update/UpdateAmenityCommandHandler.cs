@@ -27,6 +27,7 @@ namespace Airbnb.Application.Features.Admin.AirCovers.Commands.Update
             Guid Id = BaseHelper.GetIdFromRoute(_accessor);
             Amenity amenity = await _unit.AmenityRepository.GetByIdAsync(Id, null,true);
             if (amenity is null) throw new AmenityNotFoundException();
+            
             _unit.AmenityRepository.Update(amenity);
             _mapper.Map(request, amenity);
             await _unit.SaveChangesAsync();

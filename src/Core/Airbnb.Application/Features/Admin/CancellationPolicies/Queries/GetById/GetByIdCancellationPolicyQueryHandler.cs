@@ -1,16 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.AmenityTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
 using Airbnb.Application.Exceptions.CancellationPolicies;
-using Airbnb.Application.Exceptions.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.CancellationPolicies.Queries.GetById
 {

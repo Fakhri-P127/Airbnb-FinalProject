@@ -5,6 +5,11 @@ using Microsoft.Extensions.Options;
 
 namespace Airbnb.Application.Common.CustomFrameworkImpl
 {
+    /// <summary>
+    /// Bunu yaratmagimda meqsed createdAt ve modifiedAt in avtomatik olaraq update olunmasi idi 
+    /// amma bashqa yol tapdim deye bunun metodlarini commente atdim. 
+    /// UserManager e extra metodlar yazmaq istesem burda yazib ishletmek olar amma, ona gore silmedim
+    /// </summary>
     public class CustomUserManager<TUser> : UserManager<TUser> where TUser : CustomIdentityUser
     {
         public CustomUserManager(IUserStore<TUser> store, IOptions<IdentityOptions> optionsAccessor, IPasswordHasher<TUser> passwordHasher, IEnumerable<IUserValidator<TUser>> userValidators, IEnumerable<IPasswordValidator<TUser>> passwordValidators, ILookupNormalizer keyNormalizer, IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<TUser>> logger) : base(store, optionsAccessor, passwordHasher, userValidators, passwordValidators, keyNormalizer, errors, services, logger)

@@ -22,13 +22,9 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Create
 
         public async Task<PrivacyTypeResponse> Handle(CreatePrivacyTypeCommand request, CancellationToken cancellationToken)
         {
-            var existed = await _unit.PrivacyTypeRepository.GetAllAsync(x => x.Name == request.Name, null);
-            if (existed.Any())
+            if (await _unit.PrivacyTypeRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
                 throw new DuplicatePrivacyTypeNameValidationException();
-            PrivacyType privacyType = new()
-            {
-                Name = request.Name
-            };
+            PrivacyType privacyType = new() { Name = request.Name };
             await _unit.PrivacyTypeRepository.AddAsync(privacyType);
             return await PrivacyTypeHelpers.ReturnResponse(privacyType, _unit, _mapper);
         }

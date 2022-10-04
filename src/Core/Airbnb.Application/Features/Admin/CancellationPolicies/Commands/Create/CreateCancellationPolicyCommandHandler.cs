@@ -1,15 +1,10 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.Amenities.Responses;
 using Airbnb.Application.Contracts.v1.Admin.CancellationPolicies.Responses;
+using Airbnb.Application.Exceptions.CancellationPolicies;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Create
 {
@@ -25,6 +20,8 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Create
         }
         public async Task<CancellationPolicyResponse> Handle(CreateCancellationPolicyCommand request, CancellationToken cancellationToken)
         {
+            if (await _unit.CancellationPolicyRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new CancellationPolicy_DuplicateNameException();
             CancellationPolicy cancellationPolicy = _mapper.Map<CancellationPolicy>(request);
             await _unit.CancellationPolicyRepository.AddAsync(cancellationPolicy);
             return await CancellationPolicyHelpers.ReturnResponse(cancellationPolicy,_unit,_mapper);

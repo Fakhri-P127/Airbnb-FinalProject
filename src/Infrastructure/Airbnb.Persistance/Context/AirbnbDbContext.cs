@@ -1,5 +1,6 @@
 ﻿using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.Base;
+using Airbnb.Domain.Entities.Common;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using Microsoft.AspNetCore.Identity;
@@ -42,15 +43,16 @@ namespace Airbnb.Persistance.Context
         public DbSet<Reservation> Reservations { get; set; }
 
         #endregion
+        public DbSet<Settings> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            ConfigureDeleteBehaviour(builder);
+            ConfigureCascadeBehaviour(builder);
             base.OnModelCreating(builder);
         }
 
-        private static void ConfigureDeleteBehaviour(ModelBuilder builder)
+        private static void ConfigureCascadeBehaviour(ModelBuilder builder)
         {
             #region hosts
             builder.Entity<Host>().HasMany(x => x.Properties).WithOne(x => x.Host)
@@ -61,8 +63,6 @@ namespace Airbnb.Persistance.Context
                 .OnDelete(DeleteBehavior.NoAction);
             builder.Entity<Reservation>().HasOne(x => x.Host).WithMany(x => x.Reservations)
                .HasForeignKey(x => x.HostId).OnDelete(DeleteBehavior.NoAction);
-            //builder.Entity<Reservation>().HasOne(x => x.AppUser).WithMany(x => x.ReservationsYouMade)
-            //    .HasForeignKey(x => x.AppUserId).OnDelete(DeleteBehavior.NoAction);
             #endregion
             #region property reviews
             builder.Entity<PropertyReview>().HasOne(x => x.Host).WithMany(x => x.ReviewsAboutYourProperty)

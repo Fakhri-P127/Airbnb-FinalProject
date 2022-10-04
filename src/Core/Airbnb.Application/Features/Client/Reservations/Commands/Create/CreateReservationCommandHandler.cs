@@ -32,11 +32,9 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
         }
         public async Task<PostReservationResponse> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
         {
-            //Property property = await _unit.PropertyRepository
-            //    .GetByIdAsync(request.PropertyId, null, false, "Host");
             Guid userId = _accessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
-            Property property = await CheckExceptionsThenReturnProperty(request,userId,cancellationToken);
-            // host un verdiyi checkInTime i menimsedirik.
+            Property property = await CheckExceptionsThenReturnProperty(request, userId, cancellationToken);
+            // property ye verilen checkInTime,checkOutTime i menimsedirik.
             request.CheckInDate = request.CheckInDate.Date + property.CheckInTime;
             request.CheckOutDate = request.CheckOutDate.Date + property.CheckOutTime;
             int reservedDays = CheckMaxGuestThenReturnInt(request, property);
@@ -49,11 +47,16 @@ namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
             ReservationHelpers.CalculatePrice(reservation, reservedDays);
 
             await _unit.ReservationRepository.AddAsync(reservation);
+            await SendPropertyReservedEmailToGuest(userId, reservation);
+            return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
+        }
+
+        private async Task SendPropertyReservedEmailToGuest(Guid userId, Reservation reservation)
+        {
             #region send email to the user about successfuly reserving the property
             AppUser user = await _userManager.FindByIdAsync(userId.ToString());
             await EmailSenderHelpers.SendPropertyReservedEmail(user, reservation, _emailSender);
             #endregion
-            return await ReservationHelpers.ReturnResponse(reservation, _unit, _mapper);
         }
 
         private static void ManuallySettingValuesToReservation(CreateReservationCommand request, 

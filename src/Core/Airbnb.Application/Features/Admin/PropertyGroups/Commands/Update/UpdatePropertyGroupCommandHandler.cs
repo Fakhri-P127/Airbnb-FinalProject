@@ -1,5 +1,6 @@
 ﻿using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Admin.PropertyGroups.Responses;
+using Airbnb.Application.Exceptions.PrivacyTypes;
 using Airbnb.Application.Exceptions.PropertyGroups;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
@@ -27,17 +28,26 @@ namespace Airbnb.Application.Features.Admin.PropertyGroups.Commands.Update
         }
         public async Task<PostPropertyGroupResponse> Handle(UpdatePropertyGroupCommand request, CancellationToken cancellationToken)
         {
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(Id, null,true);
-            if (propertyGroup is null) throw new PropertyGroupNotFoundException();
+            PropertyGroup propertyGroup = await CheckExceptionsThenReturnPropertyGroup(request);
             _unit.PropertyGroupRepository.Update(propertyGroup);
             _mapper.Map(request, propertyGroup);
             await ImageCheck(request, propertyGroup);
-           
+
             await _unit.SaveChangesAsync();
             return await PropertyGroupHelper.ReturnResponse(propertyGroup, _unit, _mapper);
 
         }
+
+        private async Task<PropertyGroup> CheckExceptionsThenReturnPropertyGroup(UpdatePropertyGroupCommand request)
+        {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            PropertyGroup propertyGroup = await _unit.PropertyGroupRepository.GetByIdAsync(Id, null, true);
+            if (propertyGroup is null) throw new PropertyGroupNotFoundException();
+            if (await _unit.PropertyGroupRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new DuplicatePropertyGroupNameValidationException();
+            return propertyGroup;
+        }
+
         private async Task ImageCheck(UpdatePropertyGroupCommand request, PropertyGroup propertyGroup)
         {
             if (request.Image is not null)

@@ -25,15 +25,24 @@ namespace Airbnb.Application.Features.Admin.CancellationPolicies.Commands.Update
 
         public async Task<CancellationPolicyResponse> Handle(UpdateCancellationPolicyCommand request, CancellationToken cancellationToken)
         {
-            // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository
-                .GetByIdAsync(Id, null,true);
-            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
+            CancellationPolicy cancellationPolicy = await CheckThenReturnCancellationPolicy(request);
+
             _unit.CancellationPolicyRepository.Update(cancellationPolicy);
             _mapper.Map(request, cancellationPolicy);
             await _unit.SaveChangesAsync();
             return await CancellationPolicyHelpers.ReturnResponse(cancellationPolicy, _unit, _mapper);
+        }
+
+        private async Task<CancellationPolicy> CheckThenReturnCancellationPolicy(UpdateCancellationPolicyCommand request)
+        {
+            // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            CancellationPolicy cancellationPolicy = await _unit.CancellationPolicyRepository
+                .GetByIdAsync(Id, null, true);
+            if (cancellationPolicy is null) throw new CancellationPolicyNotFoundException();
+            if (await _unit.CancellationPolicyRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new CancellationPolicy_DuplicateNameException();
+            return cancellationPolicy;
         }
     }
 }

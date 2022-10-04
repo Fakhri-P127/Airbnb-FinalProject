@@ -39,6 +39,9 @@ namespace Airbnb.Application.Features.Admin.Countries.Commands.Update
             if (country is null) throw new CountryNotFoundException();
             if (await _unit.RegionRepository.GetByIdAsync(request.RegionId.TryParseNullableGuidIdToGuid(), null) is null)
                 throw new RegionNotFoundException();
+            
+            if (await _unit.CountryRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new Country_DuplicateNameException(request.Name);
             return country;
         }
     }

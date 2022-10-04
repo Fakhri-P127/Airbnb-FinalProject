@@ -23,13 +23,21 @@ namespace Airbnb.Application.Features.Admin.PropertyTypes.Commands.Update
         }
         public async Task<PostPropertyTypeResponse> Handle(UpdatePropertyTypeCommand request, CancellationToken cancellationToken)
         {
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(Id, null,true);
-            if (propertyType is null) throw new PropertyTypeNotFoundException();
+            PropertyType propertyType = await CheckExceptionsThenReturnPropertyType(request);
             _unit.PropertyTypeRepository.Update(propertyType, false);
             _mapper.Map(request, propertyType);
             await _unit.SaveChangesAsync();
             return await PropertyTypeHelper.ReturnResponse(propertyType, _unit, _mapper);
+        }
+
+        private async Task<PropertyType> CheckExceptionsThenReturnPropertyType(UpdatePropertyTypeCommand request)
+        {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            PropertyType propertyType = await _unit.PropertyTypeRepository.GetByIdAsync(Id, null, true);
+            if (propertyType is null) throw new PropertyTypeNotFoundException();
+            if (await _unit.PropertyTypeRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new DuplicatePropertyTypeNameValidationException();
+            return propertyType;
         }
     }
 }

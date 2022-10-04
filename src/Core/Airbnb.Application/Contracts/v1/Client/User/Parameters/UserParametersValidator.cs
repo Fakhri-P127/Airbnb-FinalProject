@@ -22,7 +22,29 @@ namespace Airbnb.Application.Contracts.v1.Client.User.Parameters
             {
                 RuleFor(x => x.MaxDateOfBirth).GreaterThan(x => x.MinDateOfBirth);
             });
+
             RuleForEach(x => x.LanguageCodes).NotEmpty().Length(2, 5);
+
+            RuleFor(x=>x.MinCountForReviewsAboutYou).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            RuleFor(x=>x.MaxCountForReviewsAboutYou).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            When(x => x.MinCountForReviewsAboutYou.HasValue, () =>
+            {
+                RuleFor(x => x.MaxCountForReviewsAboutYou).GreaterThan(x => x.MinCountForReviewsAboutYou);
+            });
+
+            RuleFor(x => x.MinCountForReviewsByYou).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            RuleFor(x => x.MaxCountForReviewsByYou).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            When(x => x.MinCountForReviewsByYou.HasValue, () =>
+            {
+                RuleFor(x => x.MaxCountForReviewsByYou).GreaterThan(x => x.MinCountForReviewsByYou);
+            });
+
+            RuleFor(x => x.MinCountForReservationsYouMade).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            RuleFor(x => x.MaxCountForReservationsYouMade).GreaterThanOrEqualTo(0).LessThanOrEqualTo(10000);
+            When(x => x.MinCountForReservationsYouMade.HasValue, () =>
+            {
+                RuleFor(x => x.MaxCountForReservationsYouMade).GreaterThan(x => x.MinCountForReservationsYouMade);
+            });
         }
     }
 }

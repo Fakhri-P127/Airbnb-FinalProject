@@ -32,15 +32,24 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Update
 
         public async Task<AmenityTypeResponse> Handle(UpdateAmenityTypeCommand request, CancellationToken cancellationToken)
         {
-            // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            AmenityType amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(Id, null,true);
-            if (amenityType is null) throw new AmenityTypeNotFoundException();
-            _unit.AmenityTypeRepository.Update(amenityType,false);
+            AmenityType amenityType = await CheckThenReturnAmenityType(request);
+
+            _unit.AmenityTypeRepository.Update(amenityType, false);
             amenityType.Name = request.Name;
             await _unit.SaveChangesAsync();
             return await AmenityTypeHelpers.ReturnResponse(amenityType, _unit, _mapper);
 
+        }
+
+        private async Task<AmenityType> CheckThenReturnAmenityType(UpdateAmenityTypeCommand request)
+        {
+            // guid olmadan gondersem evvelceden tutacaq ve bu error hech vaxt ishlemeyecek amma yenede her ehtimala qarshi yazdim
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            AmenityType amenityType = await _unit.AmenityTypeRepository.GetByIdAsync(Id, null, true);
+            if (amenityType is null) throw new AmenityTypeNotFoundException();
+            if (await _unit.AmenityTypeRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new AmenityType_DuplicateNameException();
+            return amenityType;
         }
     }
 }

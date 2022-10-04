@@ -11,6 +11,5 @@ namespace Airbnb.Application.Features.Admin.AmenityTypes.Commands.Create
     public class CreateAmenityTypeCommand:IRequest<AmenityTypeResponse>
     {
         public string Name { get; set; }
-
     }
 }

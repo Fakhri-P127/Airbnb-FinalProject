@@ -29,13 +29,21 @@ namespace Airbnb.Application.Features.Admin.PrivacyTypes.Commands.Update
         }
         public async Task<PrivacyTypeResponse> Handle(UpdatePrivacyTypeCommand request, CancellationToken cancellationToken)
         {
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(Id, null,true);
-            if (privacyType is null) throw new PrivacyTypeNotFoundException();
+            PrivacyType privacyType = await CheckExceptionsThenReturnPrivacyType(request);
             _unit.PrivacyTypeRepository.Update(privacyType, false);
             privacyType.Name = request.Name;
             await _unit.SaveChangesAsync();
             return await PrivacyTypeHelpers.ReturnResponse(privacyType, _unit, _mapper);
+        }
+
+        private async Task<PrivacyType> CheckExceptionsThenReturnPrivacyType(UpdatePrivacyTypeCommand request)
+        {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            PrivacyType privacyType = await _unit.PrivacyTypeRepository.GetByIdAsync(Id, null, true);
+            if (privacyType is null) throw new PrivacyTypeNotFoundException();
+            if (await _unit.PrivacyTypeRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new DuplicatePrivacyTypeNameValidationException();
+            return privacyType;
         }
     }
 }

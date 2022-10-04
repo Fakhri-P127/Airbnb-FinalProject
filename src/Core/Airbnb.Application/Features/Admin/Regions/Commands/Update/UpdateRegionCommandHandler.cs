@@ -23,13 +23,21 @@ namespace Airbnb.Application.Features.Admin.Regions.Commands.Update
         }
         public async Task<RegionResponse> Handle(UpdateRegionCommand request, CancellationToken cancellationToken)
         {
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            Region region = await _unit.RegionRepository.GetByIdAsync(Id, null,true);
-            if (region is null) throw new RegionNotFoundException();
+            Region region = await CheckExceptionsThenReturnRegion(request);
             _unit.RegionRepository.Update(region, false);
             region.Name = request.Name;
             await _unit.SaveChangesAsync();
             return await RegionHelper.ReturnResponse(region, _unit, _mapper);
+        }
+
+        private async Task<Region> CheckExceptionsThenReturnRegion(UpdateRegionCommand request)
+        {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            Region region = await _unit.RegionRepository.GetByIdAsync(Id, null, true);
+            if (region is null) throw new RegionNotFoundException();
+            if (await _unit.RegionRepository.GetSingleAsync(x => x.Name == request.Name) is not null)
+                throw new Region_DuplicateNameException(request.Name);
+            return region;
         }
     }
 }

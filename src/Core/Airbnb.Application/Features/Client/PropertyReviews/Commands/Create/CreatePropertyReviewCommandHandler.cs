@@ -2,6 +2,7 @@
 using Airbnb.Application.Common.Interfaces;
 using Airbnb.Application.Contracts.v1.Client.PropertyReviews.Responses;
 using Airbnb.Application.Exceptions.AppUser;
+using Airbnb.Application.Exceptions.GuestReviews;
 using Airbnb.Application.Exceptions.PropertyReviews;
 using Airbnb.Application.Exceptions.Reservations;
 using Airbnb.Application.Helpers;
@@ -30,7 +31,7 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
         }
         public async Task<PropertyReviewResponse> Handle(CreatePropertyReviewCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await CheckNotFoundsThenReturnReservation(request,cancellationToken);
+            Reservation reservation = await CheckExceptionsThenReturnReservation(request,cancellationToken);
             PropertyReview propertyReview = _mapper.Map<PropertyReview>(request);
             propertyReview.HostId = reservation.HostId;
             propertyReview.AppUserId = _accessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
@@ -38,11 +39,13 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
             return await PropertyReviewHelper.ReturnResponse(propertyReview, _unit, _mapper);
         }
 
-        private async Task<Reservation> CheckNotFoundsThenReturnReservation(CreatePropertyReviewCommand request,CancellationToken cancellationToken=default)
+        private async Task<Reservation> CheckExceptionsThenReturnReservation(CreatePropertyReviewCommand request,CancellationToken cancellationToken=default)
         {
             Reservation reservation = await _unit.ReservationRepository
                 .GetByIdAsync(request.ReservationId, null,true);
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
+            if (reservation.PropertyReview is not null)
+                throw new PropertyReview_DuplicateValidationException(request.ReservationId);
             return reservation;
             //AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId,cancellationToken);
             //if (user is null) throw new UserIdNotFoundException(); 

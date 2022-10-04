@@ -25,8 +25,7 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
         }
         public async Task<GuestReviewResponse> Handle(CreateGuestReviewCommand request, CancellationToken cancellationToken)
         {
-            Reservation reservation = await CheckIfNotFoundThenReturnReservation(request,cancellationToken);
-            ExceptionChecks(request, reservation);
+            Reservation reservation = await CheckExceptionsThenReturnReservation(request,cancellationToken);
             GuestReview guestReview = _mapper.Map<GuestReview>(request);
             //guestReview.Reservation.AppUserId   mappingde bunu yoxla gor ozu include edir ya yo
             guestReview.AppUserId = reservation.AppUserId;
@@ -34,25 +33,26 @@ namespace Airbnb.Application.Features.Client.GuestReviews.Commands.Create
             return await GuestReviewHelper.ReturnResponse(guestReview, _unit, _mapper);
         }
 
-        private static void ExceptionChecks(CreateGuestReviewCommand request, Reservation reservation)
-        {
-            if (reservation.GuestReview is not null)
-                throw new GuestReviewDuplicateValidationException(request.ReservationId);
-            //if (request.AppUserId != reservation.AppUserId)
-            //    throw new GuestReview_UserIdNotMatchedException(request.AppUserId, reservation.AppUserId);
-        }
 
-        private async Task<Reservation> CheckIfNotFoundThenReturnReservation(CreateGuestReviewCommand request, CancellationToken cancellationToken=default)
+        private async Task<Reservation> CheckExceptionsThenReturnReservation(CreateGuestReviewCommand request, CancellationToken cancellationToken=default)
         {
             Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null);
             if (host is null) throw new HostNotFoundException(request.HostId);
             Reservation reservation = await _unit.ReservationRepository
                 .GetByIdAsync(request.ReservationId, null,false, "GuestReview");
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
-            
+            if (reservation.GuestReview is not null)
+                throw new GuestReviewDuplicateValidationException(request.ReservationId);
             //AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId, cancellationToken);
             //if (user is null) throw new UserIdNotFoundException();
             return reservation;
         }
+
+        //private static void ExceptionChecks(CreateGuestReviewCommand request, Reservation reservation)
+        //{
+
+        //    //if (request.AppUserId != reservation.AppUserId)
+        //    //    throw new GuestReview_UserIdNotMatchedException(request.AppUserId, reservation.AppUserId);
+        //}
     }
 }

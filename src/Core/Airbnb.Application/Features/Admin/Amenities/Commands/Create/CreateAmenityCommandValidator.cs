@@ -20,7 +20,17 @@ namespace Airbnb.Application.Features.Admin.Amenities.Commands.Create
         {
             
             _unit = unit;
-            RuleFor(x => x.AmenityTypeId)
+            RuleFor(x => x.Icon).NotEmpty().MaximumLength(300);
+            RuleFor(x => x.Description).NotEmpty().Length(5, 500);
+           
+            RuleFor(x => x.Name).NotEmpty().MustAsync(async (x, cancellationToken) =>
+            {
+                if (await _unit.AmenityRepository.GetSingleAsync(x => x.Name == x.Name) is not null)
+                    return false;
+                return true;
+            }).WithMessage("Amenity with this name already exists").WithErrorCode("409");
+
+            RuleFor(x => x.AmenityTypeId).NotEmpty()
                 .MustAsync(async (x, cancellationToken) =>
                 {
                     AmenityType existed = await _unit.AmenityTypeRepository.GetByIdAsync(x,null);
