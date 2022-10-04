@@ -91,7 +91,7 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             Console.WriteLine();
         }
         [Fact]
-        public async Task Handle_WhenHostWithThisIdDoesNotExist_ThrowsHostNotFoundException()
+        public async Task CheckExceptionsThenReturnReservation_WhenHostWithThisIdDoesNotExist_ThrowsHostNotFoundException()
         {
             // 1 hostum var ve onun id sine beraber deyil deye demeli bazada bele bir host yoxdu. exception throw edirik ona gore
             Guid hostId = Guid.NewGuid();
@@ -103,7 +103,7 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             await act.Should().ThrowAsync<HostNotFoundException>();
         }
         [Fact]
-        public async Task Handle_WhenReservationWithThisIdDoesNotExist_ThrowReservationNotFoundException()
+        public async Task CheckExceptionsThenReturnReservation_WhenReservationWithThisIdDoesNotExist_ThrowReservationNotFoundException()
         {
             Guid reservationId = Guid.NewGuid();
 
@@ -120,7 +120,7 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             await act.Should().ThrowAsync<ReservationNotFoundException>();
         }
         [Fact]
-        public async Task Handle_WhenReservationAlreadyHasGuestReview_ThrowGuestReviewDuplicateException()
+        public async Task CheckExceptionsThenReturnReservation_WhenReservationAlreadyHasGuestReview_ThrowGuestReviewDuplicateException()
         {
             GuestReview guestReview = new()
             {

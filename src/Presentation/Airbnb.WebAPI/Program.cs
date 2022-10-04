@@ -2,8 +2,16 @@ using Airbnb.Application;
 using Airbnb.Application.Filters.ActionFilters;
 using Airbnb.Application.Filters.ResourceFilters;
 using Airbnb.Persistance;
-using Airbnb.Persistance.Context.Configurations;
 using Airbnb.WebAPI;
+using Serilog;
+using Serilog.Events;
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.File(@"C:\Users\efend\Desktop\Loggings.txt")
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,11 +25,10 @@ builder.Services.AddControllers(config =>
 //.AddJsonOptions(opt => opt.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationDI();
 builder.Services.AddInfrastructureDI(builder.Configuration);
-builder.Services.AddWebApiDI();
+builder.Services.AddWebApiDI(builder.Host);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseExceptionHandler("/error");
 //await app.SeedDatabase();
 app.UseHttpsRedirection();

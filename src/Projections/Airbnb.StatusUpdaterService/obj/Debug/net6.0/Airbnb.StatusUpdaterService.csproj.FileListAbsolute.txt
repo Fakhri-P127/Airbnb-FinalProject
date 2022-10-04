@@ -59,3 +59,13 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterS
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\obj\Debug\net6.0\Airbnb.StatusUpdaterService.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\obj\Debug\net6.0\Airbnb.StatusUpdaterService.genruntimeconfig.cache
 C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\obj\Debug\net6.0\ref\Airbnb.StatusUpdaterService.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.AspNetCore.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Formatting.Compact.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Projections\Airbnb.StatusUpdaterService\bin\Debug\net6.0\Serilog.Sinks.File.dll

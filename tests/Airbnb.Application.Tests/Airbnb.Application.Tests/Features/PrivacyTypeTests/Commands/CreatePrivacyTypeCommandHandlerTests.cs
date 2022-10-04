@@ -19,15 +19,9 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
         private readonly CreatePrivacyTypeCommandHandler _handler;
         private const string _existingId1 = "16bf214b-e396-40ca-b3e2-e6925398cf43";
         private const string _existingId2 = "e27b5ebe-aa34-4325-bb9e-2be0f8db8df7";
-        private const string _nonExistingId = "f33a0fb2-418f-4538-bfcc-bb1eef571a51";
+       
         public CreatePrivacyTypeCommandHandlerTests()
         {
-            //_privacyTypes = new Faker<PrivacyType>()
-            //   .RuleFor(x => x.Id, d=>d.Random.Guid())
-            //   .RuleFor(x => x.Name, x => x.Lorem.Letter(5))
-            //   .RuleFor(x => x.CreatedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
-            //   .RuleFor(x => x.ModifiedAt, x => x.Date.Between(DateTime.Now.AddYears(-1), DateTime.Now))
-            //   .RuleFor(x => x.IsDisplayed, true).Generate(5);
             _privacyTypes = new List<PrivacyType>()
             {
                 new PrivacyType()
@@ -80,9 +74,8 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
         {
             // arrange
             CreatePrivacyTypeCommand command = new() { Name = _privacyTypes.First().Name };
-            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetAllAsync(x => x.Name == command.Name,
-                 It.IsAny<PrivacyTypeParameters>(), false))
-                .ReturnsAsync(_privacyTypes.Where(x => x.Name == command.Name).ToList());
+            _mockUnit.Setup(x => x.PrivacyTypeRepository.GetSingleAsync(x => x.Name == command.Name, false))
+                .ReturnsAsync(_privacyTypes.FirstOrDefault(x => x.Name == command.Name));
 
             Func<Task> act = async()=> await _handler.Handle(command, It.IsAny<CancellationToken>());
             await act.Should().ThrowAsync<DuplicatePrivacyTypeNameValidationException>();

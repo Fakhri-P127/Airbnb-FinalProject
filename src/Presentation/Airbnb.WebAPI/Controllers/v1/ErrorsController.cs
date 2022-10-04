@@ -12,6 +12,15 @@ using System.Net;
 
 namespace Airbnb.WebAPI.Controllers.v1
 {
+    /// <summary>
+    /// Normal global exception handler middleware mentiqindedi. UseExceptionHandler middleware i exception throw 
+    /// olunan kimi bu endpoint e atir ve bizde exception i tutaraq uygun response veririk. Normal 
+    /// custom global handling middleware de yazmaq olardi amma men bunu daha chox beyendim. Hem de bu proyektden 
+    /// evvel bir defe custom global error handlingi ozum uchun ishletmishdim.
+    /// 
+    /// Bu tip global error handling yazmagin bir plusu da odur ki, return elediyimiz Problem() status code a baxaraq 
+    /// ona uygun instance da verir.
+    /// </summary>
     [SkipMyGlobalFilter]
     public class ErrorsController : ControllerBase
     {

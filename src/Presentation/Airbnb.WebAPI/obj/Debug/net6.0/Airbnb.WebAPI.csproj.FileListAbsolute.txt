@@ -91,3 +91,13 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\De
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\ref\Airbnb.WebAPI.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Airbnb.WebAPI.xml
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\obj\Debug\net6.0\Airbnb.WebAPI.xml
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.File.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.AspNetCore.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Extensions.Hosting.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Extensions.Logging.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Formatting.Compact.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.Console.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.Debug.dll

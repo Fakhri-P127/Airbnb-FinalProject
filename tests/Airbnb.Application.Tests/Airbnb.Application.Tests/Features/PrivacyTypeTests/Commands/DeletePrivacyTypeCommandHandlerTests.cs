@@ -72,9 +72,9 @@ namespace Airbnb.Application.Tests.Features.PrivacyTypeTests.Commands
             _mockUnit.Setup(x => x.PrivacyTypeRepository.GetByIdAsync(Id, null, true))
                 .ReturnsAsync(_privacyTypes.FirstOrDefault(x => x.Id == Id));
 
-
             //act
-            Func<Task> act = async()=> await _handler.Handle(new DeletePrivacyTypeCommand(It.IsAny<Guid>()), It.IsAny<CancellationToken>());
+            Func<Task> act = async()=> await _handler.Handle(new DeletePrivacyTypeCommand(It.IsAny<Guid>()),
+                It.IsAny<CancellationToken>());
             await act.Should().ThrowAsync<PrivacyTypeNotFoundException>();
             //assert
            

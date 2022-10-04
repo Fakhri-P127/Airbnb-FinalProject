@@ -4,14 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 using System.Reflection;
 
 namespace Airbnb.WebAPI
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddWebApiDI(this IServiceCollection services)
+        public static IServiceCollection AddWebApiDI(this IServiceCollection services, ConfigureHostBuilder host)
         {
+            //services.AddEndpointsApiExplorer();// bu minimal API uchundu, silmek olar
             services.AddRouting(x => x.LowercaseUrls = true);
 
             services.AddSwaggerGen(opt =>
@@ -56,6 +59,13 @@ namespace Airbnb.WebAPI
                 .AddApiVersioningAndApiExplorer()
                 .AddHttpClient()
             .AddSingleton<IAuthorizationMiddlewareResultHandler, MyAuthorizationMiddlewareResultHandler>();
+
+            host.UseSerilog((hostingContext, loggerConfiguration) =>
+            {
+                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).WriteTo
+                .Console(theme: AnsiConsoleTheme.Code);
+            }
+);
             return services;
         }
         public static IServiceCollection AddApiVersioningAndApiExplorer(this IServiceCollection services)

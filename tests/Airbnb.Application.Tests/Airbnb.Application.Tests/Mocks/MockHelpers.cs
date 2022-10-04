@@ -14,25 +14,26 @@ namespace Airbnb.Application.Tests.Mocks
     {
         public static Mock<CustomUserManager<TUser>> MockUserManager<TUser>(List<TUser> users) where TUser : CustomIdentityUser
         {
-            var store = new Mock<IUserStore<TUser>>();
-            var mgr = new Mock<CustomUserManager<TUser>>(store.Object, null, null, null, null, null, null, null, null);
-            mgr.Object.UserValidators.Add(new UserValidator<TUser>());
-            mgr.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
+            Mock<IUserStore<TUser>> mockUserStore = new ();
+            Mock<CustomUserManager<TUser>> mockUserManager = new(mockUserStore.Object, null, null, null, null, null, 
+                null, null, null);
+            mockUserManager.Object.UserValidators.Add(new UserValidator<TUser>());
+            mockUserManager.Object.PasswordValidators.Add(new PasswordValidator<TUser>());
 
-            mgr.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>()))
+            mockUserManager.Setup(x => x.CreateAsync(It.IsAny<TUser>(), It.IsAny<string>()))
                 .ReturnsAsync(IdentityResult.Success).Callback<TUser, string>((x, y) => users.Add(x));
-            mgr.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
-            mgr.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success)
+            mockUserManager.Setup(x => x.UpdateAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success);
+            mockUserManager.Setup(x => x.DeleteAsync(It.IsAny<TUser>())).ReturnsAsync(IdentityResult.Success)
                 .Callback<TUser>(user=>users.Remove(user));
-            mgr.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
+            mockUserManager.Setup(x => x.FindByIdAsync(It.IsAny<string>()))
                .ReturnsAsync(users.Last());//testleri sonuncu ile edirem deye ele bunu cagira bilerem
 
-            return mgr;
+            return mockUserManager;
         }
         public static Mock<IUnitOfWork> MockedUnitOfWork(List<Reservation> _reservations,
             CreateReservationCommand command,Property _property,IMapper _mapper) 
         {
-            var mgr = new Mock<IUnitOfWork>();
+            Mock<IUnitOfWork> mockUnit = new();
 
             #region predicates
             Func<Reservation, bool> checkInPredicate = x => x.CheckInDate <= command.CheckInDate
@@ -43,33 +44,33 @@ namespace Airbnb.Application.Tests.Mocks
             x.CheckInDate >= command.CheckInDate && x.CheckInDate <= command.CheckOutDate;
             #endregion
             #region mock for propertyrepo
-            mgr.Setup(x => x.PropertyRepository.GetByIdAsync(command.PropertyId,
+            mockUnit.Setup(x => x.PropertyRepository.GetByIdAsync(command.PropertyId,
                 It.IsAny<Expression<Func<Property, bool>>>(), true, "Host", "PropertyImages"))
                 .ReturnsAsync(_property);
             #endregion
             #region unit setups for reservations
             //checkin
-            mgr.Setup(x => x.ReservationRepository
+            mockUnit.Setup(x => x.ReservationRepository
                 .GetSingleAsync(x => x.CheckInDate <= command.CheckInDate
                 && x.CheckOutDate >= command.CheckInDate, false))
                 .ReturnsAsync(_reservations.FirstOrDefault(checkInPredicate));
             //checkout
-            mgr.Setup(x => x.ReservationRepository
+            mockUnit.Setup(x => x.ReservationRepository
               .GetSingleAsync(x => x.CheckInDate <= command.CheckOutDate
                             && x.CheckOutDate >= command.CheckOutDate, false))
               .ReturnsAsync(_reservations.FirstOrDefault(checkOutPredicate));
             //contains occupied date
-            mgr.Setup(x => x.ReservationRepository
+            mockUnit.Setup(x => x.ReservationRepository
             .GetAllAsync(x => x.CheckInDate >= command.CheckInDate && x.CheckInDate <= command.CheckOutDate,
             null, false))
                 .ReturnsAsync(_reservations.Where(containsOccupiedDatePredicate).ToList());
 
             Reservation reservation = _mapper.Map<Reservation>(command);
             reservation.Property = _property;
-            mgr.Setup(x => x.ReservationRepository.AddAsync(It.IsAny<Reservation>()))
+            mockUnit.Setup(x => x.ReservationRepository.AddAsync(It.IsAny<Reservation>()))
                 .Callback<Reservation>(reserv => _reservations.Add(reserv));
 
-            mgr.Setup(x => x.ReservationRepository.GetByIdAsync(reservation.Id,
+            mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(reservation.Id,
                 It.IsAny<Expression<Func<Reservation, bool>>>(), false))
                 .ReturnsAsync(reservation);
             #endregion
@@ -80,7 +81,7 @@ namespace Airbnb.Application.Tests.Mocks
             //true, "Host", "PropertyImages"), Times.Once());
             //mgr.Verify(x => x.ReservationRepository, Times.Exactly(5));
             //#endregion
-            return mgr;
+            return mockUnit;
         }
         //public static Mock<IUnitOfWork> PrivacyTypeRepository()
         //{

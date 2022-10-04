@@ -1,14 +1,5 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Exceptions.Reservations;
-using Airbnb.Domain.Entities.AppUserRelated;
-using Airbnb.Domain.Entities.PropertyRelated;
 using FluentValidation;
-using Org.BouncyCastle.Math.EC.Rfc7748;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Client.Reservations.Commands.Create
 {
