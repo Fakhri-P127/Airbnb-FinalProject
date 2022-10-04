@@ -22,9 +22,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.WebAPI", "src\Presentation\Airbnb.WebAPI\Airbnb.WebAPI.csproj", "{34F30124-E4F9-4499-A18D-0D14B8DDD130}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections", "{094229AB-8CEE-44D2-9F14-E299D865FB05}"
-	ProjectSection(SolutionItems) = preProject
-		src\Presentation\Airbnb.WebAPI\Program.cs = src\Presentation\Airbnb.WebAPI\Program.cs
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Airbnb.StatusUpdaterService", "src\Projections\Airbnb.StatusUpdaterService\Airbnb.StatusUpdaterService.csproj", "{9E98A650-32CC-448D-A4B0-426E61D770AA}"
 EndProject

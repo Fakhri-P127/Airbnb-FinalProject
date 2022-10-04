@@ -1,15 +1,9 @@
 ﻿using Airbnb.Application.Common.Interfaces;
-using Airbnb.Application.Contracts.v1.Admin.PrivacyTypes.Responses;
 using Airbnb.Application.Contracts.v1.Admin.PropertyTypes.Responses;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.PropertyRelated;
 using AutoMapper;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Airbnb.Application.Features.Admin.PropertyTypes.Queries.GetAll
 {

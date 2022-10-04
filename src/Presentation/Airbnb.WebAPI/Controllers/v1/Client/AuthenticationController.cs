@@ -3,6 +3,7 @@ using Airbnb.Application.Features.Client.Authentication.Commands.ForgotPassword;
 using Airbnb.Application.Features.Client.Authentication.Commands.GenerateRefreshToken;
 using Airbnb.Application.Features.Client.Authentication.Commands.Register;
 using Airbnb.Application.Features.Client.Authentication.Commands.ResetPassword;
+using Airbnb.Application.Features.Client.Authentication.Commands.RevokeRefreshToken;
 using Airbnb.Application.Features.Client.Authentication.Commands.SendConfirmationEmail;
 using Airbnb.Application.Features.Client.Authentication.Queries.ConfirmEmail;
 using Airbnb.Application.Features.Client.Authentication.Queries.Login;
@@ -51,6 +52,12 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         {
             AuthSuccessResponse result = await _mediatr.Send(command);
             return Ok(result);
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> RevokeRefreshToken([FromRoute] Guid id)
+        {
+            await _mediatr.Send(new RevokeRefreshTokenCommand(id));
+            return NoContent();
         }
         [HttpPost]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)

@@ -1,6 +1,4 @@
 ﻿using Airbnb.Domain.Entities.Base;
-using Microsoft.AspNetCore.Identity;
-using System.ComponentModel.DataAnnotations;
 
 namespace Airbnb.Domain.Entities.AppUserRelated
 {
