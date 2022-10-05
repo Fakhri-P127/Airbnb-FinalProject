@@ -2,7 +2,7 @@
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.SendConfirmationEmail
 {
-    public class SendConfirmationEmailCommand:IRequest
+    public class SendConfirmationEmailQuery:IRequest
     {
         public string Email { get; set; }
     

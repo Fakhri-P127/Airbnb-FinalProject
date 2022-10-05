@@ -6,7 +6,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Commands.Create
     public class CreateHostCommand:IRequest<PostHostResponse>
     {
         // validasiya ya ehtiyac yoxdu chunki action filterde edirem AppUserId lerin validasiyasini
-        public Guid AppUserId { get; set; }
+        //public Guid AppUserId { get; set; }
 
     }
 }

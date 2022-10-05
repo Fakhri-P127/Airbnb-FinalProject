@@ -44,6 +44,7 @@ namespace Airbnb.WebAPI
                         new List<string>()
                      }
                 });
+
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 opt.IncludeXmlComments(xmlPath);
@@ -60,12 +61,11 @@ namespace Airbnb.WebAPI
                 .AddHttpClient()
             .AddSingleton<IAuthorizationMiddlewareResultHandler, MyAuthorizationMiddlewareResultHandler>();
 
-            host.UseSerilog((hostingContext, loggerConfiguration) =>
-            {
-                loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).WriteTo
-                .Console(theme: AnsiConsoleTheme.Code);
-            }
-);
+            //host.UseSerilog((hostingContext, loggerConfiguration) =>
+            //{
+            //    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration).WriteTo
+            //    .Console(theme: SystemConsoleTheme.Colored);
+            //});
             return services;
         }
         public static IServiceCollection AddApiVersioningAndApiExplorer(this IServiceCollection services)
@@ -81,5 +81,22 @@ namespace Airbnb.WebAPI
             return services;
         }
 
+        public static IApplicationBuilder CustomRun(this WebApplication app)
+        {
+            try
+            {
+                Log.Information("Application Starting.");
+                app.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "The Application failed to start.");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
+            return app;
+        }
     }
 }

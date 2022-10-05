@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Airbnb.Application.Features.Client.Authentication.Commands.SendConfirmationEmail
 {
-    public class SendConfirmationEmailCommandHandler : IRequestHandler<SendConfirmationEmailCommand>
+    public class SendConfirmationEmailQueryHandler : IRequestHandler<SendConfirmationEmailQuery>
     {
         private readonly CustomUserManager<AppUser> _userManager;
         private readonly LinkGenerator _generator;
         private readonly IHttpContextAccessor _accessor;
         private readonly IEmailSender _emailSender;
 
-        public SendConfirmationEmailCommandHandler(CustomUserManager<AppUser> userManager
+        public SendConfirmationEmailQueryHandler(CustomUserManager<AppUser> userManager
             , LinkGenerator generator, IHttpContextAccessor accessor, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -24,7 +24,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.SendConfirm
             _accessor = accessor;
             _emailSender = emailSender;
         }
-        public async Task<Unit> Handle(SendConfirmationEmailCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(SendConfirmationEmailQuery request, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException();

@@ -25,7 +25,7 @@ namespace Airbnb.Application.Helpers
 
         public static string[] AllGuestReviewIncludes()
         {
-            string[] includes = new[] { "Host", "Reservation", "AppUser" };
+            string[] includes = new[] { "Host","Host.AppUser", "Reservation", "AppUser" };
             return includes;
         }
     }

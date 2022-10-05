@@ -9,7 +9,7 @@ namespace Airbnb.Application.Helpers
     {
         #region extension methods
         public static string GetUserIdFromClaim(this ClaimsPrincipal User) 
-            => User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
+            => User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
         
         public static async Task<AppUser> GetUserByIdAsync(this IQueryable<AppUser> users,Guid id,
             CancellationToken cancellationToken=default, params string[] includes)

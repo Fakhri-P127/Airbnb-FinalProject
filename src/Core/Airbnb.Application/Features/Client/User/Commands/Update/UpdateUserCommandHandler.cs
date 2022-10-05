@@ -54,7 +54,7 @@ namespace Airbnb.Application.Features.Client.User.Commands.Update
             if (request.ProfilPicture is not null)
             {
                 if (!request.ProfilPicture.IsImageOkay(2))
-                    throw new UserValidationException { ErrorMessage = "Image size too big" };
+                    throw new UserProfilPictureException();
                 if (!string.IsNullOrWhiteSpace(user.ProfilPicture))
                     FileHelpers.FileDelete(_env.WebRootPath, "assets/images/UserProfilePictures", user.ProfilPicture);
                 user.ProfilPicture = await request.ProfilPicture

@@ -2,9 +2,9 @@
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.ConfirmEmail
 {
-    public class ConfirmEmailQueryValidator:AbstractValidator<ConfirmEmailQuery>
+    public class ConfirmEmailCommandValidator:AbstractValidator<ConfirmEmailCommand>
     {
-        public ConfirmEmailQueryValidator()
+        public ConfirmEmailCommandValidator()
         {
             RuleFor(x => x.Email).EmailAddress().Length(8, 30).NotEmpty();
             RuleFor(x => x.Token).NotEmpty();

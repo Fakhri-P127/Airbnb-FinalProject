@@ -22,7 +22,7 @@ namespace Airbnb.Application.Features.Client.Hosts.Queries.GetById
         {
             Host host = await _unit.HostRepository.GetByIdAsync(request.Id,request.Expression,false,
              HostHelper.AllHostIncludes());
-            if (host is null) throw new HostNotFoundException(request.Id);
+            if (host is null) throw new HostNotFoundException();
             GetHostResponse response = _mapper.Map<GetHostResponse>(host);
             //if (response is null) throw new Exception("Internal server error");
             return response;

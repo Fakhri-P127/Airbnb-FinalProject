@@ -5,6 +5,10 @@ using MediatR;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.UpdatePendingStatus
 {
+    /// <summary>
+    /// User register olanda hem phone number hemde email verifikasiya olunmalidi deye artiq bunun bir menasi qalmir.
+    /// Mentiqini deyishib yeniden istifade etmek olar amma
+    /// </summary>
     public class UpdatePropertyPendingStatusCommandHandler : IRequestHandler<UpdatePropertyPendingStatusCommand>
     {
         private readonly IUnitOfWork _unit;

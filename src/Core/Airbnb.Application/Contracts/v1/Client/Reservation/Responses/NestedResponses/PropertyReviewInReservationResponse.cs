@@ -1,11 +1,4 @@
-﻿using Airbnb.Domain.Entities.AppUserRelated;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses.NestedResponses
+﻿namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses.NestedResponses
 {
     public class PropertyReviewInReservationResponse
     {
@@ -17,7 +10,7 @@ namespace Airbnb.Application.Contracts.v1.Client.Reservation.Responses.NestedRes
         public float AccuracyScore { get; set; }
         public float LocationScore { get; set; }
         public float ValueScore { get; set; }
-        public Guid AppUserId { get; set; }
+        //public Guid AppUserId { get; set; }
       
     }
 }

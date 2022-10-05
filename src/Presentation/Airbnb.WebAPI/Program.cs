@@ -5,15 +5,16 @@ using Airbnb.Persistance;
 using Airbnb.WebAPI;
 using Serilog;
 using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.File(@"C:\Users\efend\Desktop\Loggings.txt")
-    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+Log.Logger = (Serilog.ILogger)new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+    //.MinimumLevel.Debug()
+    //.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    //.Enrich.FromLogContext()
+    //.WriteTo.File(@"C:\Users\efend\Desktop\Loggings2.txt")
 
 // Add services to the container.
 
@@ -28,7 +29,7 @@ builder.Services.AddControllers(config =>
 builder.Services.AddApplicationDI();
 builder.Services.AddInfrastructureDI(builder.Configuration);
 builder.Services.AddWebApiDI(builder.Host);
-
+builder.Host.UseSerilog();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,4 +47,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+app.CustomRun();

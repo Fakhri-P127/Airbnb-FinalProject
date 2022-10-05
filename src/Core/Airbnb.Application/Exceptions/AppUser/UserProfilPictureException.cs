@@ -11,6 +11,6 @@ namespace Airbnb.Application.Exceptions.AppUser
     {
         public HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
 
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage => "Image size too big";
     }
 }

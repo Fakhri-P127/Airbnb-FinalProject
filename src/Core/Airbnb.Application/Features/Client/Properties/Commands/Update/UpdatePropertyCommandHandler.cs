@@ -4,12 +4,14 @@ using Airbnb.Application.Exceptions.Cities;
 using Airbnb.Application.Exceptions.Countries;
 using Airbnb.Application.Exceptions.Properties;
 using Airbnb.Application.Helpers;
+using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
 using Airbnb.Domain.Entities.PropertyRelated.StateRelated;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace Airbnb.Application.Features.Client.Properties.Commands.Update
 {
@@ -30,10 +32,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
         }
         public async Task<CreatePropertyResponse> Handle(UpdatePropertyCommand request, CancellationToken cancellationToken)
         {
-            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
-            Property property = await _unit.PropertyRepository
-                .GetByIdAsync(Id, null,true, PropertyHelper.AllPropertyIncludes());
-            if (property is null) throw new PropertyNotFoundException();
+            Property property = await CheckExceptionsThenReturnProperty();
             _unit.PropertyRepository.Update(property);
             _mapper.Map(request, property);
             await SetStateForProperty(request, property);
@@ -48,6 +47,20 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             return await PropertyHelper.ReturnResponse(property, _unit, _mapper);
 
         }
+
+        private async Task<Property> CheckExceptionsThenReturnProperty()
+        {
+            Guid Id = BaseHelper.GetIdFromRoute(_accessor);
+            Property property = await _unit.PropertyRepository
+                .GetByIdAsync(Id, null, true, PropertyHelper.AllPropertyIncludes());
+            if (property is null) throw new PropertyNotFoundException();
+            Guid userId = _accessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
+            Host host = await _unit.HostRepository.GetSingleAsync(x => x.AppUserId == userId, true, "AppUser");
+            if (host.Id != property.HostId)
+                throw new Property_AuthenticatedHostIdDifferentFromPropertyHostIdException();
+            return property;
+        }
+
         private async Task SetStateForProperty(UpdatePropertyCommand request, Property property)
         {
             // eger hamisi nulldisa neyise deyishmeye ehtiyac yoxdu
@@ -89,7 +102,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Update
             Region region = await _unit.RegionRepository.GetByIdAsync((Guid)request.RegionId, null);
             Country country = await _unit.CountryRepository.GetByIdAsync((Guid)request.CountryId, null);
             City city = await _unit.CityRepository.GetByIdAsync((Guid)request.CityId, null);
-            if (country.RegionId != request.RegionId) 
+            if (country.RegionId != request.RegionId)
                 throw new CountryDoesntBelongToSpecificiedRegionException(country.Name,region.Name);
             if(city.CountryId != country.Id)
                 throw new CityDoesntBelongToSpecificiedCountryException(city.Name, country.Name);

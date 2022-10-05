@@ -6,10 +6,6 @@ namespace Airbnb.Application.Exceptions.Hosts
     {
         public HttpStatusCode StatusCode => HttpStatusCode.NotFound;
 
-        public string ErrorMessage { get; set; }
-        public HostNotFoundException(Guid id)
-        {
-            ErrorMessage = $"Host with this Id({id}) doesn't exist";
-        }
+        public string ErrorMessage => "Host with this Id doesn't exist";
     }
 }

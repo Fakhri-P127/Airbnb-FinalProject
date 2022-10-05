@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Serilog;
 using System.Net;
 
 namespace Airbnb.WebAPI.Controllers.v1
@@ -39,18 +40,22 @@ namespace Airbnb.WebAPI.Controllers.v1
                     foreach (ValidationFailure error in validationException.Errors)
                     {
                         modelStateDictionary.AddModelError(error.ErrorCode, error.ErrorMessage);
+                        Log.Error($"{error.ErrorCode}:{error.ErrorMessage}(400)");
                     }
                     return ValidationProblem(modelStateDictionary);
 
                 case UserValidationException createUserFailureException:
+                    Log.Error($"{createUserFailureException.ErrorMessage}(400)");
                     foreach (IdentityError error in createUserFailureException.ErrorMessages)
                     {
                         modelStateDictionary.AddModelError(error.Code, error.Description);
+                        Log.Error($"{error.Code}:{error.Description}(400)");
                     }
                     return ValidationProblem(title:createUserFailureException.ErrorMessage,
                         modelStateDictionary:modelStateDictionary);
 
                 case IAuthTokenException tokenException:
+                    Log.Error($"{tokenException.ErrorMessage}...{tokenException.DetailErrorMessage}({tokenException.StatusCode})");
                     return Problem
                         (title: tokenException.ErrorMessage,
                         detail: tokenException.DetailErrorMessage,
@@ -67,7 +72,7 @@ namespace Airbnb.WebAPI.Controllers.v1
                     errorMessage = exception?.Message;
                     break;
             }
-          
+            Log.Error($"{errorMessage}({statusCode})");
             return Problem(statusCode: (int)statusCode, title: errorMessage);
 
 

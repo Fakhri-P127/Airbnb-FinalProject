@@ -8,11 +8,16 @@ using Airbnb.Application.Helpers;
 using Airbnb.Application.Mapping;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
+using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using Bogus;
 using FluentAssertions;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System.Linq.Expressions;
+using System.Security.Claims;
+using static Airbnb.Application.Contracts.v1.ApiRoutes;
 
 namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
 {
@@ -20,17 +25,19 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
     {
         private readonly IMapper _mapper;
         private readonly Mock<IUnitOfWork> _mockUnit;
+        private readonly Mock<IHttpContextAccessor> _mockAccessor;
         private readonly CreateGuestReviewCommandHandler _handler;
         private List<GuestReview> _guestReviews = new();
         private List<Reservation> _reservations;
         private Host _hosts;
         private List<AppUser> _users;
+        private readonly Guid _userId;
         public CreateGuestReviewCommandHandlerTests()
         {
             _mockUnit = new Mock<IUnitOfWork>();
+          
             var mapperConfig = new MapperConfiguration(config =>config.AddProfile<GuestReviewMappings>());
             _mapper = mapperConfig.CreateMapper();
-            _handler = new CreateGuestReviewCommandHandler(_mockUnit.Object, _mapper);
             _users = new Faker<AppUser>()
              .RuleFor(x => x.Id, d => d.Random.Guid())
              .RuleFor(x => x.Firstname, d => d.Person.FirstName)
@@ -54,8 +61,21 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
                 .RuleFor(x => x.CheckInDate, d => d.Date.Between(DateTime.Now, DateTime.Now.AddYears(1)))
                 .RuleFor(x => x.CheckInDate, d => d.Date.Between(DateTime.Now.AddDays(1), DateTime.Now.AddYears(1)))
                 .Generate(2);
+            _reservations.First().Status = 5;
+            _reservations.Last().Status = 2;//exceptioni yoxlamaq uchun
             _users.First().Host = _hosts;
             _hosts.Reservations.Add(_reservations.First());
+
+            _userId = _users.Last().Id;
+            _mockAccessor = new();
+            DefaultHttpContext context = new();
+            ClaimsIdentity claimIdentity = new(new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier,_userId.ToString())
+            });
+            context.User = new ClaimsPrincipal(claimIdentity);
+            _mockAccessor.Setup(x => x.HttpContext).Returns(context);
+            _handler = new CreateGuestReviewCommandHandler(_mockUnit.Object, _mapper, _mockAccessor.Object);
         }
 
         [Fact]
@@ -64,8 +84,8 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             CreateGuestReviewCommand command = new()
             { GuestScore = 4, Text = "nice" /*, HostId = _hosts.Id, ReservationId = _reservations.First().Id*/ };
 
-            _mockUnit.Setup(x => x.HostRepository.GetByIdAsync(It.IsAny<Guid>(),
-             It.IsAny<Expression<Func<Host, bool>>>(), false))
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+            It.IsAny<Expression<Func<Host, bool>>>(), true, "AppUser"))
             .ReturnsAsync(_hosts);
 
             _mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(It.IsAny<Guid>(),
@@ -93,11 +113,12 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
         [Fact]
         public async Task CheckExceptionsThenReturnReservation_WhenHostWithThisIdDoesNotExist_ThrowsHostNotFoundException()
         {
-            // 1 hostum var ve onun id sine beraber deyil deye demeli bazada bele bir host yoxdu. exception throw edirik ona gore
-            Guid hostId = Guid.NewGuid();
-            _mockUnit.Setup(x => x.HostRepository.GetByIdAsync(hostId,
-                It.IsAny<Expression<Func<Host, bool>>>(), false))
-                .ReturnsAsync(_hosts.Id != hostId ? null : _hosts);
+            //1 hostumuz var ancaq, hostun appuserId si birinci user in Id sine beraberdi ve _userId ise 2ci userin Id sine,
+            //ona gore tapa bilmir.
+
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+                x => x.AppUserId == _userId, true,"AppUser"))
+                .ReturnsAsync(_hosts.AppUserId != _userId ? null : _hosts);
 
             Func<Task> act = async () => await _handler.Handle(new CreateGuestReviewCommand(), It.IsAny<CancellationToken>());
             await act.Should().ThrowAsync<HostNotFoundException>();
@@ -107,9 +128,9 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
         {
             Guid reservationId = Guid.NewGuid();
 
-            _mockUnit.Setup(x => x.HostRepository.GetByIdAsync(It.IsAny<Guid>(),
-               It.IsAny<Expression<Func<Host, bool>>>(), false))
-               .ReturnsAsync(_hosts);
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+                It.IsAny<Expression<Func<Host,bool>>>(), true, "AppUser"))
+                .ReturnsAsync(_hosts);
 
             Reservation? returnValue = _reservations.FirstOrDefault(x => x.Id == reservationId);
             _mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(reservationId,
@@ -119,6 +140,51 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             Func<Task> act = async () => await _handler.Handle(new CreateGuestReviewCommand(), It.IsAny<CancellationToken>());
             await act.Should().ThrowAsync<ReservationNotFoundException>();
         }
+        [Fact]
+        public async Task CheckExceptionsThenReturnReservation_WhenReservationHasNotFinished_ThrowNotAvailableYetException()
+        {
+            CreateGuestReviewCommand command = new()
+            {
+                GuestScore = 4,
+                Text = "salam",
+                ReservationId = _reservations.Last().Id
+            };
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+             It.IsAny<Expression<Func<Host, bool>>>(), true, "AppUser"))
+             .ReturnsAsync(_hosts);
+
+            _mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(It.IsAny<Guid>(),
+                It.IsAny<Expression<Func<Reservation, bool>>>(), false, "GuestReview"))
+                .ReturnsAsync(_reservations.First(x=>x.Id==command.ReservationId));
+            //if (reservation.Status != (int) Enum_ReservationStatus.ReservationFinished)
+            //   throw new GuestReview_NotAvailableYetException(reservation.CheckOutDate);
+            Func<Task> act = async () => await _handler.Handle(command, It.IsAny<CancellationToken>());
+            await act.Should().ThrowAsync<GuestReview_NotAvailableYetException>();
+        }
+        [Fact]
+        public async Task CheckExceptionsThenReturnReservation_WhenReservationHostIdIsSameWithAuthenticatedHostIdIsNotSame_ThrowGuestReview_HostIdNotMatchedException()
+        {
+            CreateGuestReviewCommand command = new()
+            {
+                ReservationId = _reservations.First().Id
+            };
+            //exception i yoxlamaq uchun yaradiriq
+            Host host = new()
+            { 
+                Id = Guid.NewGuid()
+            };
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+             It.IsAny<Expression<Func<Host, bool>>>(), true, "AppUser"))
+             .ReturnsAsync(host);
+
+            _mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(It.IsAny<Guid>(),
+                It.IsAny<Expression<Func<Reservation, bool>>>(), false, "GuestReview"))
+                .ReturnsAsync(_reservations.First());
+            
+            Func<Task> act = async () => await _handler.Handle(command, It.IsAny<CancellationToken>());
+            await act.Should().ThrowAsync<GuestReview_HostIdNotMatchedException>();
+        }
+
         [Fact]
         public async Task CheckExceptionsThenReturnReservation_WhenReservationAlreadyHasGuestReview_ThrowGuestReviewDuplicateException()
         {
@@ -135,9 +201,9 @@ namespace Airbnb.Application.Tests.Features.GuestReviewsTests.Commands
             _guestReviews.Add(guestReview);
             _reservations.First().GuestReview = _guestReviews.First();// duplicate erroru uchun
 
-            _mockUnit.Setup(x => x.HostRepository.GetByIdAsync(It.IsAny<Guid>(),
-             It.IsAny<Expression<Func<Host, bool>>>(), false))
-            .ReturnsAsync(_hosts);
+            _mockUnit.Setup(x => x.HostRepository.GetSingleAsync(
+               It.IsAny<Expression<Func<Host, bool>>>(), true, "AppUser"))
+               .ReturnsAsync(_hosts);
 
             _mockUnit.Setup(x => x.ReservationRepository.GetByIdAsync(It.IsAny<Guid>(),
                 It.IsAny<Expression<Func<Reservation, bool>>>(), false, "GuestReview"))

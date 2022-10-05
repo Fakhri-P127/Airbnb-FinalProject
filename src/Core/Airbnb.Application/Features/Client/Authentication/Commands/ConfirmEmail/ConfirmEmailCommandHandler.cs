@@ -6,16 +6,16 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Airbnb.Application.Features.Client.Authentication.Queries.ConfirmEmail
 {
-    public class ConfirmEmailQueryHandler:IRequestHandler<ConfirmEmailQuery>
+    public class ConfirmEmailCommandHandler:IRequestHandler<ConfirmEmailCommand>
     {
         private readonly CustomUserManager<AppUser> _userManager;
 
-        public ConfirmEmailQueryHandler(CustomUserManager<AppUser> userManager)
+        public ConfirmEmailCommandHandler(CustomUserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
 
-        public async Task<Unit> Handle(ConfirmEmailQuery request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
         {
             AppUser user = await _userManager.FindByEmailAsync(request.Email);
             if (user is null) throw new UserNotFoundValidationException()

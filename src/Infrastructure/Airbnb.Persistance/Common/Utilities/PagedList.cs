@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Airbnb.Infrastructure.Common.Utilities
 {
     /// <summary>
-    /// Bunu kodumda ishletmeye vaxtim chatmadi((. Yazandan sonra chatdi ki, her yerde bir bir deyishmeliyem ve ona vaxtim chatmayacaq.
+    /// Bunu kodumda ishletmeye vaxtim chatmadi((. Yazandan sonra chatdi ki, her yerde bir bir deyishmeliyem 
+    /// ve ona vaxtim chatmayacaq. 
+    /// Plan burda yaranan pagecount,totalpage,currenpage ve s. deyerlerini headere yazdirmaq idi.
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class PagedList<T> : List<T>,IPagedList<T> where T : BaseEntity

@@ -64,7 +64,7 @@ namespace Airbnb.Application.Tests.Features.ReservationsTests.Commands
              _userId = _users.Last().Id;
             ClaimsIdentity claimIdentity = new(new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub,_userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier,_userId.ToString())
             });
             context.User = new ClaimsPrincipal(claimIdentity);
             _mockAccessor.Setup(x => x.HttpContext).Returns(context);
@@ -109,7 +109,7 @@ namespace Airbnb.Application.Tests.Features.ReservationsTests.Commands
             Guid userId = _users.First().Id;//hostun appuser Id sine beraber edirik ki o exception i ala bilek
             ClaimsIdentity claimIdentity = new(new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub,userId.ToString())
+                new Claim(ClaimTypes.NameIdentifier,userId.ToString())
             });
             context.User = new ClaimsPrincipal(claimIdentity);
             _mockAccessor.Setup(x => x.HttpContext).Returns(context);

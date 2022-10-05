@@ -23,8 +23,12 @@
             <summary>
             Gets all the pending properties.
             </summary>
-            <param name="hostId"></param>
-            <returns></returns>
+            <param name="hostId">Id of the host</param>
+            <response code="200">Returns all the pending properties</response>
+            <response code="200">Returns all the pending properties</response>
+            <response code="404">Host with given Id doesn't exist</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <returns>All the pending properties</returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.GetPropertById(System.Guid)">
             <summary>
@@ -40,26 +44,42 @@
             Creates Property
             </summary>
             <param name="command"></param>
+            <response code="201">Creates a new Property</response>
+            <response code="400">Validation errors or state errors</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">Given Id for one of the parameters does not exist</response>
+            <returns>Newly created property</returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.UpdateProperty(Airbnb.Application.Features.Client.Properties.Commands.Update.UpdatePropertyCommand)">
             <summary>
             Updates the property
             </summary>
             <param name="command"></param>
-            <returns></returns>
+            <response code="200">Updates the Property successfuly</response>
+            <response code="400">Validation errors or state errors</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">Given Id for one of the parameters does not exist</response>
+            <returns>Updated property</returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.UpdatePropertyPendingStatus(System.Guid)">
             <summary>
             This endpoint is for the background service to update the statuses daily
             </summary>
-            <param name="id"></param>
+            <param name="id">Id of the property</param>
+            <response code="204">Updates the status of property</response>
+            <response code="400">User verifications are still lacking. Property status has not been changed</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">Property with this Id doesn't exist</response>
             <returns></returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertiesController.DeleteProperty(System.Guid)">
             <summary>
             Deletes the property
             </summary>
-            <param name="id"></param>
+            <param name="id">Id of the property</param>
+            <response code="204">Deletes the property successfuly</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">Property with this Id doesn't exist</response>
             <returns></returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.PropertyReviewsController.GetAllPropertyReviews(Airbnb.Application.Contracts.v1.Client.PropertyReviews.Parameters.PropertyReviewParameters)">
@@ -140,48 +160,63 @@
             Get all reservations. You can use the query parameters to filter the data you recieve.
             </summary>
             <param name="parameters"></param>
-            <returns></returns>
+            <response code="200">List of reservations returned successfuly</response>
+            <response code="401">You need to be authenticated to use this feature</response>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.GetReservationById(System.Guid)">
             <summary>
             Get reservation by given Id
             </summary>
             <param name="id"></param>
-            <returns></returns>
+            <response code="200">Reservation returned successfuly</response>
+            <response code="404">Reservation with given Id doesn't exist</response>
+            <response code="401">You need to be authenticated to use this feature</response>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.MakeReservation(Airbnb.Application.Features.Client.Reservations.Commands.Create.CreateReservationCommand)">
             <summary>
             Make a reservation
             </summary>
             <param name="command"></param>
-            <returns></returns>
+            <response code="201">Reservation created successfuly</response>
+            <response code="400">Invalid request, please input valid command</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="409">Given reservation dates are already occupied</response>
+            <returns>Newly created reservation</returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.UpdateReservation(Airbnb.Application.Features.Client.Reservations.Commands.Update.UpdateReservationCommand)">
             <summary>
             Update reservation's data. Empty values will be ignored
             </summary>
             <param name="command"></param>
-            <returns></returns>
+            <response code="200">Reservation updated successfuly</response>
+            <response code="400">Invalid request, please input valid command</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">Reservation with given Id doesn't exist</response>
+            <response code="409">Given reservation dates are already occupied</response>
+            <returns>Updated reservation</returns>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.UpdateReservationsStatus">
             <summary>
-            this endpoint is for background service to update the reservations status
+            This endpoint is for background service to update the reservations status
             </summary>
-            <returns></returns>
+            <response code="204">Updates status of reservations</response>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.ExtendReservationDuration(Airbnb.Application.Features.Client.Reservations.Commands.ExtendReservationDuration.ExtendReservationDurationCommand)">
             <summary>
-            with this endpoint you can extend the duration of your trip
+            With this endpoint you can extend the duration of your trip
             </summary>
             <param name="command"></param>
-            <returns></returns>
+            <response code="200">Extended the duration of the reservation successfuly</response>
+            <response code="404">Reservation with this Id doesn't exist</response>
+            <response code="409">Given reservation dates are already occupied</response>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.ReservationsController.DeleteReservation(System.Guid)">
             <summary>
             delete reservation by Id
             </summary>
-            <param name="id"></param>
-            <returns></returns>
+            <param name="id">Id of the reservation</param>
+            <response code="204">Deletes the reservation successfuly</response>
+            <response code="404">Reservation with this Id doesn't exist</response>
         </member>
         <member name="M:Airbnb.WebAPI.Controllers.v1.Client.UsersController.GetAllUsers(Airbnb.Application.Contracts.v1.Client.User.Parameters.UserParameters)">
             <summary>
@@ -190,7 +225,38 @@
             Writing anything other than these will be automatically ignored.
             </summary>
             <param name="parameters"></param>
+            <response code="200">List of users returned successfuly</response>
+            <response code="401">You need to be authenticated to use this feature</response>
             <returns>List of users</returns>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.UsersController.GetUserById(System.Guid)">
+            <summary>
+            Gets a user by given Id
+            </summary>
+            <param name="id">Id of the user</param>
+            <response code="200">User returned successfuly</response>
+            <response code="404">User with given Id doesn't exist</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.UsersController.UpdateUser(Airbnb.Application.Features.Client.User.Commands.Update.UpdateUserCommand)">
+            <summary>
+            Updates user
+            </summary>
+            <response code="200">User updated successfuly</response>
+            <response code="400">Something went wrong with image validation</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">User with given Id doesn't exist</response>
+            <response code="409">Authenticated user Id is different from given route Id</response>
+        </member>
+        <member name="M:Airbnb.WebAPI.Controllers.v1.Client.UsersController.DeleteUser(System.Guid)">
+            <summary>
+            Deletes the user
+            </summary>
+            <param name="id">Id of the user</param>
+            <response code="204">User deleted successfuly</response>
+            <response code="401">You need to be authenticated to use this feature</response>
+            <response code="404">User with given Id doesn't exist</response>
+            <response code="409">Authenticated user Id is different from given route Id</response>
         </member>
         <member name="T:Airbnb.WebAPI.Controllers.v1.ErrorsController">
             <summary>

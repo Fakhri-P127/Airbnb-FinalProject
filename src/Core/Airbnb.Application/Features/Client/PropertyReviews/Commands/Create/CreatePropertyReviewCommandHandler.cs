@@ -8,6 +8,7 @@ using Airbnb.Application.Exceptions.Reservations;
 using Airbnb.Application.Helpers;
 using Airbnb.Domain.Entities.AppUserRelated;
 using Airbnb.Domain.Entities.PropertyRelated;
+using Airbnb.Domain.Enums.Reservations;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -44,14 +45,16 @@ namespace Airbnb.Application.Features.Client.PropertyReviews.Commands.Create
             Reservation reservation = await _unit.ReservationRepository
                 .GetByIdAsync(request.ReservationId, null,true);
             if (reservation is null) throw new ReservationNotFoundException(request.ReservationId);
+            //reservation bitmeyibse review yaza bilmesin
             if (reservation.PropertyReview is not null)
                 throw new PropertyReview_DuplicateValidationException(request.ReservationId);
+            if (reservation.Status != (int)Enum_ReservationStatus.ReservationFinished) 
+                throw new PropertyReview_NotAvailableYetException(reservation.CheckOutDate);
+          
+            Guid Id = _accessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
+            if (reservation.AppUserId != Id)
+                throw new PropertyReview_UserIdNotMatchedException(Id, reservation.AppUserId);
             return reservation;
-            //AppUser user = await _userManager.Users.GetUserByIdAsync(request.AppUserId,cancellationToken);
-            //if (user is null) throw new UserIdNotFoundException(); 
-            // bashqasininn datasini deyishe bilmerem authmiddleware de yazmisham deye bura dushe bilmez.
-            //if (reservation.AppUserId != user.Id) throw new PropertyReview_UserIdNotMatchedException(request.AppUserId, (Guid)reservation.AppUserId);
-
         }
     }
 }

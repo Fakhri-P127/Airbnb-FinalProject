@@ -139,3 +139,4 @@ C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.Application.Tests\Airbnb
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.Application.Tests\Airbnb.Application.Tests\obj\Debug\net6.0\Airbnb.Application.Tests.pdb
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.Application.Tests\Airbnb.Application.Tests\obj\Debug\net6.0\Airbnb.Application.Tests.genruntimeconfig.cache
 C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.Application.Tests\Airbnb.Application.Tests\obj\Debug\net6.0\ref\Airbnb.Application.Tests.dll
+C:\Users\efend\source\repos\Backend\Airbnb\tests\Airbnb.Application.Tests\Airbnb.Application.Tests\bin\Debug\net6.0\Serilog.dll

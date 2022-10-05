@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "N1BUoN9ndB7k2rKUwdaXer/1zp3Sxe2K0W111z/o8W5eBwkbdhaz1VkGgWmY0LRAaWVtG6GNoFuuFsA0JVs1Xg==",
+  "dgSpecHash": "t1sKjTw+O/p4HdNT6SFKWDDh4XH//1QUuBgLZzn+qXe19RgKW4UeKXtHbcmwcoerLIEvGYN39mV/FWJG6raiJg==",
   "success": true,
   "projectFilePath": "C:\\Users\\efend\\source\\repos\\Backend\\Airbnb\\tests\\Airbnb.Application.Tests\\Airbnb.Application.Tests\\Airbnb.Application.Tests.csproj",
   "expectedPackageFiles": [
@@ -75,6 +75,7 @@
     "C:\\Users\\efend\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\efend\\.nuget\\packages\\serilog\\2.10.0\\serilog.2.10.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\efend\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

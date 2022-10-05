@@ -44,18 +44,16 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
                .GreaterThan(new TimeSpan(0, 0, 0))
                .LessThanOrEqualTo(new TimeSpan(23, 59, 59));
 
-
+            //RuleFor(x => x.HostId).NotEmpty().MustAsync(async (id, cancellationToken) =>
+            //{
+            //    bool exists = await _unit.HostRepository.GetByIdAsync(id, null) is not null;
+            //    return exists;
+            //}).WithMessage("Host with this Id doesn't exist").WithErrorCode("404");
             RuleFor(x => x.AirCoverId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {
                 bool exists = await _unit.AirCoverRepository.GetByIdAsync(id, null) is not null;
                 return exists;
             }).WithMessage("Aircover with this Id doesn't exist").WithErrorCode("404");
-
-            RuleFor(x => x.HostId).NotEmpty().MustAsync(async (id, cancellationToken) =>
-            {
-                bool exists = await _unit.HostRepository.GetByIdAsync(id, null) is not null;
-                return exists;
-            }).WithMessage("Host with this Id doesn't exist").WithErrorCode("404");
 
             RuleFor(x => x.CancellationPolicyId).NotEmpty().MustAsync(async (id, cancellationToken) =>
             {

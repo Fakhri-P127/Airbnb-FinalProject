@@ -42,6 +42,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
         {
             await CheckAppUserErrors(request);
             AppUser user = _mapper.Map<AppUser>(request);
+            user.IsDisplayed = true;
             user.PhoneNumberConfirmed = true; // login olmaq uchun nomre verification true olmalidi demishik.
             await ImageCheck(request, user);
             IdentityResult createdUserResult = await _userManager.CreateAsync(user, request.Password);
@@ -53,8 +54,6 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             // register deki tokeni silmek olar
 
             RegisterResponse response = _mapper.Map<RegisterResponse>(user);
-            //if (response is null) throw new Exception("Internal server error");
-
             response.Verifications.Add("Phone number verified");
             return response;
         }
@@ -99,7 +98,7 @@ namespace Airbnb.Application.Features.Client.Authentication.Commands.Register
             {
                 if (!request.ProfilPicture.IsImageOkay(2))
                 {
-                    throw new UserProfilPictureException { ErrorMessage = "Image size too big" };
+                    throw new UserProfilPictureException();
                 }
 
                 user.ProfilPicture = await request.ProfilPicture

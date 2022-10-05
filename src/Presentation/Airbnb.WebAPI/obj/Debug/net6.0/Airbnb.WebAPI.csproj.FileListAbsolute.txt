@@ -101,3 +101,15 @@ C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\De
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Settings.Configuration.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.Console.dll
 C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.Debug.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Enrichers.Environment.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Enrichers.Process.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Enrichers.Thread.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Expressions.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Microsoft.Azure.Services.AppAuthentication.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.MSSqlServer.dll
+C:\Users\efend\source\repos\Backend\Airbnb\src\Presentation\Airbnb.WebAPI\bin\Debug\net6.0\Serilog.Sinks.PeriodicBatching.dll

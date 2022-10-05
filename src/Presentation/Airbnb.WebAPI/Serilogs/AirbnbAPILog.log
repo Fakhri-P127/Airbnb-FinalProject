@@ -1,0 +1,79 @@
+18:47:33.829 +04:00 [Information] [] Application Starting.
+18:49:05.401 +04:00 [Error] [] An error occured while processing your request:You need to be authenticated to use this feature. Please login to use it.--401
+18:49:41.690 +04:00 [Information] [] Returned reservation with count:4
+18:50:49.453 +04:00 [Information] [] Application Starting.
+18:53:12.605 +04:00 [Error] [] An error occured while processing your request:You need to be authenticated to use this feature. Please login to use it.--401
+18:55:40.582 +04:00 [Error] [] An error occured while processing your request:You need to be authenticated to use this feature. Please login to use it.--401
+18:57:52.626 +04:00 [Error] [] You have already written a guest review for this reservation(e550aba2-6db1-4cf8-c268-08daa6ded0d4).(Conflict)
+18:58:20.824 +04:00 [Error] [] You have already written a guest review for this reservation(e550aba2-6db1-4cf8-c268-08daa6ded0d4).(Conflict)
+19:28:58.344 +04:00 [Information] [] Application Starting.
+19:32:10.754 +04:00 [Error] [] You can't leave a review until 10/10/2022 14:00:00 this date. (BadRequest)
+19:33:52.879 +04:00 [Error] [] User Id of Property Review doesn't match with the Id of Reservation. cea39173-b6f5-4a62-917a-6f2092ff787d ❌ e72ddb15-90a5-4559-bca6-5e4838e72bce(BadRequest)
+19:35:25.338 +04:00 [Error] [] You have already written a guest review for this reservation(1d5216d8-26d2-41af-c267-08daa6ded0d4).(Conflict)
+19:35:36.332 +04:00 [Error] [] You can't leave a review until 10/10/2022 14:00:00 this date. (BadRequest)
+19:35:53.608 +04:00 [Error] [] You can't leave a review until 12/10/2022 14:00:00 this date. (BadRequest)
+19:36:34.355 +04:00 [Error] [] You can't leave a review until 02/10/2022 14:00:00 this date. (BadRequest)
+19:37:23.521 +04:00 [Error] [] You have already written a guest review for this reservation(e550aba2-6db1-4cf8-c268-08daa6ded0d4).(Conflict)
+19:38:06.057 +04:00 [Error] [] You have already written a guest review for this reservation(e550aba2-6db1-4cf8-c268-08daa6ded0d4).(Conflict)
+19:38:15.049 +04:00 [Error] [] An error occurred while saving the entity changes. See the inner exception for details.(InternalServerError)
+19:39:29.560 +04:00 [Information] [] Application Starting.
+19:41:53.260 +04:00 [Error] [] You have already written a guest review for this reservation(e550aba2-6db1-4cf8-c268-08daa6ded0d4).(Conflict)
+19:42:54.430 +04:00 [Error] [] Host Id of Guest Review doesn't match with the host Id of Reservation. e6ef0e8a-1733-4e64-61da-08daa154e502 ❌ 431a64d1-1f9b-4e16-fc31-08daa1494bd4(BadRequest)
+19:43:58.730 +04:00 [Error] [] Host Id of Guest Review doesn't match with the host Id of Reservation. e6ef0e8a-1733-4e64-61da-08daa154e502 ❌ 431a64d1-1f9b-4e16-fc31-08daa1494bd4(BadRequest)
+19:45:34.206 +04:00 [Information] [] Returned reservation with count:4
+19:48:06.945 +04:00 [Information] [] Created reservation(0753ec33-ac6a-4c6b-0c5e-08daa6e8fdcc) successfuly
+19:50:08.689 +04:00 [Error] [] Reservation hasn't finished yet. You can't leave a review until 06/11/2022 14:00:00 this date.(BadRequest)
+19:52:08.540 +04:00 [Information] [] Application Starting.
+20:13:16.496 +04:00 [Information] [] Application Starting.
+20:14:27.175 +04:00 [Information] [] Application Starting.
+20:18:45.131 +04:00 [Information] [] Application Starting.
+20:20:25.238 +04:00 [Information] [] Application Starting.
+20:23:29.327 +04:00 [Information] [] Application Starting.
+20:26:28.667 +04:00 [Information] [] Application Starting.
+20:27:51.399 +04:00 [Information] [] Application Starting.
+20:29:08.052 +04:00 [Information] [] Application Starting.
+20:30:08.294 +04:00 [Information] [] Application Starting.
+20:35:42.707 +04:00 [Information] [] Application Starting.
+20:38:00.267 +04:00 [Information] [] Application Starting.
+20:39:23.991 +04:00 [Information] [] Application Starting.
+20:41:00.544 +04:00 [Information] [] Application Starting.
+21:54:24.091 +04:00 [Information] [] Application Starting.
+21:55:36.418 +04:00 [Information] [] Returned reservation with count:4
+21:56:57.975 +04:00 [Error] [] Reservation hasn't finished yet. You can't leave a review until 10/10/2022 14:00:00 this date.(Unauthorized)
+21:57:10.024 +04:00 [Error] [] User Id of Property Review doesn't match with the Id of Reservation. cea39173-b6f5-4a62-917a-6f2092ff787d ❌ e72ddb15-90a5-4559-bca6-5e4838e72bce(BadRequest)
+21:58:58.801 +04:00 [Information] [] Application Starting.
+21:59:32.285 +04:00 [Information] [] Returned reservation with count:4
+21:59:44.422 +04:00 [Information] [] Returned properties with count: 4
+22:00:16.278 +04:00 [Information] [] Application Starting.
+22:00:37.699 +04:00 [Information] [] Returned reservation with count:4
+22:01:10.454 +04:00 [Error] [] GreaterThanOrEqualValidator:'Guest Score' must be greater than or equal to '1'.(400)
+22:01:10.460 +04:00 [Error] [] NotEmptyValidator:'Guest Score' must not be empty.(400)
+22:19:37.391 +04:00 [Information] [] Application Starting.
+22:21:54.673 +04:00 [Information] [] Returned properties with count: 4
+22:22:42.127 +04:00 [Information] [] Returned properties with count: 30
+22:24:02.726 +04:00 [Information] [] Returned reservation with count:4
+22:27:39.265 +04:00 [Information] [] Application Starting.
+22:35:56.647 +04:00 [Information] [] Application Starting.
+22:39:17.974 +04:00 [Error] [] RegularExpressionValidator:Phone Number +9945555521 is not in the correct format. We only accept Azerbaijan numbers(400)
+22:40:35.749 +04:00 [Information] [] Application Starting.
+22:46:58.698 +04:00 [Information] [] Application Starting.
+22:49:47.396 +04:00 [Error] [] An error occured while processing your request:You are forbidden from using this feature.--403
+22:50:32.214 +04:00 [Error] [] Phone number or password is incorrect.(NotFound)
+22:52:59.099 +04:00 [Information] [] Created a new property(8ae5d19e-4d78-4f99-1ad0-08daa702d145)
+23:03:45.189 +04:00 [Information] [] Application Starting.
+23:05:17.175 +04:00 [Information] [] Application Starting.
+23:07:11.090 +04:00 [Error] [] An error occured while processing your request:You need to be authenticated to use this feature. Please login to use it.--401
+23:07:26.081 +04:00 [Error] [] 404:Privacy type with this Id doesn't exist(400)
+23:07:52.827 +04:00 [Error] [] 404:Privacy type with this Id doesn't exist(400)
+23:07:52.831 +04:00 [Error] [] 404:Property type with this Id doesn't exist(400)
+23:08:14.463 +04:00 [Information] [] Created a new property(5a05e636-42cb-4abc-2b0a-08daa704f23f)
+23:09:27.166 +04:00 [Error] [] An error occured while processing your request:You need to be authenticated to use this feature. Please login to use it.--401
+23:10:10.724 +04:00 [Error] [] Authenticated user id is not same with the property host Id. You can't change another users data.(Unauthorized)
+23:11:20.300 +04:00 [Information] [] Returned properties with count: 30
+23:14:57.770 +04:00 [Information] [] Application Starting.
+23:20:56.781 +04:00 [Information] [] Application Starting.
+23:21:17.466 +04:00 [Error] [] An error occurred while saving the entity changes. See the inner exception for details.(InternalServerError)
+23:22:40.939 +04:00 [Information] [] Application Starting.
+23:24:17.420 +04:00 [Information] [] Application Starting.
+23:24:54.331 +04:00 [Error] [] You're already a host(Conflict)
+23:25:03.392 +04:00 [Error] [] You're already a host(Conflict)

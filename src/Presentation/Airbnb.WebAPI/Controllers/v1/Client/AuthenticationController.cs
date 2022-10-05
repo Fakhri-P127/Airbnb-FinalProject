@@ -77,16 +77,16 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
             return NoContent();
         }
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailQuery query)
+        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailCommand command)
         {
-            await _mediatr.Send(query);
+            await _mediatr.Send(command);
             return NoContent();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> SendConfirmationEmail([FromQuery] SendConfirmationEmailCommand command)
+        [HttpGet]
+        public async Task<IActionResult> SendConfirmationEmail([FromQuery] SendConfirmationEmailQuery query)
         {
-            await _mediatr.Send(command);
+            await _mediatr.Send(query);
             return NoContent();
         }
     }

@@ -26,18 +26,24 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
         private readonly IUnitOfWork _unit;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _env;
+        private readonly IHttpContextAccessor _acccessor;
 
-        public CreatePropertyCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env)
+        public CreatePropertyCommandHandler(IUnitOfWork unit, IMapper mapper, IWebHostEnvironment env,
+            IHttpContextAccessor acccessor)
         {
             _unit = unit;
             _mapper = mapper;
             _env = env;
+            _acccessor = acccessor;
         }
         public async Task<CreatePropertyResponse> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)
         {
             //Host host = await CheckExceptionsThenReturnHost(request);
-            Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
+            //Host host = await _unit.HostRepository.GetByIdAsync(request.HostId, null, false, "AppUser");
+            Guid userId = _acccessor.HttpContext.User.GetUserIdFromClaim().TryParseStringIdToGuid();
+            Host host = await _unit.HostRepository.GetSingleAsync(x => x.AppUserId == userId, true, "AppUser");
             Property property = _mapper.Map<Property>(request);
+            property.HostId = host.Id;
             await SetStateForProperty(request, property);
             await CheckAddMainImage(request, property);
             await CheckAddDetailImages(request, property);

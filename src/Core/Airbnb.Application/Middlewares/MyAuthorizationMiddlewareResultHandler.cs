@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Authorization.Policy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Serilog;
 using System.Diagnostics.Contracts;
 using System.Net;
 
@@ -20,7 +22,6 @@ namespace Airbnb.Application.Middlewares
             AuthorizationPolicy policy, PolicyAuthorizationResult authorizeResult)
         {
             //if (SkipAuthorization(actionContext)) return;
-            
             if (authorizeResult.Challenged)
             {
                 await CreateAuthorizationIsChallangedResponse(context);
@@ -52,6 +53,7 @@ namespace Airbnb.Application.Middlewares
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
+            Log.Error($"{problemDetails.Title}:{problemDetails.Detail}--{problemDetails.Status}");
             await context.Response.WriteAsync(resultStr);
             //await context.Response.WriteAsJsonAsync(problemDetails);
         }
@@ -75,6 +77,8 @@ namespace Airbnb.Application.Middlewares
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
+
+            Log.Error($"{problemDetails.Title}:{problemDetails.Detail}--{problemDetails.Status}");
             await context.Response.WriteAsync(resultStr);
         }
 
@@ -88,15 +92,9 @@ namespace Airbnb.Application.Middlewares
                 {
                     string requiredRole = item.ToString().Split(":").LastOrDefault();
                     problemDetails.Extensions.Add("Roles that has access", requiredRole[2..^1]);
+
                 }
             }
         }
-        //private static bool SkipAuthorization(HttpActionContext actionContext)
-        //{
-        //    Contract.Assert(actionContext != null);
-
-        //    return actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
-        //               || actionContext.ControllerContext.ControllerDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any();
-        //}
     }
 }

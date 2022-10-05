@@ -6,7 +6,7 @@ namespace Airbnb.Application.Features.Client.Properties.Commands.Create
 {
     public class CreatePropertyCommand : IRequest<CreatePropertyResponse>
     {
-        public Guid HostId { get; set; }
+        //public Guid HostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }

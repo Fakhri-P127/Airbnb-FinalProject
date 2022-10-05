@@ -32,7 +32,7 @@ namespace Airbnb.Application.Features.Client.Properties.Queries.GetAll
             {
                 Guid hostId = BaseHelper.GetHostIdFromRoute(_accessor);
                 if (await _unit.HostRepository.GetByIdAsync(hostId, null) is null)
-                    throw new HostNotFoundException(hostId);
+                    throw new HostNotFoundException();
             }
             ExpressionStarter<Property> filters = FilterRequest(request);
             List<Property> properties = await _unit.PropertyRepository

@@ -53,9 +53,9 @@ namespace Airbnb.WebAPI.Controllers.v1.Client
         }
         [HttpPost]
         [Authorize(Roles = "Guest")]
-        public async Task<IActionResult> BecomeHost([FromBody] CreateHostCommand command)
+        public async Task<IActionResult> BecomeHost()
         {
-            PostHostResponse result = await _mediatr.Send(command);
+            PostHostResponse result = await _mediatr.Send(new CreateHostCommand());
             return CreatedAtAction(nameof(GetHostById), new { id = result.Id }, result);
         }
         [HttpPatch("[action]")]
