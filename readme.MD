@@ -1,14 +1,13 @@
 # AIXM Query Structure Documentation
 
 ## Overview
-This document describes the AIXM (Aeronautical Information Exchange Model) query structure system used in the DOST.API project. The system has evolved from an old structure to a new, more flexible structure that supports both AND and OR logical operations.
+This document describes the AIXM (Aeronautical Information Exchange Model) query structure system used in the project. The system has evolved from an old structure to a new, more flexible structure that supports both AND and OR logical operations.
 
 ## File Structure
 - **Location**: `Shared/DOST.Dataset/DatasetQueries/`
 - **File Types**: 
   - `.single.json` - Queries for retrieving a single specific feature
   - `.list.json` - Queries for retrieving multiple features of a type
-  - `.filtered-list.json` - Queries with additional filtering criteria
 
 ## New Query Structure (Current)
 
@@ -198,7 +197,7 @@ AirportHeliport
 
 ### Complex Nested Query (runway-directions.single.json)
 - 4+ levels of nesting
-- Multiple filter conditions with AND logic
+- Multiple filter conditions with AND, OR logic
 - Complex property projections
 - Multiple child feature types
 
@@ -210,24 +209,3 @@ AirportHeliport
 4. **Filter Logic**: Use AND logic for multiple conditions (OR can be used for complex scenarios)
 5. **Naming**: Follow the established naming conventions for file types
 
-## Common Issues and Solutions
-
-1. **UTF-8 BOM**: Some files may have BOM encoding - use `utf-8-sig` when reading
-2. **Deep Nesting**: Complex queries can have 4+ levels - ensure all levels are converted
-3. **Multiple Filters**: Always wrap multiple filter conditions in Binary filter with AND logic
-4. **Property Preservation**: Ensure all original properties are maintained in projection
-
-## Tools and Scripts
-
-### Conversion Script
-A Python script was used to convert all 95 files from old to new structure:
-- Handles UTF-8 BOM encoding
-- Recursively converts nested children
-- Preserves all original logic and properties
-- Validates JSON structure after conversion
-
-### Validation
-- All files must be valid JSON
-- No old structure remnants (`filterProperties`, `checkedProperties`)
-- All files must have new structure (`filter`, `projection`)
-- Pattern consistency between `.single.json` and `.list.json` files
